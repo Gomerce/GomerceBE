@@ -26,7 +26,6 @@
 - [Faleye Oluwadamilare Odunayo](https://github.com/Dray91eu)
 - [Simon Kipkorir Chirchir](https://github.com/simon-chirchir)
 - [Daud Olarewaju](https://github.com/Daud94)
-- [Nestor Abiangang](https://github.com/martourez21)
 - [Vanessa Mwaniki](https://github.com/vanessamwaniki)
-- [Raymond Nartey](https://github.com/ray-nart)
 - [Nestor Abiangang](https://github.com/martourez21)
+- [Raymond Nartey](https://github.com/ray-nart)
