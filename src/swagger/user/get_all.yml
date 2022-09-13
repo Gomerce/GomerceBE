@@ -1,0 +1,25 @@
+title: Get all users
+description: Return all users key information based the query parameter
+tags:
+  - users
+parameters:
+  - name: first_name
+    in: query
+    type: string
+    description: the first name of the user
+  - name: last_name
+    in: query
+    type: string
+    description: the last name of the user
+responses:
+  200:
+    description: The users information were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+            [
+              { "last_name": Doe, "first_name": John, "age": 30 },
+              { "last_name": "Roe", "first_name": "Jerry", "age": 23 },
+            ],
+        }

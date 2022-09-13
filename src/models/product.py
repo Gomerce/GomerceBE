@@ -10,6 +10,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "products"
 
+    product_id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(300), primary_key=True)
     description = db.Column(db.Text(), primary_key=True)
     price = db.Column(db.Numeric, nullable=True)

@@ -8,6 +8,6 @@ from resources import ProductResource
 
 PRODUCT_BLUEPRINT = Blueprint("product", __name__)
 
-PRODUCT_BLUEPRINT.route("/product", methods=['GET'])(ProductResource.get_all)
-PRODUCT_BLUEPRINT.route("/product", methods=['POST'])(ProductResource.post)
-PRODUCT_BLUEPRINT.route("/product/<string:name>", methods=['GET'])(ProductResource.get)
+PRODUCT_BLUEPRINT.route("/products", methods=['GET'])(ProductResource.get_all)
+PRODUCT_BLUEPRINT.route("/products", methods=['POST'])(ProductResource.post)
+PRODUCT_BLUEPRINT.route("/products/<string:name>", methods=['GET'])(ProductResource.get)

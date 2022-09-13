@@ -10,8 +10,9 @@ class User(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "users"
 
-    first_name = db.Column(db.String(300), primary_key=True)
-    last_name = db.Column(db.String(300), primary_key=True)
+    user_id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(300))
+    last_name = db.Column(db.String(300))
     age = db.Column(db.Integer, nullable=True)
 
     def __init__(self, first_name, last_name, age=None):

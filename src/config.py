@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 import logging
 import os
+import datetime
 
 load_dotenv()
 # Databse configs
@@ -21,10 +22,19 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # DB_CONTAINER = os.getenv("APPLICATION_DB_CONTAINER", "db")
 
-logging.basicConfig(
-    filename=os.getenv("SERVICE_LOG", "server.log"),
-    level=logging.DEBUG,
-    format="%(levelname)s: %(asctime)s \
+if (DEBUG):
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(levelname)s: %(message)s",
+        datefmt="%d/%m/%y %H:%M:%S",
+    )
+else:
+    filename = datetime.datetime.now().strftime('%d-%m-%Y')
+    logging.basicConfig(
+        filename=f"logs/{filename}.log",
+        level=logging.WARNING,
+        format="%(asctime)s %(levelname)s:\
+        %(filename)s %(funcName)s \
         pid:%(process)s module:%(module)s %(message)s",
-    datefmt="%d/%m/%y %H:%M:%S",
-)
+        datefmt="%H:%M:%S",
+    )
