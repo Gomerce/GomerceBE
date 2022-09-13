@@ -21,6 +21,12 @@ PostgreSQL 13.* or higher - recommended
 
 # Setup
 
+## Development Environment
+
+Install this extension `Python` from Microsoft on your code editor (VS Code) or it's equivalent for the editor you use, to allow you to use the same coding style with everyone.
+
+Setup your linter to follow `pycodestyle` and your formatter to follow `autopep8`
+
 ## Virtual environment
 
 How to setup a python virtual environment
@@ -62,9 +68,11 @@ pip install -r requirements-prod.txt
 
 ## Set environment variables
 
-Make a copy of the `example.env` file, and rename it to `.env`
+- Make a copy of the `example.env` file, and rename it to `.env`
 
-Update the values of the variables in the `.env` file to suite your system environment.
+- Update the values of the variables in the `.env` file to suite your system environment.
+
+- Create a folder named `logs` in the root directory, if it does not exist
 
 ## Datebase setup
 
@@ -125,6 +133,8 @@ python src/server.py
 
 The application will run at the specified port `APPLICATION_PORT` in `.env` file
 
-The local URL to access the API should be `http://localhost:3303`
+The local URL to access the API should be `http://localhost:3303/`
 
 You can visit the Products URL to test the application at `http://localhost:3303/products`
+
+The API Swagger documentation should be accessible at `http://localhost:3303/apidocs`
