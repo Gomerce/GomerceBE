@@ -10,6 +10,7 @@
 - [Onyekachi Jasper-Duruzor](https://github.com/kachi-jasperD)
 - [Ebuka Obiora](https://github.com/oEbuka)
 - [Chinonso Kalu](https://github.com/tripletens)
+- [Hassan Yahya](https://github.com/dmdhassan)
 - [Clinton Mekwunye](https://github.com/clintonMF)
 - [Joseph Ogwuche](https://github.com/joew2k)
 - [Doghor Samuel](https://github.com/samdoghor)
