@@ -32,4 +32,16 @@ CREATE TABLE public.customer (
     PRIMARY KEY (id, email_address)
 )
 
-
+CREATE TABLE public.reviews (
+    id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    seller_id INTEGER NOT NULL,
+    "comment" VARCHAR NOT NULL,
+    PRIMARY KEY(id),
+    CONSTRAINT fk_pid
+        FOREIGN KEY(product_id)
+            REFERENCES products(id),
+    CONSTRAINT fk_sid
+        FOREIGN KEY(seller_id)
+            REFERENCES sellers(id),  
+)
