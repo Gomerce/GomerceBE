@@ -79,3 +79,16 @@ class JWTTokenBlocklist(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+
+class PaymentMethod(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable = False)
+    currency = db.Column(db.Float(), nullable = False)
+
+    def __init__(self, name, currency):
+        self.name = name
+        self.currency = currency
+
+    def __repr__(self):
+        return self.name
