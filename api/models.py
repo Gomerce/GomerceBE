@@ -79,3 +79,14 @@ class JWTTokenBlocklist(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+#Database Schema for Shipping Address
+#Foreign key is yet to be inserted
+class ShippingAddress(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    address = db.Column(db.String(64), nullable=False)
+    city = db.Column(db.String(32), nullable=False)
+    state = db.Column(db.String(32), nullable=False)
+    post_code = db.Column(db.String(32), nullable=False)
+    country = db.Column(db.String(32), nullable=False)
+    is_default = db.Column(db.Boolean())
