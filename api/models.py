@@ -79,3 +79,12 @@ class JWTTokenBlocklist(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    #Schema for order details
+    class OrderDetails(db.Model):
+        id = db.Column(db.Integer(), primary_key=True)
+        status = db.Column(db.Boolean, default=False)
+        quantity = db.Column(db.Integer, nullable=False)
+        SKU =  db.Column(db.String(120), nullable=False)
+        order_id = db.Column(db.Integer, db.ForeignKey("Order.id"), nullable=False)
+        product_id = db.Column(db.Integer, db.ForeignKey("Product.id"), nullable=False)
