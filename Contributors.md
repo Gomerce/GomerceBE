@@ -28,6 +28,7 @@
 - [Daud Olarewaju](https://github.com/Daud94)
 - [Nestor Abiangang](https://github.com/martourez21)
 - [Vanessa Mwaniki](https://github.com/vanessamwaniki)
+- [John Ajayi](https://github.com/realJohnAdex)
 - [Raymond Nartey](https://github.com/ray-nart)
 - [Nestor Abiangang](https://github.com/martourez21)
 - [Lawrence Onoja](https://github.com/iamlawrenceonoja)
