@@ -33,3 +33,10 @@ CREATE TABLE public.customer (
 )
 
 
+CREATE TABLE public.paymentMethod (
+    id INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    currency CHAR NOT NULL,
+    PRIMARY KEY (id)
+)
+
