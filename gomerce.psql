@@ -5,6 +5,7 @@
 /* 
 Contributors
 Samuel Doghor @samdoghor(Github)
+John Ajayi @realJohnAdex(Github)
 */
 
 SET statement_timeout = 0;
@@ -32,4 +33,12 @@ CREATE TABLE public.customer (
     PRIMARY KEY (id, email_address)
 )
 
+CREATE TABLE public.store (
+    id INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    address VARCHAR NOT NULL,
+    phone INTEGER UNIQUE,
+    email VARCHAR UNIQUE,
+    PRIMARY KEY (id)
+)
 
