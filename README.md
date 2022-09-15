@@ -1,6 +1,6 @@
 ## Flask API Server
 
-e-commerce [gommerce](https://github.com/Ajioz/gomerce_backend.git) enhanced with JWT authentication, SqlAlchemy, **SQLite** persistence and deployment scripts via Docker. It has all the ready-to-use bare minimum essentials.
+E-commerce [gomerce](https://github.com/Gomerce/GomerceBE.git) enhanced with JWT authentication, SqlAlchemy, **SQLite** persistence and deployment scripts via Docker. It has all the ready-to-use bare minimum essentials.
 
 <br />
 
@@ -17,8 +17,8 @@ e-commerce [gommerce](https://github.com/Ajioz/gomerce_backend.git) enhanced wit
 > Get the code
 
 ```bash
-$ git clone https://github.com/Ajioz/gomerce_backend.git
-$ cd gomerce_backend
+$ git clone https://github.com/Gomerce/GomerceBE.git
+$ cd GomerceBE
 ```
 
 > Start the app in Docker
@@ -33,10 +33,11 @@ The API server will start using the PORT `5000`.
 
 ## ✨ Table of Contents
 
-1. [Getting Started](#getting-started)
-2. [Project Structure](#project-structure)
-3. [Modules](#modules)
-4. [Testing](#testing)
+1. [Getting Started](#✨-how-to-use-the-code)
+2. [Project Structure](#✨-project-structure)
+3. [Modules](#✨-api)
+4. [Testing](#✨-testing)
+5. [Contributors](#✨-contributors)
 
 <br />
 
@@ -45,8 +46,8 @@ The API server will start using the PORT `5000`.
 > **Step #1** - Clone the project
 
 ```bash
-$ git clone https://github.com/Ajioz/gomerce_backend.git
-$ cd gomerce_backend
+$ git clone https://github.com/Gomerce/GomerceBE.git
+$ cd GomerceBE
 ```
 
 <br />
@@ -176,5 +177,14 @@ authorization: JWT_TOKEN (returned by Login request)
 Run tests using `pytest tests.py`
 
 <br />
+
+## ✨ Contributors
+> The Gomerce project won't be complete without these backend developers: <br /> 
+
+<img src="https://img.shields.io/github/contributors/gomerce/gomercebe?style=plastic" alt="Contributors" /> <br />
+
+<a href="https://github.com/gomerce/gomercebe/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=gomerce/gomercebe" />
+</a>
 
 ---
