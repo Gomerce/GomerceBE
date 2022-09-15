@@ -5,6 +5,7 @@
 /* 
 Contributors
 Samuel Doghor @samdoghor(Github)
+Aaron Ben-elijah @aaronben41(Github)
 */
 
 SET statement_timeout = 0;
@@ -30,6 +31,17 @@ CREATE TABLE public.customer (
     created_at TIMESTAMP WITH TIME ZONE,
     updtaet_at TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY (id, email_address)
+)
+
+CREATE TABLE public.shippingAddress (
+    id INTEGER NOT NULL,
+    country VARCHAR NOT NULL,
+    phone_number INTEGER UNIQUE,
+    state VARCHAR,
+    zip_code INTEGER,
+    city VARCHAR,
+    street_name TEXT,
+    PRIMARY KEY (id)
 )
 
 
