@@ -5,11 +5,8 @@
 /* 
 Contributors
 Samuel Doghor @samdoghor(Github)
-<<<<<<< HEAD
-John Ajayi @realJohnAdex(Github)
-=======
 Aaron Ben-elijah @aaronben41(Github)
->>>>>>> main
+Hammed Iyiola Jimoh @IyiolaJay(Github)
 */
 
 SET statement_timeout = 0;
@@ -62,3 +59,9 @@ CREATE TABLE public.store (
     PRIMARY KEY (id)
 )
 
+CREATE TABLE public.coupon (
+    id integer NOT NULL,
+    coupon_code integer,
+    amount double precision,
+    expiry_date date
+)
