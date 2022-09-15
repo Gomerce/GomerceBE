@@ -5,11 +5,8 @@
 /* 
 Contributors
 Samuel Doghor @samdoghor(Github)
-<<<<<<< HEAD
 John Ajayi @realJohnAdex(Github)
-=======
 Aaron Ben-elijah @aaronben41(Github)
->>>>>>> main
 */
 
 SET statement_timeout = 0;
@@ -56,7 +53,7 @@ CREATE TABLE public.paymentMethod (
 CREATE TABLE public.store (
     id INTEGER NOT NULL,
     name VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL,
+    address TEXT NOT NULL,
     phone INTEGER UNIQUE,
     email VARCHAR(255) UNIQUE,
     PRIMARY KEY (id)
