@@ -5,7 +5,11 @@
 /* 
 Contributors
 Samuel Doghor @samdoghor(Github)
+<<<<<<< HEAD
+John Ajayi @realJohnAdex(Github)
+=======
 Aaron Ben-elijah @aaronben41(Github)
+>>>>>>> main
 */
 
 SET statement_timeout = 0;
@@ -44,11 +48,17 @@ CREATE TABLE public.shippingAddress (
     PRIMARY KEY (id)
 )
 
-
 CREATE TABLE public.paymentMethod (
     id INTEGER NOT NULL,
     name VARCHAR NOT NULL,
     currency CHAR NOT NULL,
+
+CREATE TABLE public.store (
+    id INTEGER NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    phone INTEGER UNIQUE,
+    email VARCHAR(255) UNIQUE,
     PRIMARY KEY (id)
 )
 
