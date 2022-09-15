@@ -31,3 +31,15 @@ CREATE TABLE public.customer (
     updated_at TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY (id, email_address)
 )
+<<<<<<< HEAD
+=======
+
+
+CREATE TABLE public.paymentMethod (
+    id INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
+    currency CHAR NOT NULL,
+    PRIMARY KEY (id)
+)
+
+>>>>>>> b12cbf63fe70ff2c68099e6d5eae396034e47c76
