@@ -17,19 +17,17 @@ SET row_security = off;
 
 CREATE TABLE public.customer (
     id INTEGER NOT NULL,
-    first_name VARCHAR NOT NULL,
-    last_name VARCHAR NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
     phone_number INTEGER UNIQUE,
-    email_address VARCHAR UNIQUE,
-    customer_password VARCHAR,
+    email_address VARCHAR(255) UNIQUE,
+    customer_password VARCHAR(255),
     street_name TEXT,
-    city VARCHAR,
-    state VARCHAR,
+    city VARCHAR(255),
+    state VARCHAR(255),
     zipcode INTEGER,
-    country VARCHAR,
+    country VARCHAR(255),
     created_at TIMESTAMP WITH TIME ZONE,
-    updtaet_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY (id, email_address)
 )
-
-
