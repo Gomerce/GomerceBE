@@ -1,0 +1,56 @@
+-- PostgreSQL Database Documentation https://www.postgresql.org/docs/
+-- PostgreSQL Database version 14.5
+
+-- Gomerce Database Schema 
+/* 
+Contributors
+Samuel Doghor @samdoghor(Github)
+*/
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET row_security = off;
+
+-- EXTENSIONS --
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Create Tables
+
+CREATE TABLE public.customer (
+    id INTEGER NOT NULL,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
+    phone_number INTEGER UNIQUE,
+    email_address VARCHAR UNIQUE,
+    customer_password VARCHAR,
+    street_name TEXT,
+    city VARCHAR,
+    state VARCHAR,
+    zipcode INTEGER,
+    country VARCHAR,
+    created_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    PRIMARY KEY (id, email_address)
+);
+
+
+CREATE TABLE public.orders (
+    id uuid DEFAULT uuid_generate_v4(),
+    status VARCHAR(20),
+    total_order_cost DECIMAL(12,4) DEFAULT 0.0000,
+    tax DECIMAL(12,4) DEFAULT 0.0000,
+    delivery_status VARCHAR(25),
+    delivery_date DATE,
+    customer_id INTEGER(10) NOT NULL REFERENCES customer(id) ON DELETE SET NULL,
+    shipping_address_id INTEGER(10) REFERENCES shipping_addresses(id) ON DELETE SET NULL,
+    cart_id INTEGER(10) REFERENCES cart(id) ON DELETE SET NULL
+    seller_id INTEGER(10) REFERENCES sellers(id),
+    coupon_id INTEGER(10) REFERENCES coupons(id) ON DELETE SET NULL,
+    created_at TIMESTAMPZ NOT NULL DEFAULT NOW(),
+    modified_at TIMESTAMPZ,
+    PRIMARY KEY(id)
+);
+
+
