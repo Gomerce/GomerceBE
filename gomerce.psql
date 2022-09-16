@@ -59,12 +59,14 @@ CREATE TABLE public.store (
     PRIMARY KEY (id)
 )
 
+CREATE TYPE Status AS ENUM ('pending', 'processing', 'completed')
+
 CREATE TABLE public.orderDetails (
     id INTEGER NOT NULL,
-    status BOOLEAN,
+    status Status NOT NULL,
     quantity INTEGER NOT NULL,
-    SKU VARCHAR(255) NOT NULL,
-    order_id INTEGER REFERENCES orders (id),
-    product_id INTEGER REFERENCES product (id),
+    sku VARCHAR(255) NOT NULL,
+    order_id INTEGER REFERENCES orders (id) ON DELETE CASCADE,
+    product_id INTEGER REFERENCES products (id) ON DELETE RESTRICT,
     PRIMARY KEY (id)
 )
