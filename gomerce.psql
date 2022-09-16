@@ -7,6 +7,7 @@ Contributors
 Samuel Doghor @samdoghor(Github)
 John Ajayi @realJohnAdex(Github)
 Aaron Ben-elijah @aaronben41(Github)
+Oluwatobi Odekunle @tee-code(Github)
 */
 
 SET statement_timeout = 0;
@@ -69,4 +70,45 @@ CREATE TABLE public.orderDetails (
     order_id INTEGER REFERENCES orders (id) ON DELETE CASCADE,
     product_id INTEGER REFERENCES products (id) ON DELETE RESTRICT,
     PRIMARY KEY (id)
+    
+CREATE TABLE public.order (
+    id INTEGER NOT NULL,
+    status VARCHAR(25),
+    total_order_cost DOUBLE PRECISION CHECK(total_order_cost > 0),
+    tax DOUBLE PRECISION,
+    delivery_status VARCHAR(25),
+    delivery_date DATE,
+    customer_id INTEGER NOT NULL,
+    shipping_address_id INTEGER NOT NULL,
+    cart_id INTEGER NOT NULL,
+    seller_id INTEGER NOT NULL,
+    coupon_id INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_customer
+      FOREIGN KEY(customer_id) 
+	    REFERENCES customer(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    CONSTRAINT fk_shippingAddress
+      FOREIGN KEY(shipping_address_id) 
+	    REFERENCES shippingAddress(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    CONSTRAINT fk_cart
+      FOREIGN KEY(cart_id) 
+	    REFERENCES cart(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    CONSTRAINT fk_seller
+      FOREIGN KEY(seller_id) 
+	    REFERENCES seller(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    CONSTRAINT fk_coupon
+      FOREIGN KEY(coupon_id) 
+	    REFERENCES coupon(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 )
