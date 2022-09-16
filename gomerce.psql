@@ -8,7 +8,6 @@ Samuel Doghor @samdoghor(Github)
 John Ajayi @realJohnAdex(Github)
 Aaron Ben-elijah @aaronben41(Github)
 Oluwatobi Odekunle @tee-code(Github)
-Onoja Lawrence @iamlawrenceonoja(Github)
 */
 
 SET statement_timeout = 0;
@@ -122,8 +121,8 @@ CREATE TABLE public.review (
     PRIMARY KEY(id),
     CONSTRAINT fk_pid
         FOREIGN KEY(product_id)
-            REFERENCES product(id) ON DELETE CASCADE,
+            REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_sid
         FOREIGN KEY(seller_id)
-            REFERENCES seller(id) ON DELETE CASCADE,  
+            REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,  
 )
