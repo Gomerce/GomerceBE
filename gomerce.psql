@@ -19,7 +19,7 @@ SET row_security = off;
 
 -- Create Tables
 
-CREATE TABLE public.customer (
+CREATE TABLE public.customers (
     id INTEGER NOT NULL,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE public.customer (
     created_at TIMESTAMP WITH TIME ZONE,
     updated_at TIMESTAMP WITH TIME ZONE,
     PRIMARY KEY (id, email_address)
-)
+);
 
 CREATE TABLE public.shippingAddress (
     id INTEGER NOT NULL,
