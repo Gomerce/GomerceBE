@@ -9,7 +9,7 @@ John Ajayi @realJohnAdex(Github)
 Aaron Ben-elijah @aaronben41(Github)
 Oluwatobi Odekunle @tee-code(Github)
 Onoja Lawrence @iamlawrenceonoja(Github)
-Isaac Adedokun @Favisoki(Github)
+Isaac Adedokun@Favisoki(Github)
 */
 
 SET statement_timeout = 0;
@@ -73,7 +73,6 @@ CREATE TABLE public.orderDetails (
     product_id INTEGER REFERENCES products (id) ON DELETE RESTRICT,
     PRIMARY KEY (id)
 )
-
 CREATE TABLE public.order (
     id INTEGER NOT NULL,
     status VARCHAR(25),
@@ -130,30 +129,8 @@ CREATE TABLE public.review (
             REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,  
 )
 
-CREATE TABLE public.review (
-    id INTEGER NOT NULL,
-    product_id INTEGER,
-    seller_id INTEGER,
-    comment TEXT NOT NULL,
-    PRIMARY KEY(id),
-    CONSTRAINT fk_pid
-        FOREIGN KEY(product_id)
-            REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_sid
-        FOREIGN KEY(seller_id)
-            REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,  
-)
-
-CREATE TABLE public.review (
-    id INTEGER NOT NULL,
-    product_id INTEGER,
-    seller_id INTEGER,
-    comment TEXT NOT NULL,
-    PRIMARY KEY(id),
-    CONSTRAINT fk_pid
-        FOREIGN KEY(product_id)
-            REFERENCES product(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_sid
-        FOREIGN KEY(seller_id)
-            REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,  
+CREATE TABLE public.category (
+    cat_code INTEGER NOT NULL,
+    cat_name VARCAR(255) NOT NULL,
+    PRIMARY KEY(cat_code)
 )
