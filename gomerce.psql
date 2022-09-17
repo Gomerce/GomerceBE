@@ -128,3 +128,27 @@ CREATE TABLE public.review (
             REFERENCES seller(id) ON DELETE CASCADE ON UPDATE CASCADE,  
 )
 
+CREATE TABLE public.products(
+    id INTEGER NOT NULL,
+    seller_id INTEGER,
+    title VARCHAR,
+    price DOUBLE,
+    quantity INTEGER,
+    created_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMP WITH TIME ZONE,
+    published TIMESTAMP WITH TIME ZONE,
+    content VARCHAR,
+    product_category_id INTEGER,
+    ratings VARCHAR,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_seller
+      FOREIGN KEY(seller_id) 
+	    REFERENCES seller(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+    CONSTRAINT fk_productCategory
+      FOREIGN KEY(product_category_id) 
+	    REFERENCES productCategory(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE 
+)
