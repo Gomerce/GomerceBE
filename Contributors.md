@@ -31,4 +31,4 @@
 - [Raymond Nartey](https://github.com/ray-nart)
 - [Nestor Abiangang](https://github.com/martourez21)
 - [Lawrence Onoja](https://github.com/iamlawrenceonoja)
-[Isaac Adedokun](https://github.com/Favisoki)
+- [Isaac Adedokun](https://github.com/Favisoki)
