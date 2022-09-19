@@ -80,6 +80,7 @@ class JWTTokenBlocklist(db.Model):
         db.session.add(self)
         db.session.commit()
 
+
 class Seller(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(32), nullable=False)
@@ -87,3 +88,4 @@ class Seller(db.Model):
     password = db.Column(db.Text())
     jwt_auth_active = db.Column(db.Boolean())
     date_joined = db.Column(db.DateTime(), default=datetime.utcnow)
+ 
