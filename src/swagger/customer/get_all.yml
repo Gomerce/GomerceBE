@@ -1,19 +1,19 @@
-title: Get all users
-description: Return all users key information based the query parameter
+title: Get all customers
+description: Return all customers key information based the query parameter
 tags:
-  - users
+  - customers
 parameters:
   - name: first_name
     in: query
     type: string
-    description: the first name of the user
+    description: the first name of the customer
   - name: last_name
     in: query
     type: string
-    description: the last name of the user
+    description: the last name of the customer
 responses:
   200:
-    description: The users information were successfully retrieved
+    description: The customers information were successfully retrieved
     schema:
       example:
         {
