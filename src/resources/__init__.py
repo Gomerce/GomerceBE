@@ -1,4 +1,3 @@
 from .index import IndexResource
-from .user import UserResource
-from .product import ProductResource
+from .customer import CustomerResource
 from .auth import AuthResource

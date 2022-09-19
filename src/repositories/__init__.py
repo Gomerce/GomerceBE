@@ -1,2 +1,1 @@
-from .user import UserRepository
-from .product import ProductRepository
+from .customer import CustomerRepository
