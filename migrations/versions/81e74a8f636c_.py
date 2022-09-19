@@ -1,4 +1,4 @@
-"""empty message
+"""Initial
 
 Revision ID: 81e74a8f636c
 Revises: 
@@ -32,6 +32,7 @@ def upgrade():
     sa.Column('age', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('user_id')
     )
+    op.execute("Insert")
     # ### end Alembic commands ###
 
 

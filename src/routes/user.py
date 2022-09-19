@@ -2,12 +2,11 @@
 Defines the blueprint for the users
 """
 from flask import Blueprint
-from flask_restful import Api
-from utils import errors
 
-from resources import UserResource, UsersResource
+from ..resources import UserResource
 
 USER_BLUEPRINT = Blueprint("user", __name__)
-api = Api(USER_BLUEPRINT, errors=errors)
-api.add_resource(UserResource, "/users/<int:user_id>")
-api.add_resource(UsersResource, "/users")
+
+USER_BLUEPRINT.route("/user", methods=['GET'])(UserResource.get_all)
+USER_BLUEPRINT.route("/user", methods=['POST'])(UserResource.post)
+USER_BLUEPRINT.route("/user/<int:user_id>", methods=['GET'])(UserResource.get_one)

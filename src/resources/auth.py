@@ -1,20 +1,26 @@
 """
-Define the REST verbs relative to the users
+Define the resources user, vendor and admin auth
 """
 from flask import jsonify, abort
 from flasgger import swag_from
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
-from ..repositories import UserRepository
+# from ..repositories import UserRepository
 from ..utils import parse_params
 
 
-class UserResource(Resource):
-    """ methods relative to the user """
+class AuthResource(Resource):
+    """ methods relative to the authorization """
 
     @staticmethod
-    @swag_from("../swagger/user/get_one.yml")
-    def get_one(user_id):
+    @parse_params(
+        Argument("email", location="json",
+                 help="The email of the user."),
+        Argument("password", location="json",
+                 help="The password of the user.")
+    )
+    # @swag_from("../swagger/auth/login_user.yml")
+    def login_user(email, password):
         """ Return a user key information based on user_id """
 
         try:

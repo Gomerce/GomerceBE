@@ -2,45 +2,28 @@ import sys
 
 
 class InternalServerError(Exception):
-    pass
-    """ def __init__(self):
+    def __init__(self):
         self.code = 500
-
+        self.message = "Internal server error"
         print(sys.exc_info())
-        return {
-            "error": "Internal server error",
-            "code": self.code
-        } """
 
 
-class SchemaValidationError(Exception):
-    pass
+class Unauthorized(Exception):
+    def __init__(self, message) -> None:
+        self.code = 401
+        self.message = message
+
+
+class AccessDenied(Exception):
+    def __init__(self, message) -> None:
+        self.code = 403
+        self.message = message
 
 
 class UserNotFound(Exception):
     def __init__(self, message) -> None:
         self.code = 404
         self.message = message
-
-
-class UpdatingMovieError(Exception):
-    pass
-
-
-class DeletingMovieError(Exception):
-    pass
-
-
-class MovieNotExistsError(Exception):
-    pass
-
-
-class EmailAlreadyExistsError(Exception):
-    pass
-
-
-class UnauthorizedError(Exception):
-    pass
 
 
 errors = {
