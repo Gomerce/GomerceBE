@@ -6,6 +6,7 @@
 - [MaryBlessing Umeh](https://github.com/marybngozi)
 - [Timilehin Aliyu](https://github.com/TangoIndiaMango)
 - [Iniobong Benson](https://github.com/linibensonjr)
+- [Goodness Atunde](https://github.com/goody-1)
 - [Oluwatobi Odekunle](https://github.com/tee-code)
 - [Onyekachi Jasper-Duruzor](https://github.com/kachi-jasperD)
 - [Ebuka Obiora](https://github.com/oEbuka)
