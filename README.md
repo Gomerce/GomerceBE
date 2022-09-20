@@ -1,180 +1,140 @@
-## Flask API Server
+# Gomerce Backend Service
 
-e-commerce [gommerce](https://github.com/Ajioz/gomerce_backend.git) enhanced with JWT authentication, SqlAlchemy, **SQLite** persistence and deployment scripts via Docker. It has all the ready-to-use bare minimum essentials.
+This is the backend for and open source ALX-T Udacity full-stack developer graduate project.
+It is the backend API for a B2C e-commerce web application
 
-<br />
+# Collaboration
 
-> Features:
+Our Pledge
+In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-- `Up-to-date dependencies`
-- [API Definition](https://docs.appseed.us/boilerplate-code/api-unified-definition) - the unified API structure implemented by this server
-- Simple, intuitive codebase - can be extended with ease.
-- `Flask-restX`, `Flask-jwt_extended`
-- **Docker**, `Unitary tests`
+We appreciate your time and effort made to support this project and so we have set out some guidelines to make this community effort worthwhile.
 
-## ✨ Quick Start in `Docker`
+Informations on how best to contribute to this initiative can be found at the [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-> Get the code
-
-```bash
-$ git clone https://github.com/Ajioz/gomerce_backend.git
-$ cd gomerce_backend
-```
-
-> Start the app in Docker
-
-```bash
-$ docker-compose up --build
-```
-
-The API server will start using the PORT `5000`.
-
-<br />
-
-## ✨ Table of Contents
-
-1. [Getting Started](#getting-started)
-2. [Project Structure](#project-structure)
-3. [Modules](#modules)
-4. [Testing](#testing)
-
-<br />
-
-## ✨ How to use the code
-
-> **Step #1** - Clone the project
-
-```bash
-$ git clone https://github.com/Ajioz/gomerce_backend.git
-$ cd gomerce_backend
-```
-
-<br />
-
-> **Step #2** - create virtual environment using python3 and activate it (keep it outside our project directory)
-
-```bash
-## Virtualenv modules installation (Unix based systems)
-$ virtualenv env
-$ source env/bin/activate
-$
-
-##Virtualenv modules installation (Windows based systems starting from python 3)
-Create a virtual environment by running "python -m venv env"
-Activate the virtual environment by running: ". env/scripts/activate"
-```
-
-<br />
-
-> **Step #3** - Install dependencies in virtual env
-
-```bash
-$ pip install -r requirements.txt <-- ### Mac users
-Install the dependencies by running "pip install -r requirements.txt" <-- ### Windows users
-```
-
-<br />
-
-> **Step #4** - setup `flask` command for our app
-
-```bash
-$ export FLASK_APP=run.py
-$ export FLASK_ENV=development
-```
-
-For **Windows-based** systems
-
-```powershell
-$ (Windows CMD) set FLASK_APP=run.py
-$ (Windows CMD) set FLASK_ENV=development
-$
-$ (Powershell) $env:FLASK_APP = ".\run.py"
-$ (Powershell) $env:FLASK_ENV = "development"
-```
-
-<br />
-
-> **Step #5** - start test APIs server at `localhost:5000`
-
-```bash
-$ flask run
-```
-
-Use the API via `POSTMAN` or Swagger Dashboard.
-
-![Flask API Server - Swagger Dashboard.](https://user-images.githubusercontent.com/51070104/141950891-ea315fca-24c2-4929-841c-38fb950a478d.png)
-
-<br />
-
-## ✨ Project Structure
-
-```bash
-api-server-flask/
-├── api
-│   ├── config.py
-│   ├── __init__.py
-│   ├── models.py
-│   └── routes.py
-├── Dockerfile
-├── README.md
-├── requirements.txt
-├── run.py
-└── tests.py
-```
-
-<br />
-
-## ✨ API
-
-For a fast set up, use this `POSTMAN` file: attached in the root folder **api.postman_collection.json**
-
-> **Register** - `api/users/register` (**POST** request)
+# Requirements
 
 ```
-POST api/users/register
-Content-Type: application/json
-
-{
-    "username":"yourUsername",
-    "password":"yourPassword",
-    "email":"yourEmail"
-}
+Python 3.9 or higher
+PostgreSQL 13.* or higher - recommended
 ```
 
-<br />
+# Setup
 
-> **Login** - `api/users/login` (**POST** request)
+## Development Environment
+
+Install this extension `Python` from Microsoft on your code editor (VS Code) or it's equivalent for the editor you use, to allow you to use the same coding style with everyone.
+
+Setup your linter to follow `pycodestyle` and your formatter to follow `autopep8`
+
+## Virtual environment
+
+How to setup a python virtual environment
+
+- Create the virtual environment,
+
+  ```
+  python -m venv .venv
+  ```
+
+- Activate the virtual environment
+  - for windows
+  ```
+  .venv\Scripts\activate
+  ```
+  - for Linux / macOS
+  ```
+  source .venv/bin/activate
+  ```
+- Deactivate the virtual environment when you need to,
+
+  ```
+  deactivate
+  ```
+
+## Install requirements
+
+For local development
 
 ```
-POST /api/users/login
-Content-Type: application/json
-
-{
-    "password":"yourPassword",
-    "email":"yourEmail"
-}
+pip install -r requirements.txt
 ```
 
-<br />
-
-> **Logout** - `api/users/logout` (**POST** request)
+For production
 
 ```
-POST api/users/logout
-Content-Type: application/json
-authorization: JWT_TOKEN (returned by Login request)
-
-{
-    "token":"JWT_TOKEN"
-}
+pip install -r requirements-prod.txt
 ```
 
-<br />
+## Set environment variables
 
-## ✨ Testing
+- Make a copy of the `example.env` file, and rename it to `.env`
 
-Run tests using `pytest tests.py`
+- Update the values of the variables in the `.env` file to suite your system environment.
 
-<br />
+- Create a folder named `logs` in the root directory, if it does not exist
 
----
+## Datebase setup
+
+### Create databases
+
+Create a Postgres database with the name matching what you have on the `.env` file for `DB_NAME` and `TEST_DB_NAME`. For example:
+
+```
+createdb gomerce
+createdb gomerce-test
+```
+
+### Export your flask app
+
+In order to run your migrations and app using the `flask` command, expose your flask app:
+
+- for Linux / macOS
+
+```
+export FLASK_APP=src/server.py
+```
+
+- for windows
+  - On CMD
+  ```
+  SET FLASK_APP=src/server.py
+  ```
+  - On BASH
+  ```
+  export FLASK_APP=src/server.py
+  ```
+  - On POWERSHELL
+  ```
+  $env:FLASK_APP=src/server.py
+  ```
+
+### **Create database tables from migrations**
+
+To add the existing database schema and dummy data to your datebase, run:
+
+```
+flask db upgrade
+```
+
+Make your database changes accessible to others using migrations
+
+```
+flask db migrate
+```
+
+### **Run server application**
+
+From the root folder, run
+
+```
+python src/server.py
+```
+
+The application will run at the specified port `APPLICATION_PORT` in `.env` file
+
+The local URL to access the API should be `http://localhost:3303/`
+
+You can visit the Products URL to test the application at `http://localhost:3303/products`
+
+The API Swagger documentation should be accessible at `http://localhost:3303/apidocs`
