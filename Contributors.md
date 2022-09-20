@@ -4,6 +4,7 @@
 
 - [Ajiroghene Sunday](https://github.com/Ajioz)
 - [MaryBlessing Umeh](https://github.com/marybngozi)
+- [Timi Ambaye](https://github.com/itstimiking)
 - [Timilehin Aliyu](https://github.com/TangoIndiaMango)
 - [Iniobong Benson](https://github.com/linibensonjr)
 - [Oluwatobi Odekunle](https://github.com/tee-code)
