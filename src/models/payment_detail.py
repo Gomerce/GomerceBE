@@ -9,7 +9,7 @@ from datetime import datetime
 class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Payment Details model """
 
-    __tablename__ = "payment-details"
+    __tablename__ = "payment_details"
 
     id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, nullable=False, unique=True)
