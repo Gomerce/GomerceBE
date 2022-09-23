@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Shipping Address model """
 
-    __tablename__ = "shippingAddresses"
+    __tablename__ = "shipping_addresses"
 
     id = db.Column(db.Integer, primary_key=True)
     country = db.Column(db.String(50), nullable=False)
@@ -24,9 +24,9 @@ class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
     #foreign keys
-    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'),
-        nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'),
-        nullable=False)
+    # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'),
+    #     nullable=False)
+    # order_id = db.Column(db.Integer, db.ForeignKey('orders.id'),
+    #     nullable=False)
 
     
