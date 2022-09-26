@@ -146,3 +146,6 @@ dmypy.json
 
 # TODO files
 TODO
+
+# OS files
+**/.DS_Store
