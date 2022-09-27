@@ -82,7 +82,7 @@ Create a Postgres database with the name matching what you have on the `.env` fi
 
 ```
 createdb gomerce
-createdb gomerce-test
+createdb gomerce_test
 ```
 
 ### Export your flask app
