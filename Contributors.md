@@ -30,4 +30,5 @@
 - [Vanessa Mwaniki](https://github.com/vanessamwaniki)
 - [Raymond Nartey](https://github.com/ray-nart)
 - [Nestor Abiangang](https://github.com/martourez21)
+- [Desmond Okeke](https://github.com/trini7y)
 - [Lawrence Onoja](https://github.com/iamlawrenceonoja)
