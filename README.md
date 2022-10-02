@@ -101,15 +101,15 @@ export FLASK_APP=src/server.py
 - for windows
   - On CMD
   ```
-  SET FLASK_APP=src/server.py
+  SET FLASK_APP="src/server.py"
   ```
   - On BASH
   ```
-  export FLASK_APP=src/server.py
+  export FLASK_APP="src/server.py"
   ```
   - On POWERSHELL
   ```
-  $env:FLASK_APP=src/server.py
+  $env:FLASK_APP="src/server.py"
   ```
 
 ### **Create database tables from migrations**
