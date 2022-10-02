@@ -1,7 +1,7 @@
 # Gomerce Backend Service
 
 This is the backend for and open source ALX-T Udacity full-stack developer graduate project.
-It is the backend API for a B2C e-commerce web application
+It is the backend API for a B2B2C e-commerce web application
 
 # Collaboration
 
@@ -73,6 +73,9 @@ pip install -r requirements-prod.txt
 - Update the values of the variables in the `.env` file to suite your system environment.
 
 - Create a folder named `logs` in the root directory, if it does not exist
+
+- Create and accout on [Mailjet](https://www.mailjet.com) to get your `API_KEY` and `API_SECRET` for development process.
+make sure to validate your `EMAIL_SENDER_EMAIL` on mailjet first
 
 ## Datebase setup
 
