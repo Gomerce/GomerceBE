@@ -30,5 +30,5 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     product_categories_id = db.Column(db.Integer, db.ForeignKey('product_categories.id'), nullable=False)
 
     #Relationship
-    reviews = db.relationship('Review', backref='Product', lazy='true')
-    order_details = db.relationship('Order_Detail', backref='Product', lazy='true')
+    reviews = db.relationship('Review', backref='products', lazy=True)
+    order_details = db.relationship('Order_Detail', backref='products', lazy=True)
