@@ -4,3 +4,4 @@ db = SQLAlchemy()
 
 from .customer import Customer
 from .verification_token import VerificationToken
+from .product import Product
