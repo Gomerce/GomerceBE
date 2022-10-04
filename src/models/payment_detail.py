@@ -17,4 +17,3 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     status = db.Column(db.String(10))
     payment_initiated = db.Column(db.DateTime(), default=datetime.utcnow)
     paymentmethod_id = db.Column(db.Integer)
-
