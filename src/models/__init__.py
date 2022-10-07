@@ -6,3 +6,4 @@ from .customer import Customer
 from .verification_token import VerificationToken
 from .product import Product
 from .store import Store
+from .shipping_address import ShippingAddress

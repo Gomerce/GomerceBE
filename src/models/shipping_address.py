@@ -24,9 +24,9 @@ class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
     #foreign keys
-    # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'),
-    #     nullable=False)
-    # order_id = db.Column(db.Integer, db.ForeignKey('orders.id'),
-    #     nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'),
+        nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'),
+        nullable=False)
 
     
