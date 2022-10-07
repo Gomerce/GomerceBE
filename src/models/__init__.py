@@ -7,3 +7,4 @@ from .verification_token import VerificationToken
 from .product import Product
 from .store import Store
 from .payment_detail import PaymentDetail
+from .shipping_address import ShippingAddress
