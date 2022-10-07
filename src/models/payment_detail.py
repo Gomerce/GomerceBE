@@ -12,11 +12,12 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = "payment_details"
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, nullable=False, unique=True)
     amount = db.Column(db.Integer)
     status = db.Column(db.String(10))
-    payment_initiated = db.Column(db.DateTime(), default=datetime.utcnow)
-    paymentmethod_id = db.Column(db.Integer)
-
-    #foreign keys
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
     
+
+    #Foreign Key
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+    payment_method_id = db.Column(db.Integer, db.ForeignKey('payment_methods.id'), nullable=False)    
