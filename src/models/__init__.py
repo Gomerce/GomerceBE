@@ -8,3 +8,5 @@ from .product import Product
 from .store import Store
 from .coupon import Coupon
 from .payment_detail import PaymentDetail
+from .payment_detail import PaymentDetail
+from .shipping_address import ShippingAddress
