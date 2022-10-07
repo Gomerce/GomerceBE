@@ -9,4 +9,4 @@ from .store import Store
 from .coupon import Coupon
 from .payment_detail import PaymentDetail
 from .shipping_address import ShippingAddress
-from .paymentMethod import PaymentMethod
+from .payment_method import PaymentMethod
