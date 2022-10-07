@@ -21,3 +21,6 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     #Foreign Key
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
     payment_method_id = db.Column(db.Integer, db.ForeignKey('payment_methods.id'), nullable=False)    
+
+    #Relationship
+    orders = db.relationship('Order', backref='payment_details', lazy=True)
