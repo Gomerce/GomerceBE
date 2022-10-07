@@ -1,4 +1,4 @@
-"""empty message
+"""Initiate setup with Payment Details
 
 Revision ID: ddabfe9eb4b0
 Revises: c2f0700e652a
