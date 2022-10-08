@@ -2,14 +2,18 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-from .customer import Customer
-from .verification_token import VerificationToken
-from .product import Product
-from .store import Store
+from .admin import Admin
 from .coupon import Coupon
-from .payment_detail import PaymentDetail
-from .shipping_address import ShippingAddress
-from .payment_method import PaymentMethod
+from .customer import Customer
+from .order_detail import OrderDetail
 from .order import Order
-from .status import Status
+from .payment_detail import PaymentDetail
+from .payment_method import paymentMethod
+from .product_category import ProductCategory
+from .product import Product
+from .review import Review
 from .seller import Seller
+from .shipping_address import ShippingAddress
+from .status import Status
+from .store import Store
+from .verification_token import VerificationToken

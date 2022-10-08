@@ -6,8 +6,6 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
-from sqlalchemy import ForeignKey
-
 class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Product model """
 
@@ -31,4 +29,4 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     #Relationship
     reviews = db.relationship('Review', backref='products', lazy=True)
-    order_details = db.relationship('Order_Detail', backref='products', lazy=True)
+    order_details = db.relationship('OrderDetail', backref='products', lazy=True)
