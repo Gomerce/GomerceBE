@@ -12,3 +12,4 @@ from .shipping_address import ShippingAddress
 from .payment_method import PaymentMethod
 from .order import Order
 from .status import Status
+from .seller import Seller
