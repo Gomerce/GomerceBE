@@ -10,7 +10,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
-    """ The Seller model """
+    """ The Order model """
 
     __tablename__ = "sellers"
 
@@ -36,3 +36,4 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
     #Relationship
     reviews = db.relationship('Review', backref='sellers', lazy=True)
     stores = db.relationship('Store', backref='sellers', lazy=True)
+    orders = db.relationship('Order', backref='sellers', lazy=True)

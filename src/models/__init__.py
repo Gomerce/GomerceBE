@@ -8,7 +8,7 @@ from .customer import Customer
 from .order_detail import OrderDetail
 from .order import Order
 from .payment_detail import PaymentDetail
-from .payment_method import paymentMethod
+from .payment_method import PaymentMethod
 from .product_category import ProductCategory
 from .product import Product
 from .review import Review
