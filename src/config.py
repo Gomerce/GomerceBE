@@ -6,7 +6,7 @@ import datetime
 load_dotenv()
 # Databse configs
 DB_NAME = os.getenv("DB_NAME", 'gomerce')
-DB_TEST_NAME = os.getenv("DB_TEST_NAME", 'gomerce-test')
+DB_TEST_NAME = os.getenv("DB_TEST_NAME", 'gomerce_test')
 DB_USER = os.getenv("DB_USER", 'postgres')
 DB_PASSWORD = os.getenv("DB_PASSWORD", '')
 DB_HOST = os.getenv("DB_HOST", 'localhost')
