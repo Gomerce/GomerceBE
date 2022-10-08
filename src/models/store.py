@@ -29,5 +29,5 @@ class Store(db.Model, BaseModel, metaclass=MetaBaseModel):
      phone_verified = db.Column(db.Boolean, default=False)
 
 
-    #Foreign Key
-    sellers_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)
+     #Foreign Key
+     sellers_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)

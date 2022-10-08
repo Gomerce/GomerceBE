@@ -1,5 +1,5 @@
 """
-Define the Customer model
+Define the Seller model
 """
 import uuid
 from . import db
@@ -32,3 +32,7 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    #Relationship
+    reviews = db.relationship('Review', backref='sellers', lazy=True)
+    stores = db.relationship('Store', backref='sellers', lazy=True)
