@@ -5,9 +5,6 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
-
 class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Shipping Address model """
 
