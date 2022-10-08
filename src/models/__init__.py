@@ -12,11 +12,8 @@ from .payment_method import paymentMethod
 from .product_category import ProductCategory
 from .product import Product
 from .review import Review
+from .seller import Seller
 from .shipping_address import ShippingAddress
 from .status import Status
 from .store import Store
 from .verification_token import VerificationToken
-
-
-
-
