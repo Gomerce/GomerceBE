@@ -1,5 +1,5 @@
 """
-Define the paymentMethod model
+Define the PaymentMethod model
 """
 from locale import currency
 from . import db
@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy_utils import CurrencyType, Currency
 
 
-class paymentMethod(db.Model):
+class PaymentMethod(db.Model):
     __tablename__ = 'payment_methods'
 
     id = db.Column(db.Integer, primary_key=True)

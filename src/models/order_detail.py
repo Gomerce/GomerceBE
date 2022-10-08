@@ -6,7 +6,7 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
-class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
+class OrderDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Order Detail model """
 
     __tablename__ = "order_details"
