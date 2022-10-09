@@ -1,5 +1,5 @@
 """
-Define the Customer model
+Define the Seller model
 """
 import uuid
 from . import db
@@ -9,24 +9,21 @@ from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
-    """ The Customer model """
+class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
+    """ The Order model """
 
-    __tablename__ = "customers"
+    __tablename__ = "sellers"
 
     id = db.Column(db.Integer, primary_key=True)
-    # id = db.Column(db.String(), primary_key=True, default=lambda: str(uuid.uuid4()))
-    username = db.Column(db.String(32), nullable=False, unique=True)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))
     email = db.Column(db.String(100), nullable=False, unique=True)
     phone = db.Column(db.String(15))
+    username = db.Column(db.String(32), nullable=False, unique=True)
     password = db.Column(db.Text(), nullable=False)
-    country = db.Column(db.String(50))
-    state = db.Column(db.String(70))
-    city = db.Column(db.String(50))
-    street_name = db.Column(db.String(50))
-    zipcode = db.Column(db.String(50))
+    rating = db.Column(db.Integer)
+    email_verified= db.Column(db.Boolean)
+    phone_verified= db.Column(db.Boolean)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
@@ -37,4 +34,6 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
         return check_password_hash(self.password, password)
 
     #Relationship
-    orders = db.relationship('Order', backref='customers', lazy=True)
+    reviews = db.relationship('Review', backref='sellers', lazy=True)
+    stores = db.relationship('Store', backref='sellers', lazy=True)
+    orders = db.relationship('Order', backref='sellers', lazy=True)
