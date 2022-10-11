@@ -137,7 +137,7 @@ In order to allow for a team spirit, we would not be accepting any further pull 
 
 Every pull request on this repo should come from a feature or issue approved for development by the Project Leads and the community.
 
-If there is any need discovered feature or bug, please inform the project leads or raise and issue, and on the feedback from the project leads or isses, the pull request for feature or bug implementation is welcomed for review.
+If there is any need discovered feature or bug, please inform the project leads or raise an issue, and on the feedback from the project leads or isses, the pull request for feature or bug implementation is welcomed for review.
 
 Every pull request will be reviewed by the project team and community, we are encouraged to keep and open mind to the solutions we offer.
 
