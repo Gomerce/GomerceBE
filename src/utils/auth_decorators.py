@@ -1,4 +1,4 @@
-import jwt
+from jose import jwt
 from functools import wraps
 from flask import jsonify, request
 from .errors import *
