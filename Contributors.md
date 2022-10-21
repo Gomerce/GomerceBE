@@ -7,6 +7,7 @@
 - [Timilehin Aliyu](https://github.com/TangoIndiaMango)
 - [Iniobong Benson](https://github.com/linibensonjr)
 - [Oluwatobi Odekunle](https://github.com/tee-code)
+- [Ayorinde Ajibaye](https://github.com/felayo)
 - [Onyekachi Jasper-Duruzor](https://github.com/kachi-jasperD)
 - [Ebuka Obiora](https://github.com/oEbuka)
 - [Chinonso Kalu](https://github.com/tripletens)
