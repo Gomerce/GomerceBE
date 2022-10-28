@@ -14,12 +14,12 @@ class PaymentMethod(db.Model):
     name = db.Column(db.String, nullable=False)
     currency = db.Column(db.String(30), nullable=False)
     # currency = db.Column(CurrencyType)
-    created_at = db.Column(db.DateTime(), default = datetime.utcnow)
-    updated_at = db.Column(db.DateTime(), default = datetime.utcnow)
+    created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-
-    #relationship
-    payment_details = db.relationship('PaymentDetail', backref="payment_methods", lazy=True)
+    # relationship
+    payment_details = db.relationship(
+        'PaymentDetail', backref="payment_methods", lazy=True)
 
 
 # def __init__(self, name='',currency=''):

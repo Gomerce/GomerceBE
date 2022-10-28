@@ -59,9 +59,9 @@ class AuthResource(Resource):
 
         # TODO: validate inputs very well
         try:
-            # customer = CustomerRepository.create(email=email, password=password, username=username,
-            #                                      first_name=first_name, last_name=last_name,
-            #                                      phone=phone)
+            customer = CustomerRepository.create(email=email, password=password, username=username,
+                                                 first_name=first_name, last_name=last_name,
+                                                 phone=phone)
 
             customer = CustomerRepository.get(customer_id=26)
             # create verification tokens for the email and phone
@@ -82,7 +82,8 @@ class AuthResource(Resource):
                 "email": customer.email
             }
             subject = "Customer Email Verification"
-            Notification.send_email(message=email_message, to=recipient, subject=subject)
+            Notification.send_email(
+                message=email_message, to=recipient, subject=subject)
 
             return jsonify({"data": customer.json})
         except DuplicateData as e:
