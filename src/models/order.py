@@ -20,16 +20,19 @@ class Order(db.Model, BaseModel, metaclass=MetaBaseModel):
     delivery_status = db.Column(db.Boolean, nullable=False, default=False)
     delivered_at = db.Column(db.DateTime, nullable=False)
 
-    #Foreign Key
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=False)
-    shipping_address_id = db.Column(db.Integer, db.ForeignKey("shipping_addresses.id"), nullable=False)
-    coupon_id = db.Column(db.Integer, db.ForeignKey("coupons.id"), nullable=False)
-    seller_id = db.Column(db.Integer, db.ForeignKey("sellers.id"), nullable=False)
+    # Foreign Key
+    customer_id = db.Column(db.Integer, db.ForeignKey(
+        "customers.id"), nullable=False)
+    shipping_address_id = db.Column(db.Integer, db.ForeignKey(
+        "shipping_addresses.id"), nullable=False)
+    coupon_id = db.Column(db.Integer, db.ForeignKey(
+        "coupons.id"), nullable=False)
+    seller_id = db.Column(db.Integer, db.ForeignKey(
+        "sellers.id"), nullable=False)
     # cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"), nullable=False)
 
-    #Relationship
-    payment_details = db.relationship("PaymentDetail", backref="orders", lazy=True)
-    order_details =  db.relationship("OrderDetail", backref="orders", lazy=True)
-    statuses =  db.relationship("Status", backref="orders", lazy=True)
-
-
+    # Relationship
+    payment_details = db.relationship(
+        "PaymentDetail", backref="paymet", lazy=True)
+    order_details = db.relationship("OrderDetail", backref="orders", lazy=True)
+    statuses = db.relationship("Status", backref="orders", lazy=True)

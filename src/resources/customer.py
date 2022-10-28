@@ -48,7 +48,8 @@ class CustomerResource(Resource):
         print(customer_id)
         repository = CustomerRepository()
         customer = repository.update(
-            customer_id=customer_id, last_name=last_name, first_name=first_name, age=age
+            customer_id=customer_id, last_name=last_name, first_name=first_name,
+            age=age
         )
         return jsonify({"data": customer.json})
 

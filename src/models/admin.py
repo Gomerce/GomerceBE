@@ -26,7 +26,7 @@ class Admin(db.Model, BaseModel, metaclass=MetaBaseModel):
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
     email_verified = db.Column(db.Boolean, default=False)
     phone_verified = db.Column(db.Boolean, default=False)
-    
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
