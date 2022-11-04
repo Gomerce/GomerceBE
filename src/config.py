@@ -28,6 +28,12 @@ EMAIL_API_KEY = os.getenv("EMAIL_API_SECRET", '')
 EMAIL_SENDER_NAME = os.getenv("EMAIL_SENDER_NAME", '')
 EMAIL_SENDER_EMAIL = os.getenv("EMAIL_SENDER_EMAIL", '')
 
+
+#  google configs
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
+APP_SECRET = os.getenv('SECRET_KEY', 'gommerce')
+
+
 if DEBUG:
     logging.basicConfig(
         level=logging.DEBUG,
