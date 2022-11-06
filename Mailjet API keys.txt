@@ -1,6 +1,0 @@
-
-API key
-90ae493b66e3cd5d2a73d32eb8433852
-
-Secret key
-b8c09beb667865fbea6a96df97250f69
