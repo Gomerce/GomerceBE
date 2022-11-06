@@ -1,8 +1,8 @@
-"""All models
+"""empty message
 
-Revision ID: 2a28bfdff6f2
-Revises: 7de12331201e
-Create Date: 2022-10-08 19:50:13.415202
+Revision ID: 4126a8b4dbd8
+Revises: 
+Create Date: 2022-10-25 15:14:46.173392
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2a28bfdff6f2'
-down_revision = '7de12331201e'
+revision = '4126a8b4dbd8'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -43,6 +43,25 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('code')
+    )
+    op.create_table('customers',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('username', sa.String(length=32), nullable=False),
+    sa.Column('first_name', sa.String(length=300), nullable=True),
+    sa.Column('last_name', sa.String(length=300), nullable=True),
+    sa.Column('email', sa.String(length=100), nullable=False),
+    sa.Column('phone', sa.String(length=15), nullable=True),
+    sa.Column('password', sa.Text(), nullable=False),
+    sa.Column('country', sa.String(length=50), nullable=True),
+    sa.Column('state', sa.String(length=70), nullable=True),
+    sa.Column('city', sa.String(length=50), nullable=True),
+    sa.Column('street_name', sa.String(length=50), nullable=True),
+    sa.Column('zipcode', sa.String(length=50), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('payment_methods',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -85,6 +104,19 @@ def upgrade():
     sa.Column('street_name', sa.String(length=300), nullable=False),
     sa.Column('zipcode', sa.String(length=50), nullable=True),
     sa.Column('phone', sa.String(length=15), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('verification_tokens',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('token', sa.String(length=200), nullable=False),
+    sa.Column('used_status', sa.Boolean(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('user_type', sa.String(length=70), nullable=False),
+    sa.Column('email_token', sa.Boolean(), nullable=False),
+    sa.Column('phone_token', sa.Boolean(), nullable=False),
+    sa.Column('expires_at', sa.DateTime(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -196,10 +228,12 @@ def downgrade():
     op.drop_table('stores')
     op.drop_table('products')
     op.drop_table('orders')
+    op.drop_table('verification_tokens')
     op.drop_table('shipping_addresses')
     op.drop_table('sellers')
     op.drop_table('product_categories')
     op.drop_table('payment_methods')
+    op.drop_table('customers')
     op.drop_table('coupons')
     op.drop_table('admins')
     # ### end Alembic commands ###
