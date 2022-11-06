@@ -59,16 +59,23 @@ class SellerResource(Resource):
         Argument("last_name", location="json", required=True,
                  help="The last_name of the seller."),
         Argument("phone", location="json", required=True,
-                 help="The phone details of the seller.")
+                 help="The phone details of the seller."),
+        Argument("username", location="json", required=True,
+                 help="The username of the seller."),
+        Argument("email", location="json", required=True,
+                 help="The email of the seller."),
+        Argument("password", location="json", required=True,
+                 help="The password of the seller."),
     )
     # @swag_from("../swagger/seller/POST.yml")
-    def post(last_name, first_name, phone):
+    def post(last_name, first_name, phone, username, email, password):
         """ Create a seller based on the provided information """
         # Check duplicates
         seller = SellerRepository.create(
-            last_name=last_name, first_name=first_name, phone=phone
+            last_name=last_name, first_name=first_name, phone=phone, username=username, email=email, password=password
         )
         return jsonify({"data": seller.json})
+    
 
     def delete(seller_id):
         """ delete a seller based on the seller id provided """
