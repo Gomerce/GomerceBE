@@ -20,6 +20,7 @@
 - [Tapiwa](https://github.com/deltaCS99)
 - [Kevin Muriuki](https://github.com/Kevinmuriuki)
 - [Christopher Bundi](https://github.com/bundiw)
+- [Aniekan Daniel](https://github.com/aniekandan)
 - [Obiora Ebuka](https://github.com/oEbuka)
 - [Bryan Adamson](https://github.com/BryanAdamson)
 - [Daramola Oluwatobi](https://github.com/Hephzaron)
