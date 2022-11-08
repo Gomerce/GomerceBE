@@ -90,7 +90,7 @@ pip install -r requirements-prod.txt
 7. Add a redirect url http://127.0.0.1:5000/callback
 8. download the client_secretXXXXX.json file
 9. Rename client_secretXXXXXX.json to client_secret.json
-10. move to poject root directory
+10. move to project root directory
 
 ### install google auth requirements
 
