@@ -1,0 +1,18 @@
+title: Get all products
+description: Return all products
+tags:
+  - products
+parameters:
+responses:
+  200:
+    description: The products were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "title": "Handbag", 
+              "price": 23.87, "rating": 5 },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "title": "Sunglasses", 
+              "price": 12.87, "rating": 4 },
+          ],
+

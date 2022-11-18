@@ -14,6 +14,7 @@ class ProductResource(Resource):
     """ product resource definition """
 
     @staticmethod
+    @swag_from("../swagger/products/get_one.yml")
     def get_one(product_id):
         """ return product information based on the search id """
         try:
@@ -25,6 +26,7 @@ class ProductResource(Resource):
             abort(500)
 
     @staticmethod
+    @swag_from("../swagger/products/get_all.yml")
     def get_all():
         """ get all product information """
         products = ProductRepository.getAll()

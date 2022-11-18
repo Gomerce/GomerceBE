@@ -1,0 +1,20 @@
+title: Get a product
+description: Return key information of a product given its id
+tags:
+  - product
+parameters:
+  - name: product_id
+    in: path
+    type: int
+    description: the id of the product
+responses:
+  200:
+    description: The product was successfully retrieved
+    schema:
+    example:
+      data:
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
+        title: "Handbag"
+        price: 23.65
+        rating: 5
