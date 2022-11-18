@@ -1,0 +1,16 @@
+title: Get all payment methods
+description: Return all payment methods
+tags:
+  - payment-methods
+parameters:
+responses:
+  200:
+    description: The payment methods were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "Wire Transfer", "currency": "CHF" },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "PayPal", "currency": "USD" },
+          ],
+

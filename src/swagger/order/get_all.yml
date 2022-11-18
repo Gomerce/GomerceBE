@@ -1,25 +1,18 @@
 title: Get all orders
-description: Return all orders key information based the query parameter
+description: Return all orders
 tags:
   - orders
 parameters:
-  - name: first_name
-    in: query
-    type: string
-    description: the first name of the customer
-  - name: last_name
-    in: query
-    type: string
-    description: the last name of the customer
 responses:
   200:
-    description: The customers information were successfully retrieved
+    description: The orders were successfully retrieved
     schema:
-      example:
-        {
-          "data":
-            [
-              { "last_name": Doe, "first_name": John, "age": 30 },
-              { "last_name": "Roe", "first_name": "Jerry", "age": 23 },
-            ],
-        }
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+              "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+              "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+          ],
+

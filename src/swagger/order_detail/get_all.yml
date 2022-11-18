@@ -1,0 +1,16 @@
+title: Get all order details
+description: Return all order detail key information based on the query parameter
+tags:
+  - order-details
+parameters:
+responses:
+  200:
+    description: The order details were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "sku": "YYYYYYYYYYYYYYYYYYYY", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+            { "sku": "XXXXXXXXXXXXXXXXXXXX", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+          ],
+

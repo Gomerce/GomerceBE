@@ -14,6 +14,7 @@ class SellerResource(Resource):
     """ sellers resource definition """
 
     @staticmethod
+    @swag_from("../swagger/sellers/get_one.yml")
     def get_one(seller_id):
         """ return seller information based on the search id """
 
@@ -26,6 +27,7 @@ class SellerResource(Resource):
             abort(500)
 
     @staticmethod
+    @swag_from("../swagger/sellers/get_all.yml")
     def get_all():
         """ get all seller information """
         sellers = SellerRepository.getAll()
