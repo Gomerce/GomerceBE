@@ -1,0 +1,18 @@
+title: Get all sellers
+description: Return all sellers
+tags:
+  - sellers
+parameters:
+responses:
+  200:
+    description: The sellers were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "first_name": "John", 
+              "last_name": "Sam", "phone": "+234 8113243567", "rating": 4 },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "first_name": "Jane", 
+              "last_name": "Foster", "phone": "+1 347658790", "rating": 4 },
+          ],
+

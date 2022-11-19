@@ -1,0 +1,19 @@
+title: Get a category
+description: Return key information of a category given its id
+tags:
+  - category
+parameters:
+  - name: search_id
+    in: path
+    type: int
+    description: the id of the category
+responses:
+  200:
+    description: The category was successfully retrieved
+    schema:
+    example:
+      data:
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
+        sku: "XXXXXXXXXXX"
+        name: "Accessories"

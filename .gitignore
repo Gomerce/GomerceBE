@@ -9,6 +9,7 @@ env/
 env__/
 .vscode/symbols.json
 app/db.sqlite3
+Mailjet_API_keys.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

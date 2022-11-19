@@ -1,0 +1,16 @@
+title: Get all categories
+description: Return all categories
+tags:
+  - categories
+parameters:
+responses:
+  200:
+    description: The categories were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "sku": "XXXXXXXXXXXX", "name": "Accessories" },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "sku": "YYYYYYYYYYYY", "name": "Clothing" },
+          ],
+

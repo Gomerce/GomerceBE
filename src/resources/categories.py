@@ -13,7 +13,8 @@ from utils.errors import DataNotFound
 class CategoriesResource(Resource):
     """ methods relative to the category """
 
-    @staticmethod
+    @staticmethod    
+    @swag_from("../swagger/categories/get_one.yml")
     def get_category_product(search_id):
         """ get product category """
 
@@ -25,7 +26,15 @@ class CategoriesResource(Resource):
         except Exception:
             abort(500)
 
+    @staticmethod  
+    @swag_from("../swagger/categories/get_all.yml")  
+    def get_all():
+        """ get all categories information """
+        categories = CategoriesRepository.getAll()
+        return jsonify({"data": categories})
+
     @staticmethod
+    # @swag_from("../swagger/categories/post.yml")
     @parse_params(
         Argument("name", location="json",
                  help="The category name"),
@@ -34,12 +43,6 @@ class CategoriesResource(Resource):
         Argument("products", location="json",
                  help="defines the products of this categories")
     )
-    def get_all():
-        """ get all categories information """
-        categories = CategoriesRepository.getAll()
-        return jsonify({"data": categories})
-
-    @staticmethod
     def post(name, sku, products):
         """ Create a category based on the provided information """
         print("i was called")

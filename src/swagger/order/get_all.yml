@@ -1,0 +1,18 @@
+title: Get all orders
+description: Return all orders
+tags:
+  - orders
+parameters:
+responses:
+  200:
+    description: The orders were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+              "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+            { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+              "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+          ],
+
