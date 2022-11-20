@@ -27,3 +27,5 @@ class Cart(db.Model, BaseModel, metaclass=MetaBaseModel):
     # payment_details = db.relationship("PaymentDetail", backref="orders", lazy=True)
     # order_details =  db.relationship("OrderDetail", backref="orders", lazy=True)
     # statuses =  db.relationship("Status", backref="orders", lazy=True)
+
+    

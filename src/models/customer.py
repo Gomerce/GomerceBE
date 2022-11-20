@@ -39,3 +39,5 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     #Relationship
     orders = db.relationship('Order', backref='customers', lazy=True)
     carts = db.relationship('Cart', backref='customers', lazy=True)
+
+    

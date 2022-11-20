@@ -24,3 +24,5 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     #Relationship
     # orders = db.relationship('Order', backref='payment_details', lazy=True)
+
+    
