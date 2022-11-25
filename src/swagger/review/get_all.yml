@@ -1,0 +1,16 @@
+title: Get all reviews
+description: Return all review key information based on the query parameter
+tags:
+  - reviews
+parameters:
+responses:
+  200:
+    description: The reviews were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "comment": "Best service ever!!!", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+            { "comment": "Swift delivery", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+          ],
+
