@@ -1,0 +1,17 @@
+title: Get all shipping addresses
+description: Return all shipping addresses key information based on the query parameter
+tags:
+  - shipping addresses
+parameters:
+responses:
+  200:
+    description: The shipping addresses were successfully retrieved
+    schema:
+    example:
+      data:
+          [
+            { "country": "Nigeria", "state": "Bauchi", "city": "Alkaleri", 
+                  "street": "Danjuma Street", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+            { "country": "Nigeria", "state": "Plateau", "city": "Jos", 
+                  "street": "Abuja Road", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+          ],

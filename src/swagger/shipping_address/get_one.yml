@@ -1,0 +1,21 @@
+title: Get a shipping address
+description: Return key information of a shipping address given its id
+tags:
+  - shipping address
+parameters:
+  - name: address_id
+    in: path
+    type: int
+    description: the id of the shipping address
+responses:
+  200:
+    description: The shipping address' information were successfully retrieved
+    schema:
+    example:
+      data:
+        country: Nigeria
+        state: Bauchi
+        city: Alkaleri
+        street: Danjuma Lane        
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
