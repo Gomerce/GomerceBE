@@ -42,13 +42,14 @@ class SellerResource(Resource):
         Argument("phone", location="json",
                  help="The phone details of the seller.")
     )
+    
     # @swag_from("../swagger/seller/PUT.yml")
-    def update_seller(seller_id, last_name, first_name):
+    def update_seller(seller_id, last_name, first_name, phone):
         """ Update a seller based on the provided information """
         print(seller_id)
         repository = SellerRepository()
         seller = repository.update(
-            seller_id=seller_id, last_name=last_name, first_name=first_name
+            seller_id=seller_id, last_name=last_name, first_name=first_name, phone=phone
         )
         return jsonify({"data": seller.json})
 
@@ -82,4 +83,4 @@ class SellerResource(Resource):
         # fetch seller
         seller = SellerRepository.delete(seller_id=seller_id)
 
-        return jsonify({ "data": seller.json })
+        return jsonify({ "message": "successfully deleted" })
