@@ -1,5 +1,5 @@
 """
-Define the resources for the categories
+Define the resources for the Catgories
 """
 from flask import jsonify, abort
 from flasgger import swag_from
@@ -13,42 +13,51 @@ from utils.errors import DataNotFound
 class CategoriesResource(Resource):
     """ methods relative to the category """
 
-    @staticmethod    
-    @swag_from("../swagger/categories/get_one.yml")
-    def get_category_product(search_id):
+    @staticmethod
+    def get_category(category_id):
         """ get product category """
 
         try:
-            products = CategoriesRepository.get(search_id=search_id)
+            products = CategoriesRepository.get(category_id=category_id)
             return jsonify({"data": products.json})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
             abort(500)
 
-    @staticmethod  
-    @swag_from("../swagger/categories/get_all.yml")  
+    @staticmethod
+    @swag_from("../swagger/category/get_all.yml")
     def get_all():
-        """ get all categories information """
-        categories = CategoriesRepository.getAll()
-        return jsonify({"data": categories})
+        """ Return all category key information based on the query parameter """
+        caetgories = CategoriesRepository.getAll()
+        return jsonify({"data": caetgories})
 
     @staticmethod
-    # @swag_from("../swagger/categories/post.yml")
     @parse_params(
-        Argument("name", location="json",
-                 help="The category name"),
         Argument("sku", location="json",
-                 help=" the category sku"),
-        Argument("products", location="json",
-                 help="defines the products of this categories")
+                 help="The sku of the category."),
+        Argument("name", location="json",
+                 help="The name of the category.")
+    )
+    def update_category(category_id, name, sku):
+        """ Update a category based on the provided information """
+        repository = CategoriesRepository()
+        category = repository.update(
+            category_id=category_id, name=name, sku=sku
+        )
+        return jsonify({"data": category.json})
+
+    @staticmethod
+    @parse_params(
+        Argument("sku", location="json",
+                 help="The sku of the category."),
+        Argument("name", location="json",
+                 help="The name of the category."),
     )
     def post(name, sku, products):
         """ Create a category based on the provided information """
-        print("i was called")
         category = CategoriesRepository.create(
             name=name,
-            sku=sku,
-            products=products
+            sku=sku
         )
         return jsonify({"data": category.json})

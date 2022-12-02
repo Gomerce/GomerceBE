@@ -14,3 +14,6 @@ from .sellers import SellerResource
 from .review import ReviewResource
 from .google_auth import GoogleResource
 
+from .status import StatusResource
+from .store import StoreResource
+from .coupon import CouponResource

@@ -34,5 +34,3 @@ class OrderRepository:
         orders = Order.query.all()
         all_orders = [order.json for order in orders]
         return all_orders
-
-    

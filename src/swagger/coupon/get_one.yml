@@ -1,0 +1,31 @@
+title: Get a coupon
+description: Return a coupon key information based on his name
+tags:
+  - coupon
+parameters:
+  - name: code
+    in: path
+    type: string
+    description: the code of the coupon
+  - name: amount
+    in: path
+    type: float
+    description: the amount of the coupon
+  - name: expires_at
+    in: path
+    type: datetime
+    description: the expires_at of the coupon
+  - name: orders
+    in: path
+    type: int
+    description: the orders of the coupon
+responses:
+  200:
+    description: The coupon's information were successfully retrieved
+    schema:
+      example:
+        coupon:
+          code: R3454
+          amount: 500.00
+          expires_at: 2/3/2023
+          order: 2

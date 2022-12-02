@@ -1,19 +1,21 @@
 title: Get a category
-description: Return key information of a category given its id
+description: Return a category key information based on his name
 tags:
   - category
 parameters:
-  - name: search_id
+  - name: name
     in: path
-    type: int
-    description: the id of the category
+    type: string
+    description: the name of the category
+  - name: sku
+    in: path
+    type: string
+    description: the sku of the category
 responses:
   200:
-    description: The category was successfully retrieved
+    description: The category's information were successfully retrieved
     schema:
-    example:
-      data:
-        created_at: 08-11-2022
-        updated_at: 08-11-2022
-        sku: "XXXXXXXXXXX"
-        name: "Accessories"
+      example:
+        category:
+          name: shoe
+          sku: 300gm

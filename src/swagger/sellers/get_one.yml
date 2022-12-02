@@ -15,7 +15,11 @@ responses:
       data:
         created_at: 08-11-2022
         updated_at: 08-11-2022
-        first_name: "John"
-        last_name: "Sam"
-        phone: "+234 8113243567"
+        first_name: John
+        last_name: Sam
+        email: johnsam@email.com
+        phone: +234 8113243567
+        username: sam john
         rating: 4
+        email_verified: john@email.com
+        phone_verified: +234 8313243567

@@ -3,10 +3,18 @@ description: Return key information of an order detail given its detail id
 tags:
   - order detail
 parameters:
-  - name: detail_id
+  - name: sku
     in: path
-    type: int
-    description: the id of the order detail
+    type: string
+    description: the sku of the order detail
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date an order was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date an order was updated
 responses:
   200:
     description: The order detail's information were successfully retrieved

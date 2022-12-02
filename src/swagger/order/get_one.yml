@@ -3,10 +3,30 @@ description: Return key information of an order given its id
 tags:
   - order 
 parameters:
-  - name: order_id
+  - name: created_at
     in: path
-    type: int
-    description: the id of the order
+    type: datetime
+    description: the date an order was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date an order was updated
+  - name: total_cost
+    in: path
+    type: float
+    description: the date an order was created
+  - name: tax
+    in: path
+    type: float
+    description: the tax for an order
+  - name: delivery_status
+    in: path
+    type: boolean
+    description: the status of a delivery
+  - name: delivered_at
+    in: path
+    type: datetime
+    description: the date an order was delivered
 responses:
   200:
     description: The order's information were successfully retrieved

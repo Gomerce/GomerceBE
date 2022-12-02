@@ -11,4 +11,7 @@ from .shipping_address import ShippingAddressRepository
 from .categories import CategoriesRepository
 from .products import ProductRepository
 from .sellers import SellerRepository
+from .coupon import CouponRepository
+from .status import StatusRepository
+from .store import StoreRepository
 

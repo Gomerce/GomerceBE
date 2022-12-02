@@ -3,10 +3,23 @@ description: Return key information of a payment detail given its id
 tags:
   - payment-detail
 parameters:
-  - name: detail_id
+  - name: amount
     in: path
     type: int
-    description: the id of the payment detail
+    description: the amout for the payment detail
+  - name: status
+    in: path
+    type: string
+    description: the status for the payment detail
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date a payment was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date a payment was updated
+  
 responses:
   200:
     description: The payment detail was successfully retrieved

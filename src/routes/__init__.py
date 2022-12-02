@@ -14,3 +14,6 @@ from .products import PRODUCT_BLUEPRINT
 from .sellers import SELLER_BLUEPRINT
 from .google_auth import GOOGLE_BLUEPRINT
 
+from .store import STORE_BLUEPRINT
+from .status import STATUS_BLUEPRINT
+from .coupon import COUPON_BLUEPRINT
