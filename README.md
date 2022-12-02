@@ -81,6 +81,8 @@ pip install -r requirements-prod.txt
 
 ### Create client_secret.json
 
+### Note python 3.9.\* is required for google Oauth incorporation
+
 1. visit <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwj5ouHdnPD0AhXksFYBHbw3CfMQFnoECAkQAQ&url=https%3A%2F%2Fconsole.developers.google.com%2F&usg=AOvVaw39ieEDI7pzBj4NtuzqS57M"> Google CLoud Platform</a>
 2. on the sidebar click on the credentials menu
 3. To the top below the Navigation bar click on create credentials
