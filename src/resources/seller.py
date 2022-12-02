@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import SellerRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from utils.auth_decorators import seller_auth_required
 
 
 class SellerResource(Resource):
@@ -28,6 +29,7 @@ class SellerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/seller/get_all.yml")
+    @seller_auth_required
     def get_all():
         """ Return all seller key information based on the query parameter """
         sellers = SellerRepository.getAll()
@@ -83,4 +85,4 @@ class SellerResource(Resource):
         # fetch seller
         seller = SellerRepository.delete(seller_id=seller_id)
 
-        return jsonify({ "message": "successfully deleted" })
+        return jsonify({ "message": "seller successfully deleted" })

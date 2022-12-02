@@ -1,4 +1,4 @@
-""" Defines the Customer repository """
+""" Defines the Seller repository """
 import jwt
 import os
 from datetime import datetime, timedelta
