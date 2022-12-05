@@ -70,7 +70,16 @@ class ProductResource(Resource):
         product = ProductRepository.create(
             title=title, price=price, quantity=quantity, short_desc=short_desc, thumbnail=thumbnail, image=image, sellers_id=sellers_id, product_categories_id=product_categories_id
         )
-        return jsonify({"message": "product successfully created"})
+        return jsonify({
+            "title": product.title,
+            "price": product.price,
+            "quantity": product.quantity,
+            "short_desc": product.short_desc,
+            "thumbnail": product.thumbnail,
+            "image": product.image,
+            "sellers_id": product.sellers_id,
+            "product_category_id": product.product_categories_id
+        })
     
     def delete(product_id):
         """ delete a product based on the product id provided """
@@ -92,17 +101,19 @@ class ProductResource(Resource):
         Argument("thumbnail", location="json", required=True,
                  help="The thumbnail of the product."),
         Argument("image", location="json", required=True,
-                 help="The image of the product.")
+                 help="The image of the product."),
+        Argument("rating", location="json", required=True,
+                 help="The rating of the product.")
     )
     # @swag_from("../swagger/product/PUT.yml")
-    def update_product(product_id, title, price, quantity, short_desc, thumbnail, image):
+    def update_product(product_id, title, price, quantity, short_desc, thumbnail, image, rating):
         """ Update a product based on the provided information """
         print(product_id)
         repository = ProductRepository()
         product = repository.update(
-            product_id=product_id, title=title, price=price, quantity=quantity, short_desc=short_desc, thumbnail=thumbnail, image=image
+            product_id=product_id, title=title, price=price, quantity=quantity, short_desc=short_desc, thumbnail=thumbnail, image=image, rating=rating
         )
-        return jsonify({"data": "updated successfully"})
+        return jsonify({"message": "updated successfully"})
 
 
     

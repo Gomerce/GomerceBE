@@ -10,7 +10,6 @@ from utils.errors import DataNotFound, DuplicateData, InternalServerError
 from sqlalchemy.exc import IntegrityError
 
 
-
 class SellerRepository:
     """ The repository for the seller model """
 
@@ -76,27 +75,31 @@ class SellerRepository:
             new_seller = Seller(username=username, first_name=first_name,
                                 last_name=last_name, email=email, phone=phone)
             new_seller.set_password(password)
-            
+
             if len(password) < 6:
                 return jsonify({"error": "Password must be at least 6 characters"}), 400
 
             seller = new_seller.save()
-            
+
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
-        
+
         token = jwt.encode(
             {"id": seller.id, "exp": datetime.now() + timedelta(days=1)},
             os.environ.get("SECRET_KEY"),
             algorithm="HS256",
         )
-        
-        return jsonify({"seller": seller.username, "token": token})
-        
-        
+
+        return jsonify({
+            "seller": seller.username, 
+            "email": seller.email,
+            "firstName": seller.first_name,
+            "lastName": seller.last_name, 
+            "token": token
+            })
 
     @staticmethod
     def delete(seller_id):

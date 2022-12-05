@@ -72,6 +72,9 @@ class ProductRepository:
             
         if 'image' in args and args['image'] is not None:
             product.image = args['image']
+            
+        if 'rating' in args and args['rating'] is not None:
+            product.rating = args['rating']
 
         return product.save()
     
