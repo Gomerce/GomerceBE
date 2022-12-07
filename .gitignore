@@ -2,6 +2,7 @@ flask/
 *.pyc
 dev
 api/apidata.db
+.vscode
 yarn.lock
 yarn-error.log
 *.psd
