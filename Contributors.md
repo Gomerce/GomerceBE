@@ -20,6 +20,7 @@
 - [Kalu Chinonso](https://github.com/tripletens)
 - [Tapiwa](https://github.com/deltaCS99)
 - [Kevin Muriuki](https://github.com/Kevinmuriuki)
+- [Ayorinde Ajibaye](https://github.com/felayo)
 - [Christopher Bundi](https://github.com/bundiw)
 - [Aniekan Daniel](https://github.com/aniekandan)
 - [Obiora Ebuka](https://github.com/oEbuka)
@@ -33,3 +34,4 @@
 - [Raymond Nartey](https://github.com/ray-nart)
 - [Nestor Abiangang](https://github.com/martourez21)
 - [Lawrence Onoja](https://github.com/iamlawrenceonoja)
+- [Iyamu Hope](https://github.com/horpeazy)

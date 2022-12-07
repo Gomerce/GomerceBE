@@ -25,11 +25,8 @@ class Order(db.Model, BaseModel, metaclass=MetaBaseModel):
     shipping_address_id = db.Column(db.Integer, db.ForeignKey("shipping_addresses.id"), nullable=False)
     coupon_id = db.Column(db.Integer, db.ForeignKey("coupons.id"), nullable=False)
     seller_id = db.Column(db.Integer, db.ForeignKey("sellers.id"), nullable=False)
-    # cart_id = db.Column(db.Integer, db.ForeignKey("cart.id"), nullable=False)
 
     #Relationship
     payment_details = db.relationship("PaymentDetail", backref="orders", lazy=True)
     order_details =  db.relationship("OrderDetail", backref="orders", lazy=True)
     statuses =  db.relationship("Status", backref="orders", lazy=True)
-
-
