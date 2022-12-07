@@ -1,0 +1,41 @@
+title: Get an order
+description: Return key information of an order given its id
+tags:
+  - order 
+parameters:
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date an order was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date an order was updated
+  - name: total_cost
+    in: path
+    type: float
+    description: the date an order was created
+  - name: tax
+    in: path
+    type: float
+    description: the tax for an order
+  - name: delivery_status
+    in: path
+    type: boolean
+    description: the status of a delivery
+  - name: delivered_at
+    in: path
+    type: datetime
+    description: the date an order was delivered
+responses:
+  200:
+    description: The order's information were successfully retrieved
+    schema:
+    example:
+      data:
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
+        total_cost: 123.45
+        tax: 12.34
+        delivery_status: False
+        delivered_at: 08-11-2022

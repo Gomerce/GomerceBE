@@ -1,0 +1,55 @@
+title: Get all shipping addresses
+description: Return all shipping addresses key information based on the query parameter
+tags:
+  - shipping addresses
+parameters:
+  - name: country
+    in: query
+    type: string
+    description: the country to ship
+  - name: state
+    in: query
+    type: string
+    description: the state to ship
+  - name: city
+    in: query
+    type: string
+    description: the city to ship
+  - name: street_name
+    in: query
+    type: string
+    description: the street to ship
+  - name: zipcode
+    in: query
+    type: string
+    description: the zipcode to ship
+  - name: phone
+    in: query
+    type: string
+    description: the phone number of the person
+  - name: created_at
+    in: query
+    type: datetime
+    description: the data the order was created
+  - name: created_at
+    in: query
+    type: datetime
+    description: the data the order was created
+  - name: updated_at
+    in: query
+    type: datetime
+    description: the data the order was updated
+responses:
+  200:
+    description: The shipping addresses were successfully retrieved
+    schema:
+    example:
+      {
+        "data":
+            [
+              { "country": "Nigeria", "state": "Bauchi", "city": "Alkaleri", 
+                    "street": "Danjuma Street", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+              { "country": "Nigeria", "state": "Plateau", "city": "Jos", 
+                    "street": "Abuja Road", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+            ],
+      }

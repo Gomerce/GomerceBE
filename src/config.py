@@ -6,7 +6,7 @@ import datetime
 load_dotenv()
 # Databse configs
 DB_NAME = os.getenv("DB_NAME", 'gomerce')
-DB_TEST_NAME = os.getenv("DB_TEST_NAME", 'gomerce-test')
+DB_TEST_NAME = os.getenv("DB_TEST_NAME", 'gomerce_test')
 DB_USER = os.getenv("DB_USER", 'postgres')
 DB_PASSWORD = os.getenv("DB_PASSWORD", '')
 DB_HOST = os.getenv("DB_HOST", 'localhost')
@@ -27,6 +27,12 @@ EMAIL_API_SECRET = os.getenv("EMAIL_API_KEY", '')
 EMAIL_API_KEY = os.getenv("EMAIL_API_SECRET", '')
 EMAIL_SENDER_NAME = os.getenv("EMAIL_SENDER_NAME", '')
 EMAIL_SENDER_EMAIL = os.getenv("EMAIL_SENDER_EMAIL", '')
+
+
+#  google configs
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
+APP_SECRET = os.getenv('SECRET_KEY', 'gommerce')
+
 
 if DEBUG:
     logging.basicConfig(

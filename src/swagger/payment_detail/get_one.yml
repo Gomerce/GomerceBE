@@ -1,0 +1,32 @@
+title: Get a payment detail
+description: Return key information of a payment detail given its id
+tags:
+  - payment-detail
+parameters:
+  - name: amount
+    in: path
+    type: int
+    description: the amout for the payment detail
+  - name: status
+    in: path
+    type: string
+    description: the status for the payment detail
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date a payment was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date a payment was updated
+  
+responses:
+  200:
+    description: The payment detail was successfully retrieved
+    schema:
+    example:
+      data:
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
+        amount: 123.45
+        status: "Partly Paid"

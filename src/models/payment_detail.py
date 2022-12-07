@@ -23,6 +23,5 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     payment_methods_id = db.Column(db.Integer, db.ForeignKey('payment_methods.id'), nullable=False)    
 
     #Relationship
+    orders = db.relationship('Order', backref='payment_details', lazy=True)
     # orders = db.relationship('Order', backref='payment_details', lazy=True)
-
-    

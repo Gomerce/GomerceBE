@@ -1,0 +1,25 @@
+title: Get all status
+description: Return all status key information based the query parameter
+tags:
+  - status
+parameters:
+  - name: status
+    in: query
+    type: string
+    description: the status of the statuses
+  - name: order_id
+    in: query
+    type: int
+    description: the order id of the status
+responses:
+  200:
+    description: The status information were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+            [
+              { "status": sold,  "order_id": 3 },
+              { "status": available,  "order_id": 2},
+            ],
+        }

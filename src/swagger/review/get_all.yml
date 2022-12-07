@@ -1,0 +1,41 @@
+title: Get all reviews
+description: Return all review key information based on the query parameter
+tags:
+  - reviews
+parameters:
+  - name: comment
+    in: query
+    type: string
+    description: the comment for a review
+  - name: images
+    in: query
+    type: string
+    description: the image for a review
+  - name: sellers_id
+    in: query
+    type: int
+    description: the sellers id for a review
+  - name: products_id
+    in: query
+    type: int
+    description: the products id for a review
+  - name: created_at
+    in: query
+    type: datetime
+    description: the date the review was created
+  - name: updated_at
+    in: query
+    type: datetime
+    description: the date the review was updated
+responses:
+  200:
+    description: The reviews were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+              [
+                { "comment": "Best service ever!!!", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+                { "comment": "Swift delivery", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+              ],
+        }

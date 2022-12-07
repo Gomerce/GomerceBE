@@ -1,0 +1,21 @@
+title: Get a status
+description: Return a status key information based on his name
+tags:
+  - status
+parameters:
+  - name: status
+    in: path
+    type: string
+    description: the name of the status
+  - name: order_id
+    in: path
+    type: int
+    description: the order_id of the status
+responses:
+  200:
+    description: The status's information were successfully retrieved
+    schema:
+      example:
+        status:
+          status: sold
+          order_id: 2

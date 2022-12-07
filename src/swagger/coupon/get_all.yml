@@ -1,0 +1,29 @@
+title: Get all coupon
+description: Return all coupon key information based the query parameter
+tags:
+  - coupon
+parameters:
+  - name: code
+    in: query
+    type: string
+    description: the code of the coupon
+  - name: amount
+    in: query
+    type: float
+    description: the amount of the coupon
+  - name: expires_at
+    in: query
+    type: datetime
+    description: the expires_at id of the coupon
+responses:
+  200:
+    description: The coupon information were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+            [
+              { "code": R3626, "amount": 100.00,"expires_at": 2/3/2023},
+              { "code": R354, "amount": 100.00, "expires_at": 2/3/2023},
+            ],
+        }

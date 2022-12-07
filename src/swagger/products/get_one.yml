@@ -1,0 +1,68 @@
+title: Get a product
+description: Return a product key information based on his name
+tags:
+  - product
+parameters:
+  - name: title
+    in: path
+    type: string
+    description: the title of the product
+  - name: price
+    in: path
+    type: float
+    description: the price of the product
+  - name: quantity
+    in: path
+    type: int
+    description: the quantity of the product
+  - name: short_desc
+    in: path
+    type: string
+    description: the short_desc of the product
+  - name: long_desc
+    in: path
+    type: string
+    description: the long_desc of the product
+  - name: rating
+    in: path
+    type: string
+    description: the rating of the product
+  - name: thumbnail
+    in: path
+    type: string
+    description: the thumbnail of the product
+  - name: image
+    in: path
+    type: string
+  - name: sellers_id
+    in: path
+    type: int
+    description: the sellers_id of the product
+  - name: product_categories_id
+    in: path
+    type: int
+    description: the product categories id of the product
+  - name: reviews
+    in: path
+    type: string
+    description: the product review id of the product
+  - name: order_details
+    in: path
+    type: string
+    description: the product order details id of the product
+responses:
+  200:
+    description: The product's information were successfully retrieved
+    schema:
+      example:
+        product:
+          title: shoe
+          price: 300
+          quantity: 30
+          short_desc: product short descriptions
+          long_desc: product long description
+          rating: 5
+          thumbnail: image.png
+          image: product.png
+          sellers_id: 1
+          product_categories_id: 1

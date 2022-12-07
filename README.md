@@ -75,7 +75,30 @@ pip install -r requirements-prod.txt
 - Create a folder named `logs` in the root directory, if it does not exist
 
 - Create and accout on [Mailjet](https://www.mailjet.com) to get your `API_KEY` and `API_SECRET` for development process.
-make sure to validate your `EMAIL_SENDER_EMAIL` on mailjet first
+  make sure to validate your `EMAIL_SENDER_EMAIL` on mailjet first
+
+## Integrating Google OAuth
+
+### Create client_secret.json
+
+### Note python 3.9.\* is required for google Oauth incorporation
+
+1. visit <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwj5ouHdnPD0AhXksFYBHbw3CfMQFnoECAkQAQ&url=https%3A%2F%2Fconsole.developers.google.com%2F&usg=AOvVaw39ieEDI7pzBj4NtuzqS57M"> Google CLoud Platform</a>
+2. on the sidebar click on the credentials menu
+3. To the top below the Navigation bar click on create credentials
+4. select oauth_client
+5. select web application
+6. Fill the respective fields
+7. Add a redirect url http://127.0.0.1:5000/callback
+8. download the client_secretXXXXX.json file
+9. Rename client_secretXXXXXX.json to client_secret.json
+10. move to project root directory
+
+### install google auth requirements
+
+```
+pip install -r requirements_google.txt
+```
 
 ## Datebase setup
 

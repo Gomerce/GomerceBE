@@ -1,0 +1,51 @@
+title: Get a shipping address
+description: Return key information of a shipping address given its id
+tags:
+  - shipping address
+parameters:
+  - name: country
+    in: path
+    type: int
+    description: the country to ship
+  - name: state
+    in: path
+    type: int
+    description: the state to ship
+  - name: city
+    in: path
+    type: int
+    description: the city to ship
+  - name: street_name
+    in: path
+    type: int
+    description: the street to ship
+  - name: zipcode
+    in: path
+    type: int
+    description: the zipcode to ship
+  - name: phone
+    in: path
+    type: string
+    description: the phone number of the person
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date a shipping address was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date a shipping address was updated
+responses:
+  200:
+    description: The shipping address' information were successfully retrieved
+    schema:
+    example:
+      data:
+        country: Nigeria
+        state: Lagos
+        city: Ikotu
+        street: abuja street       
+        zip: 10030
+        phone: 080383073
+        created_at: 08-11-2022
+        updated_at: 08-11-2022

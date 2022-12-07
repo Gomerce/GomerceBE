@@ -1,0 +1,46 @@
+title: Get a store
+description: Return a store key information based on his name
+tags:
+  - store
+parameters:
+  - name: name
+    in: path
+    type: string
+    description: the name of the store
+  - name: address
+    in: path
+    type: string
+    description: the address of the store
+  - name: phone
+    in: path
+    type: int
+    description: the phone of the store
+  - name: email
+    in: path
+    type: string
+    description: the email of the store
+  - name: email_verified
+    in: path
+    type: string
+    description: the email_verified of the store
+  - name: phone_verified
+    in: path
+    type: int
+    description: the phone_verified of the store
+  - name: sellers_id
+    in: path
+    type: int
+    description: the sellers_id of the store
+responses:
+  200:
+    description: The store's information were successfully retrieved
+    schema:
+      example:
+        store:
+          name: shp1
+          address: address1
+          phone: 090383793
+          email: email@email.com
+          phone_verified: 090383793
+          email_verified: email2@email.com
+          sellers_id: 2

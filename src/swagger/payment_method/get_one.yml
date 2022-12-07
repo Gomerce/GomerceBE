@@ -1,0 +1,31 @@
+title: Get a payment method
+description: Return key information of a payment method given its id
+tags:
+  - payment-method
+parameters:
+  - name: name
+    in: path
+    type: int
+    description: the name of the payment detail
+  - name: currency
+    in: path
+    type: int
+    description: the name of the payment detail
+  - name: created_at
+    in: path
+    type: datetime
+    description: the date an payment was created
+  - name: updated_at
+    in: path
+    type: datetime
+    description: the date an payment was updated
+responses:
+  200:
+    description: The payment method was successfully retrieved
+    schema:
+    example:
+      data:
+        created_at: 08-11-2022
+        updated_at: 08-11-2022
+        name: "PayPal"
+        currency: "USD"

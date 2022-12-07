@@ -1,0 +1,45 @@
+title: Get all store
+description: Return all store key information based the query parameter
+tags:
+  - store
+parameters:
+  - name: name
+    in: query
+    type: string
+    description: the name of the stores
+  - name: address
+    in: query
+    type: string
+    description: the address of the stores
+  - name: phone
+    in: query
+    type: int
+    description: the phone number of the stores
+  - name: phone_verified
+    in: query
+    type: int
+    description: the phone number verified of the stores
+  - name: email
+    in: query
+    type: string
+    description: the email  of the stores
+  - name: email_verified
+    in: query
+    type: string
+    description: the email_verified  of the stores
+  - name: seller_id
+    in: query
+    type: int
+    description: the seller id of the store
+responses:
+  200:
+    description: The store information were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+            [
+              { "name": store1, "address": adress1, "phone":03282333380, "email": email1@email.com, "email_verified": email3@email.com, "phone_verfied":080823453283,  "seller_id": 3 },
+              { "name": store2, "address": adress133, "phone":03282355380, "email": email2@email.com, "email_verified": email4@email.com, "phone_verfied":080823803283,  "seller_id": 2},
+            ],
+        }

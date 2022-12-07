@@ -1,0 +1,43 @@
+title: Get all payment details
+description: Return all payment details
+tags:
+  - payment-details
+parameters:
+  - name: amount
+    in: query
+    type: float
+    description: the amount for the payment
+  - name: status
+    in: query
+    type: string
+    description: the status for the payment
+  - name: orders_id
+    in: query
+    type: int
+    description: the order id for the payment
+  - name: payment_methods_id
+    in: query
+    type: int
+    description: the payment method id for the payment
+  - name: created_at
+    in: query
+    type: datetime
+    description: the date the payment was made
+  - name: updated_at
+    in: query
+    type: datetime
+    description: the date the payment was updated
+  
+responses:
+  200:
+    description: The payment details were successfully retrieved
+    schema:
+    example:
+      {
+        "data":
+            [
+              { "created_at": 08-11-2022, "updated_at": 08-11-2022, "amount": 123.45, "status": "Fully Settled", "orders_id":2, "payment_methods_id":4 },
+              { "created_at": 08-11-2022, "updated_at": 08-11-2022, "amount": 154.45, "status": "Partly Paid", "orders_id":5, "payment_methods_id":3},
+            ],
+      }
+

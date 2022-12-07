@@ -1,0 +1,57 @@
+title: Get all product
+description: Return all product key information based the query parameter
+tags:
+  - product
+parameters:
+  - name: price
+    in: query
+    type: string
+    description: the title of the product
+  - name: price
+    in: query
+    type: float
+    description: the price of the product
+  - name: quantity
+    in: query
+    type: int
+    description: the quantity of the product
+  - name: short_desc
+    in: query
+    type: string
+    description: the short_desc of the product
+  - name: long_desc
+    in: query
+    type: string
+    description: the long_desc of the product
+  - name: rating
+    in: query
+    type: int
+    description: the rating of the product
+  - name: thumbnail
+    in: query
+    type: string
+    description: the thumbnail of the product
+  - name: image
+    in: query
+    type: string
+    description: the image of the product
+  - name: sellers_id
+    in: query
+    type: int
+    description: the sellers id of the product
+  - name: product_categories_id
+    in: query
+    type: int
+    description: the product categories id of the product
+responses:
+  200:
+    description: The product information were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+            [
+              { "title": jacket, "price": 100., "quanity": 30, "short_desc": little description, "rating":5, "thumbnail": product1.png, "image": product3.png, "seller_id":2, "product_categories":3},
+              { "title": "shoe", "price": 100.00, "quanity": 23, "short_desc": little description, "rating":5, "thumbnail": product2.png, "image": product4.png, "seller_id":2, "product_categories":7},
+            ],
+        }

@@ -5,6 +5,9 @@ db = SQLAlchemy()
 from .admin import Admin
 from .coupon import Coupon
 from .customer import Customer
+
+from .verification_token import VerificationToken
+
 from .order_detail import OrderDetail
 from .order import Order
 from .payment_detail import PaymentDetail

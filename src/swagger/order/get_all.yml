@@ -1,0 +1,44 @@
+title: Get all orders
+description: Return all orders
+tags:
+  - orders
+parameters:
+  - name: created_at
+    in: query
+    type: datetime
+    description: the data the order was created
+  - name: updated_at
+    in: query
+    type: datetime
+    description: the data the order was updated
+  - name: total_cost
+    in: query
+    type: float
+    description: the total cost for an order
+  - name: tax
+    in: query
+    type: float
+    description: the tax for an order
+  - name: delivery_status
+    in: query
+    type: boolean
+    description: the status of an order
+  - name: delivered_at
+    in: query
+    type: datetime
+    description: the date an order was delivered
+
+responses:
+  200:
+    description: The orders were successfully retrieved
+    schema:
+      example:
+        {
+          "data":
+              [
+                { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+                  "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+                { "created_at": 08-11-2022, "updated_at": 08-11-2022, "total_cost": 123.45,
+                  "tax": 12.34, "delivery_status": False, "delivered_at": 08-11-2022 },
+              ],
+        }
