@@ -77,7 +77,9 @@ class SellerRepository:
             new_seller.set_password(password)
 
             if len(password) < 6:
-                return jsonify({"error": "Password must be at least 6 characters"}), 400
+                return jsonify({
+                    "error": "Password must be at least 6 characters"
+                }), 400
 
             seller = new_seller.save()
 
@@ -87,19 +89,18 @@ class SellerRepository:
         except Exception:
             raise InternalServerError
 
-        token = jwt.encode(
-            {"id": seller.id, "exp": datetime.now() + timedelta(days=1)},
-            os.environ.get("SECRET_KEY"),
-            algorithm="HS256",
-        )
+        # token = jwt.encode(
+        #     {"id": seller.id, "exp": datetime.now() + timedelta(days=1)},
+        #     os.environ.get("SECRET_KEY"),
+        #     algorithm="HS256",
+        # )
 
         return jsonify({
-            "seller": seller.username, 
+            "seller": seller.username,
             "email": seller.email,
             "firstName": seller.first_name,
-            "lastName": seller.last_name, 
-            "token": token
-            })
+            "lastName": seller.last_name
+        })
 
     @staticmethod
     def delete(seller_id):
@@ -116,4 +117,4 @@ class SellerRepository:
             return seller.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Seller with {seller_id} not found")\
+            raise DataNotFound(f"Seller with {seller_id} not found")

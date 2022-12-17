@@ -2,6 +2,7 @@
 import sys
 from sqlalchemy import or_
 from models import db, Product, ProductCategory
+from utils.auth_decorators import requires_auth
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
 from sqlalchemy.exc import IntegrityError
 from flask import jsonify
@@ -44,17 +45,18 @@ class ProductRepository:
                 "short_desc": product.short_desc,
                 "rating": product.rating,
                 "thumbnail": product.thumbnail,
-                "image": product.image, 
+                "image": product.image,
                 "price": product.price,
                 "sellers_id": product.sellers_id,
                 "product_category": product.product_categories_id
             })
-            
+
         return data
-    
+
+    @requires_auth('patch:product')
     def update(self, product_id, **args):
         """ Update a product details """
-        product = self.get(product_id)
+        product = ProductRepository.get(product_id)
         if 'title' in args and args['title'] is not None:
             product.title = args['title']
 
@@ -69,21 +71,34 @@ class ProductRepository:
 
         if 'thumbnail' in args and args['thumbnail'] is not None:
             product.thumbnail = args['thumbnail']
-            
+
         if 'image' in args and args['image'] is not None:
             product.image = args['image']
-            
+
         if 'rating' in args and args['rating'] is not None:
             product.rating = args['rating']
 
         return product.save()
-    
+
     @staticmethod
-    def create(title, price, quantity, short_desc, thumbnail, image, sellers_id, product_categories_id):
+    @requires_auth('post:product')
+    def create(title, price, quantity, short_desc, long_desc,
+               sellers_id, product_categories_id, thumbnail=None, image=None,
+               rating=0):
         """ Create a new product """
         try:
-            new_product = Product(title=title, price=price, quantity=quantity, short_desc=short_desc,
-                                  thumbnail=thumbnail, image=image, sellers_id=sellers_id, product_categories_id=product_categories_id)
+            new_product = Product(
+                title=title,
+                price=price,
+                quantity=quantity,
+                short_desc=short_desc,
+                long_desc=long_desc,
+                thumbnail=thumbnail,
+                image=image,
+                rating=rating,
+                sellers_id=sellers_id,
+                product_categories_id=product_categories_id
+            )
 
             return new_product.save()
 
@@ -92,8 +107,9 @@ class ProductRepository:
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
-        
+
     @staticmethod
+    @requires_auth('delete:product')
     def delete(product_id):
         """ Delete a product by product_id """
 
@@ -108,7 +124,4 @@ class ProductRepository:
             return product.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Product with {product_id} not found")\
-
-
-   
+            raise DataNotFound(f"Product with {product_id} not found")

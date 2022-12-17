@@ -20,7 +20,10 @@ class CustomerResource(Resource):
 
         try:
             customer = CustomerRepository.get(customer_id=customer_id)
-            return jsonify({"data": customer.json})
+            if customer:
+                return jsonify({"data": customer})
+            else:
+                raise DataNotFound('Not Found')
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -29,7 +32,8 @@ class CustomerResource(Resource):
     @staticmethod
     @swag_from("../swagger/customer/get_all.yml")
     def get_all():
-        """ Return all customer key information based on the query parameter """
+        """ Return all customer key information based on the query parameter 
+        """
         customers = CustomerRepository.getAll()
         return jsonify({"data": customers})
 
@@ -48,7 +52,8 @@ class CustomerResource(Resource):
         print(customer_id)
         repository = CustomerRepository()
         customer = repository.update(
-            customer_id=customer_id, last_name=last_name, first_name=first_name, age=age
+            customer_id=customer_id, last_name=last_name,
+            first_name=first_name, age=age
         )
         return jsonify({"data": customer.json})
 

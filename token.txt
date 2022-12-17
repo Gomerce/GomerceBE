@@ -1,0 +1,1 @@
+https://dev-attahiru-kamba-fsnd.us.auth0.com/authorize?audience=gomerceRS&response_type=token&client_id=pEOL0mLqky1YikGX7U2ZgrUjCOFJwYu4&redirect_uri=https://127.0.0.1:3303/api

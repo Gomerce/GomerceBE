@@ -10,4 +10,4 @@ SELLER_BLUEPRINT = Blueprint("sellers", __name__)
 SELLER_BLUEPRINT.route(
     "/sellers", methods=['GET'])(SellerResource.get_all)
 SELLER_BLUEPRINT.route("/sellers/<int:seller_id>",
-                         methods=['GET'])(SellerResource.get_one)
+                       methods=['GET'])(SellerResource.get_one)

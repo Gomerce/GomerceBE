@@ -15,7 +15,8 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = "customers"
 
     id = db.Column(db.Integer, primary_key=True)
-    # id = db.Column(db.String(), primary_key=True, default=lambda: str(uuid.uuid4()))
+    # id = db.Column(db.String(), primary_key=True, default=lambda: 
+    # str(uuid.uuid4()))
     username = db.Column(db.String(32), nullable=False, unique=True)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))
@@ -36,8 +37,6 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    #Relationship
+    # Relationship
     orders = db.relationship('Order', backref='customers', lazy=True)
     carts = db.relationship('Cart', backref='customers', lazy=True)
-
-    

@@ -16,12 +16,13 @@ class PaymentDetail(db.Model, BaseModel, metaclass=MetaBaseModel):
     status = db.Column(db.String(10))
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    
 
-    #Foreign Key
-    orders_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
-    payment_methods_id = db.Column(db.Integer, db.ForeignKey('payment_methods.id'), nullable=False)    
+    # Foreign Key
+    orders_id = db.Column(db.Integer, db.ForeignKey(
+        'orders.id'), nullable=False)
+    payment_methods_id = db.Column(db.Integer, db.ForeignKey(
+        'payment_methods.id'), nullable=False)
 
-    #Relationship
-    orders = db.relationship('Order', backref='payment_details', lazy=True)
+    # Relationship
+    # orders = db.relationship('Order', backref='payment_details', lazy=True)
     # orders = db.relationship('Order', backref='payment_details', lazy=True)

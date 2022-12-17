@@ -24,7 +24,8 @@ class AuthResource(Resource):
     )
     @swag_from("../swagger/auth/login_customer.yml")
     def login_user(username, password):
-        """ Login a customer annd return basic information if customer exists """
+        """ Login a customer annd return basic information if customer exists 
+        """
 
         try:
             customer = CustomerRepository.get(username=username)
@@ -34,7 +35,7 @@ class AuthResource(Resource):
             return jsonify({"data": customer.json})
         except DataNotFound:
             abort(401, "Username or Password is incorrect")
-        except:
+        except Exception:
             abort(500)
 
     @staticmethod
@@ -54,27 +55,36 @@ class AuthResource(Resource):
         Argument("phone", location="json"),
     )
     @swag_from("../swagger/auth/register_customer.yml")
-    def register_user(email, password, username, first_name, last_name, confirm_url, phone=None):
+    def register_user(
+        email, password, username,
+        first_name, last_name, confirm_url,
+        phone=None
+    ):
         """ Register a customer and return the information of customer """
 
         # TODO: validate inputs very well
         try:
-            # customer = CustomerRepository.create(email=email, password=password, username=username,
-            #                                      first_name=first_name, last_name=last_name,
-            #                                      phone=phone)
+            # customer = CustomerRepository.create(email=email,
+            # password=password, username=username,
+            # first_name=first_name, last_name=last_name,
+            # phone=phone)
 
             customer = CustomerRepository.get(customer_id=26)
             # create verification tokens for the email and phone
-            email_token = VerificationTokenRepository.create(user_id=customer.id,
-                                                             user_type="customer", email=True,
-                                                             phone=False)
+            email_token = VerificationTokenRepository.create(
+                user_id=customer.id,
+                user_type="customer", email=True,
+                phone=False
+            )
 
             # create email template for verification token
             email_confirm_url = f"{confirm_url}/{email_token}"
             email_notification = Notification(email=True)
-            email_message = email_notification.create_email_template("user_verification_email.html",
-                                                                     confirm_url=email_confirm_url,
-                                                                     customer=customer)
+            email_message = email_notification.create_email_template(
+                "user_verification_email.html",
+                confirm_url=email_confirm_url,
+                customer=customer
+            )
 
             # send email verification notification
             recipient = {
@@ -82,7 +92,8 @@ class AuthResource(Resource):
                 "email": customer.email
             }
             subject = "Customer Email Verification"
-            Notification.send_email(message=email_message, to=recipient, subject=subject)
+            Notification.send_email(
+                message=email_message, to=recipient, subject=subject)
 
             return jsonify({"data": customer.json})
         except DuplicateData as e:

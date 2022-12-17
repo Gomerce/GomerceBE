@@ -6,6 +6,7 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
+
 class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Product model """
 
@@ -13,7 +14,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=False)
-    price = db.Column(db.Float(10,2), nullable=False)
+    price = db.Column(db.Float(10, 2), nullable=False)
     quantity = db.Column(db.Integer)
     short_desc = db.Column(db.String(500), nullable=False)
     long_desc = db.Column(db.Text())
@@ -23,10 +24,14 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    #Foreign Key
-    sellers_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)
-    product_categories_id = db.Column(db.Integer, db.ForeignKey('product_categories.id'), nullable=False)
+    # Foreign Key
+    sellers_id = db.Column(db.Integer, db.ForeignKey(
+        'sellers.id'), nullable=False)
+    product_categories_id = db.Column(db.Integer, db.ForeignKey(
+        'product_categories.id'), nullable=False)
 
-    #Relationship
+    # Relationship
     reviews = db.relationship('Review', backref='products', lazy=True)
-    order_details = db.relationship('OrderDetail', backref='products', lazy=True)
+    order_details = db.relationship(
+        'OrderDetail', backref='products', lazy=True
+    )

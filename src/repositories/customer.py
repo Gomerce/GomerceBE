@@ -22,13 +22,18 @@ class CustomerRepository:
             if customer_id:
                 query = query.filter(Customer.id == customer_id)
             if username:
-                query = query.filter(or_(Customer.username == username, Customer.email == username))
+                query = query.filter(
+                    or_(
+                        Customer.username == username,
+                        Customer.email == username
+                    ))
             if email:
-                query = query.filter(or_(Customer.email == email, Customer.username == email))
+                query = query.filter(
+                    or_(Customer.email == email, Customer.username == email))
 
             customer = query.first()
             return customer
-        except:
+        except Exception:
             print(sys.exc_info())
             raise DataNotFound(f"Customer with {customer_id} not found")
 
@@ -54,13 +59,17 @@ class CustomerRepository:
         return customer.save()
 
     @staticmethod
-    def create(username, last_name, first_name, email, password, phone=None, country=None,
-               state=None, city=None, street_name=None, zipcode=None):
+    def create(username, last_name, first_name, email, password, phone=None,
+               country=None, state=None, city=None, street_name=None,
+               zipcode=None):
         """ Create a new customer """
         try:
-            new_customer = Customer(username=username, first_name=first_name, last_name=last_name,
-                                    email=email, phone=phone, country=country, state=state, city=city,
-                                    street_name=street_name, zipcode=zipcode)
+            new_customer = Customer(username=username, first_name=first_name,
+                                    last_name=last_name,
+                                    email=email, phone=phone,
+                                    country=country, state=state,
+                                    city=city, street_name=street_name,
+                                    zipcode=zipcode)
             new_customer.set_password(password)
 
             return new_customer.save()
