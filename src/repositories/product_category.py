@@ -86,5 +86,4 @@ class ProductCategoryRepository:
             return category.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Category with {category_id} not found")\
-
+            raise DataNotFound(f"Category with {category_id} not found")

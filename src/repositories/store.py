@@ -1,7 +1,7 @@
 """ Defines the Store repository """
 import sys
 from sqlalchemy import or_, and_
-from models import Store
+from models import Store, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
 from sqlalchemy.exc import IntegrityError, DataError
 
@@ -40,9 +40,21 @@ class StoreRepository:
     @staticmethod
     def getAll():
         """ Query all Stores"""
-        stores = Store.query.all()
-        all_stores = [s.json for s in stores]
-        return all_stores
+        stores = db.session.query(Store).all()
+
+        data = []
+        for st in stores:
+            data.append({
+                "name": st.name,
+                "address": st.address,
+                "phone": st.phone,
+                "email": st.email,
+                "email_verified": st.email_verified,
+                "phone_verified": st.phone_verified,
+                "sellers_id": st.sellers_id,
+            })
+
+        return data
 
     def update(self, store_id, **args):
         """ Update a Store's age """
@@ -82,3 +94,15 @@ class StoreRepository:
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
+
+    @staticmethod
+    def delete(store_id):
+        """ Delete a store by id """
+        if not store_id:
+            raise DataNotFound(f"Store not found")
+        try:
+            query = Store.query.filter(Store.id == store_id).first()
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Store with {store_id} not found")

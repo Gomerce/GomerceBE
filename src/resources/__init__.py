@@ -11,12 +11,13 @@ from .order import OrderResource
 from .order_detail import OrderDetailResource
 from .shipping_address import ShippingAddressResource
 
-from .categories import CategoriesResource
-from .products import ProductResource
-from .sellers import SellerResource
+# from .categories import CategoriesResource
+# from .product import ProductResource
+# from .sellers import SellerResource
 from .review import ReviewResource
 from .google_auth import GoogleResource
 
 from .status import StatusResource
 from .store import StoreResource
 from .coupon import CouponResource
+from .cart import CartResource

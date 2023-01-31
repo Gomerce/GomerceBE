@@ -53,10 +53,25 @@ class CategoriesRepository:
         return category.save()
 
     @staticmethod
-    def create(name, sku):
+    def delete(category_id):
+        """ Delete a category"""
+        if not category_id:
+            raise DataNotFound(f"Category not found")
+
+        try:
+            query = ProductCategory.query.filter(
+                ProductCategory.id == category_id).first()
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Category with {category_id} not found")
+
+    
+    @staticmethod
+    def create(name, sku, products):
         """ Create a new category """
         try:
-            category = ProductCategory(name=name, sku=sku)
+            category = ProductCategory(name=name, sku=sku, products=products)
             return category.save()
         except IntegrityError as e:
             message = e.orig.diag.message_detail

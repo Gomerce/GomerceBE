@@ -22,9 +22,11 @@ class CustomerRepository:
             if customer_id:
                 query = query.filter(Customer.id == customer_id)
             if username:
-                query = query.filter(or_(Customer.username == username, Customer.email == username))
+                query = query.filter(
+                    or_(Customer.username == username, Customer.email == username))
             if email:
-                query = query.filter(or_(Customer.email == email, Customer.username == email))
+                query = query.filter(
+                    or_(Customer.email == email, Customer.username == email))
 
             customer = query.first()
             return customer

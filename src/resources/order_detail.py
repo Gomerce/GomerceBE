@@ -32,3 +32,52 @@ class OrderDetailResource(Resource):
         """ Return all order detail key information based on the query parameter """
         order_details = OrderDetailRepository.getAll()
         return jsonify({"data": order_details})
+
+    @staticmethod
+    @parse_params(
+        Argument("sku", location="json",
+                 help="The sku of the order."),
+        Argument("order_id", location="json",
+                 help="The order_id of the order."),
+        Argument("products_id", location="json",
+                 help="The products_id of the order."),
+        Argument("statuses_id", location="json",
+                 help="The statuses of the order."),
+    )
+    def update(order_detail_id, sku, order_id, products_id, statuses_id):
+        """ Update a order """
+        order = OrderDetailRepository().update(
+            order_detail_id=order_detail_id,
+            sku=sku, order_id=order_id,
+            products_id=products_id,
+            statuses_id=statuses_id
+        )
+        return jsonify({"data": order.json})
+
+    @staticmethod
+    @parse_params(
+        Argument("sku", location="json",
+                 help="The sku of the order."),
+        Argument("order_id", location="json",
+                 help="The order_id of the order."),
+        Argument("products_id", location="json",
+                 help="The products_id of the order."),
+        Argument("order_id", location="json",
+                 help="The order of the order."),
+        Argument("statuses_id", location="json",
+                 help="The statuses of the order."),
+    )
+    def post(sku, order_id, products_id, statuses_id):
+        """ Create an order detail """
+
+        order = OrderDetailRepository.create(
+            sku=sku, order_id=order_id,
+            products_id=products_id,
+            statuses_id=statuses_id,
+        )
+        return jsonify({"data": order.json})
+
+    def delete(order_detail_id):
+        """ delete a order via the provided id """
+        OrderDetailRepository.delete(order_detail_id=order_detail_id)
+        return jsonify({"message": "order successfully deleted"})

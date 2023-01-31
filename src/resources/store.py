@@ -2,6 +2,7 @@
 Define the resources for the store
 """
 from flask import jsonify, abort
+import json
 from flasgger import swag_from
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
@@ -51,10 +52,8 @@ class StoreResource(Resource):
                  help="The sellers_id of the store."),
     )
     def update_store(store_id, phone, name, email, address, email_verified, phone_verified):
-        """ Update a store based on the provided information """
-        print(store_id)
-        repository = StoreRepository()
-        status = repository.update(
+        """ Update a store """
+        status = StoreRepository().update(
             store_id=store_id, phone=phone, name=name, email=email, address=address,
             email_verified=email_verified, phone_verified=phone_verified
         )
@@ -78,12 +77,24 @@ class StoreResource(Resource):
                  help="The sellers_id of the store."),
     )
     def post(phone, name, email, address, email_verified, phone_verified, sellers_id):
-        """ Create a store based on the provided information """
+        """ Create a store """
         store = StoreRepository.create(
-            name, address,
+            name=name, address=address,
             email=email, phone=phone,
             email_verified=email_verified,
             phone_verified=phone_verified,
             sellers_id=sellers_id,
         )
-        return jsonify({"data": store.json})
+        data = {
+            'name': store.name,
+            'address': store.address,
+            'email': store.email,
+            'phone': store.phone,
+            'sellers_id': store.sellers_id,
+        }
+        return jsonify({"data": data})
+
+    def delete(store_id):
+        """ delete a Store via the provided id """
+        StoreRepository.delete(store_id=store_id)
+        return jsonify({"message": "store successfully deleted"})

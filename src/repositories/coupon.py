@@ -40,7 +40,7 @@ class CouponRepository:
 
     def update(self, coupon_id, **args):
         """ Update a Coupon's age """
-        Coupon = self.get(coupon_id)
+        Coupon = self.get_one(coupon_id)
         if 'code' in args and args['code'] is not None:
             Coupon.code = args['code']
 
@@ -55,10 +55,24 @@ class CouponRepository:
     def create(amount, code, expires_at):
         """ Create a new Coupon """
         try:
-            new_Coupon = Coupon(amount=amount, code=code, expires_at=expires_at)
+            new_Coupon = Coupon(amount=amount, code=code,
+                                expires_at=expires_at)
             return new_Coupon.save()
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
+
+    @staticmethod
+    def delete(coupon_id):
+        """ Delete a coupoun by id """
+        if not coupon_id:
+            raise DataNotFound(f"Coupon not found")
+
+        try:
+            query = Coupon.query.filter(Coupon.id == coupon_id).first()
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Store with {coupon_id} not found")

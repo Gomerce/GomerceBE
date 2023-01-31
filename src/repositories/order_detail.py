@@ -35,3 +35,44 @@ class OrderDetailRepository:
         all_order_details = [order_detail.json for order_detail in order_details]
         return all_order_details
 
+    def update(self, order_detail_id, **args):
+        """ Update a order details"""
+        order_details = self.get(order_detail_id)
+        if 'sku' in args and args['sku'] is not None:
+            order_details.sku = args['sku']
+
+        if 'statuses_id' in args and args['statuses_id'] is not None:
+            order_details.statuses_id = args['statuses_id']
+
+        if 'products_id' in args and args['products_id'] is not None:
+            order_details.products_id = args['products_id']
+        return order_details.save()
+
+    @staticmethod
+    def create(sku, order_id, products_id, statuses_id):
+        """ Create a new Order Details """
+        try:
+            order_detail = OrderDetail(sku=sku, order_id=order_id, 
+                                     products_id=products_id,
+                                     statuses_id=statuses_id,
+                                     )
+            return order_detail.save()
+        except IntegrityError as e:
+            message = e.orig.diag.message_detail
+            raise DuplicateData(message)
+        except Exception:
+            raise InternalServerError
+
+        
+    @staticmethod
+    def delete(order_detail_id):
+        """ Delete a OrderDetail by id """
+        if not order_detail_id:
+            raise DataNotFound(f"OrderDetail not found")
+
+        try:
+            query = OrderDetail.query.filter(OrderDetail.id == order_detail_id).first()
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Order Detail with {order_detail_id} not found")
