@@ -19,6 +19,8 @@ class CouponResource(Resource):
         """ Return a coupon based on id provided"""
         try:
             coupon = CouponRepository.get_one(coupon_id=coupon_id)
+            if not coupon:
+                return jsonify({"message": f" coupon with the id {coupon_id} not found"})
             data = {
                 "id": coupon.id,
                 "code": coupon.code,

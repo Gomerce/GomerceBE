@@ -60,6 +60,9 @@ class StoreRepository:
     def update(self, store_id, **args):
         """ Update a Store's age """
         store = self.get(store_id)
+        if not store:
+            raise DataNotFound(f"Store Detail with {store_id} not found")
+
         if 'phone' in args and args['phone'] is not None:
             store.phone = args['phone']
 
@@ -105,7 +108,7 @@ class StoreRepository:
         try:
             query = Store.query.filter(Store.id == store_id).first()
             if not query:
-                return
+                raise DataNotFound(f"Store Detail with {store_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

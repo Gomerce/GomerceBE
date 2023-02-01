@@ -20,6 +20,9 @@ class PaymentDetailResource(Resource):
 
         try:
             payment_detail = PaymentDetailRepository.get(payment_id=payment_id)
+            if not payment_detail:
+                return jsonify({"message": f" Payment Details with the id {payment_id} not found"})
+            
             return jsonify({"data": payment_detail.json})
         except DataNotFound as e:
             abort(404, e.message)

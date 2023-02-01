@@ -20,6 +20,8 @@ class OrderResource(Resource):
 
         try:
             order = OrderRepository.get(order_id=order_id)
+            if not order:
+                return jsonify({"message": f" Order with the id {order_id} not found"})
             data = {
                 "id": order.id,
                 "tax": order.tax,

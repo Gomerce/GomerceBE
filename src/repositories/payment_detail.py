@@ -74,6 +74,9 @@ class PaymentDetailRepository:
         try:
             query = PaymentDetail.query.filter(
                 PaymentDetail.id == payment_id).first()
+            if not query:
+                raise DataNotFound(
+                    f"Payments Detail with {payment_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

@@ -43,6 +43,9 @@ class StatusRepository:
     def update(self, status_id, **args):
         """ Update a Status's  """
         status = self.get(status_id)
+        if not status:
+            raise DataNotFound(f"Status Detail with {status_id} not found")
+
         if 'status' in args and args['status'] is not None:
             status.status = args['status']
 
@@ -71,6 +74,8 @@ class StatusRepository:
 
         try:
             query = Status.query.filter(Status.id == status_id).first()
+            if not query:
+                raise DataNotFound(f"Status Detail with {status_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

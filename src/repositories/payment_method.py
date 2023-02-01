@@ -66,6 +66,9 @@ class PaymentMethodRepository:
         try:
             query = PaymentMethod.query.filter(
                 PaymentMethod.id == method_id).first()
+            if not query:
+                raise DataNotFound(
+                    f"Payments Method with {method_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

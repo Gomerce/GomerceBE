@@ -23,6 +23,9 @@ class SellerRepository:
 
         try:
             query = Seller.query
+            if not query:
+                raise DataNotFound(f"Seller Detail with {seller_id} not found")
+
             if seller_id:
                 query = query.filter(Seller.id == seller_id)
             if username:
@@ -94,10 +97,10 @@ class SellerRepository:
         )
 
         return jsonify({
-            "seller": seller.username, 
+            "seller": seller.username,
             "email": seller.email,
             "firstName": seller.first_name,
-            "lastName": seller.last_name, 
+            "lastName": seller.last_name,
             "token": token
             })
 

@@ -19,7 +19,16 @@ class CartResource(Resource):
         """ Return a cart based on id provided"""
         try:
             cart = CartRepository.get_one(card_id=card_id)
-            return jsonify({"data": cart.json})
+            if not cart:
+                return jsonify({"message": f" Cart with the id {card_id} not found"})
+            data = {
+                "quantity": cart.quantity,
+                "id": cart.id,
+                "product_id": cart.product_id,
+                "unit_price": cart.unit_price,
+                "total_cost": cart.total_cost
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:

@@ -51,6 +51,9 @@ class CouponRepository:
     def update(self, coupon_id, **args):
         """ Update a Coupon's age """
         Coupon = self.get_one(coupon_id)
+        if not Coupon:
+            raise DataNotFound(f"Coupon Detail with {coupon_id} not found")
+
         if 'code' in args and args['code'] is not None:
             Coupon.code = args['code']
 
@@ -82,6 +85,8 @@ class CouponRepository:
 
         try:
             query = Coupon.query.filter(Coupon.id == coupon_id).first()
+            if not query:
+                raise DataNotFound(f"Coupon Detail with {coupon_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

@@ -80,6 +80,9 @@ class ShippingAddressRepository:
     def update(self, address_id, **args):
         """ Update a address """
         address = self.get(address_id)
+        if not address:
+            raise DataNotFound(f"Address Detail with {address_id} not found")
+
         if 'country' in args and args['country'] is not None:
             address.country = args['country']
 
@@ -110,7 +113,8 @@ class ShippingAddressRepository:
             query = ShippingAddress.query.filter(
                 ShippingAddress.id == address_id).first()
             if not query:
-                return 
+                raise DataNotFound(
+                    f"Address Detail with {address_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

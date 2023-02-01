@@ -45,6 +45,8 @@ class CartRepository:
     def update(self, cart_id, **args):
         """ Update a Cart"""
         cart = self.get_one(cart_id)
+        if not cart:
+            raise DataNotFound(f"Order Detail with {cart_id} not found")
         if 'unit_price' in args and args['unit_price'] is not None:
             cart.unit_price = args['unit_price']
 
@@ -80,6 +82,8 @@ class CartRepository:
 
         try:
             query = Cart.query.filter(Cart.id == cart_id).first()
+            if not query:
+                raise DataNotFound(f"Cart Detail with {cart_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

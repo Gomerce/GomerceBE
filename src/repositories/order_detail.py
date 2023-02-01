@@ -32,12 +32,25 @@ class OrderDetailRepository:
     def getAll():
         """ Query all order details"""
         order_details = OrderDetail.query.all()
-        all_order_details = [order_detail.json for order_detail in order_details]
-        return all_order_details
+        data = []
+        for order in order_details:
+            data.append({
+                "id": order.id,
+                "sku": order.sku,
+                "created_at": order.created_at,
+                "updated_at": order.updated_at,
+                "orders_id": order.orders_id,
+                "products_id": order.products_id,
+                "statuses_id": order.statuses_id,
+            })
 
-    def update(self, order_detail_id, **args):
+        return data
+
+    def update(self, detail_id, **args):
         """ Update a order details"""
-        order_details = self.get(order_detail_id)
+        order_details = self.get(detail_id)
+        if not order_details:
+            raise DataNotFound(f"Order Detail with {detail_id} not found")
         if 'sku' in args and args['sku'] is not None:
             order_details.sku = args['sku']
 
@@ -49,30 +62,34 @@ class OrderDetailRepository:
         return order_details.save()
 
     @staticmethod
-    def create(sku, order_id, products_id, statuses_id):
+    def create(sku, orders_id, products_id, statuses_id):
         """ Create a new Order Details """
         try:
-            order_detail = OrderDetail(sku=sku, order_id=order_id, 
-                                     products_id=products_id,
-                                     statuses_id=statuses_id,
-                                     )
+            order_detail = OrderDetail(sku=sku, orders_id=orders_id,
+                                       products_id=products_id,
+                                       statuses_id=statuses_id,
+                                       )
             return order_detail.save()
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
-        except Exception:
+        except Exception as err:
+            print(err)
             raise InternalServerError
 
-        
     @staticmethod
-    def delete(order_detail_id):
+    def delete(detail_id):
         """ Delete a OrderDetail by id """
-        if not order_detail_id:
+        if not detail_id:
             raise DataNotFound(f"OrderDetail not found")
 
         try:
-            query = OrderDetail.query.filter(OrderDetail.id == order_detail_id).first()
+            query = OrderDetail.query.filter(
+                OrderDetail.id == detail_id).first()
+            if not query:
+                raise DataNotFound(f"Order Detail with {detail_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Order Detail with {order_detail_id} not found")
+            raise DataNotFound(
+                f"Order Detail with {detail_id} not found")

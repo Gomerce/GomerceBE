@@ -47,8 +47,9 @@ class OrderRepository:
 
     def update(self, order_id, **args):
         """ Update a order details"""
-        print(order_id)
         order = self.get(order_id)
+        if not order:
+            raise DataNotFound(f"Order Detail with {order_id} not found")
         if 'total_cost' in args and args['total_cost'] is not None:
             order.total_cost = args['total_cost']
         if 'tax' in args and args['tax'] is not None:
@@ -87,6 +88,8 @@ class OrderRepository:
 
         try:
             query = Order.query.filter(Order.id == order_id).first()
+            if not query:
+                raise DataNotFound(f"Order Detail with {order_id} not found")
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())
