@@ -46,6 +46,7 @@ class StoreRepository:
         for st in stores:
             data.append({
                 "name": st.name,
+                "id": st.id,
                 "address": st.address,
                 "phone": st.phone,
                 "email": st.email,
@@ -92,7 +93,8 @@ class StoreRepository:
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
-        except Exception:
+        except Exception as ee:
+            print(ee)
             raise InternalServerError
 
     @staticmethod
@@ -102,6 +104,8 @@ class StoreRepository:
             raise DataNotFound(f"Store not found")
         try:
             query = Store.query.filter(Store.id == store_id).first()
+            if not query:
+                return
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

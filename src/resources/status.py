@@ -20,7 +20,14 @@ class StatusResource(Resource):
 
         try:
             status = StatusRepository.get(status_id=status_id)
-            return jsonify({"data": status.json})
+            if not status:
+                return jsonify({"message": "status not found"})
+            data = {
+                "id": status.id,
+                "status": status.status,
+                "order_id": status.order_id,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:

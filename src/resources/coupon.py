@@ -19,7 +19,15 @@ class CouponResource(Resource):
         """ Return a coupon based on id provided"""
         try:
             coupon = CouponRepository.get_one(coupon_id=coupon_id)
-            return jsonify({"data": coupon.json})
+            data = {
+                "id": coupon.id,
+                "code": coupon.code,
+                "amount": coupon.amount,
+                "expires_at": coupon.expires_at,
+                "created_at": coupon.created_at,
+                "updated_at": coupon.updated_at,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -47,8 +55,16 @@ class CouponResource(Resource):
         coupon = repo.update(
             coupon_id=coupon_id, code=code, amount=amount, expires_at=expires_at
         )
-        
-        return jsonify({"data": coupon.json})
+        data = {
+            "id": coupon.id,
+            "code": coupon.code,
+            "amount": coupon.amount,
+            "expires_at": coupon.expires_at,
+            "created_at": coupon.created_at,
+            "updated_at": coupon.updated_at,
+        }
+
+        return jsonify({"data": data})
 
     @staticmethod
     @parse_params(

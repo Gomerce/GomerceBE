@@ -10,22 +10,17 @@ class StatusRepository:
     """ The repository for the Status model """
 
     @staticmethod
-    def get(status_id, status=None, order_id=None):
+    def get(status_id=None):
         """ Query a Status by status_id """
 
         # make sure one of the parameters was passed
-        if not status_id and not status:
+        if not status_id:
             raise DataNotFound(f"Status not found, no detail provided")
 
         try:
             query = Status.query
             if status_id:
                 query = query.filter(Status.id == status_id)
-            if status:
-                query = query.filter(
-                    or_(Status.status == status, Status.id == status))
-            if order_id:
-                query = query.filter(Status.order_id == order_id)
 
             status = query.first()
             return status

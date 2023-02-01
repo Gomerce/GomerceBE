@@ -34,8 +34,19 @@ class ShippingAddressRepository:
     def getAll():
         """ Query all shipping addresses"""
         addresses = ShippingAddress.query.all()
-        all_addresses = [address_item.json for address_item in addresses]
-        return all_addresses
+        data = []
+        for add in addresses:
+            data.append({
+                "id": add.id,
+                "country": add.country,
+                "state": add.state,
+                "city": add.city,
+                "street_name": add.street_name,
+                "zipcode": add.zipcode,
+                "phone": add.phone,
+            })
+
+        return data
 
     @staticmethod
     def create(country, state, city, street_name, zipcode, phone):
@@ -98,6 +109,8 @@ class ShippingAddressRepository:
         try:
             query = ShippingAddress.query.filter(
                 ShippingAddress.id == address_id).first()
+            if not query:
+                return 
             return query.delete()
         except DataNotFound as e:
             print(sys.exc_info())

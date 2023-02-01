@@ -21,7 +21,16 @@ class ReviewResource(Resource):
 
         try:
             review = ReviewRepository.get(review_id=review_id)
-            return jsonify({"data": review.json})
+            if not review:
+                return jsonify({"message": f"review with id {review_id} not found"})
+            data = {
+                "id": review.id,
+                "comment": review.comment,
+                "images": review.images,
+                "sellers_id": review.sellers_id,
+                "products_id": review.products_id,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -67,8 +76,15 @@ class ReviewResource(Resource):
         review = repo.update(
             review_id=review_id, comment=comment, images=images
         )
+        data = {
+            "comment": review.comment,
+            "id": review.id,
+            "images": review.images,
+            "sellers_id": review.sellers_id,
+            "products_id": review.products_id,
+        }
 
-        return jsonify({"data": {"message": "review updated"}})
+        return jsonify({"data": data})
 
     def delete(review_id):
         """ delete a review via the provided id """

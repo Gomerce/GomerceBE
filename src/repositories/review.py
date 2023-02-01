@@ -36,7 +36,8 @@ class ReviewRepository:
         data = []
         for rev in all_reviews:
             data.append({
-                "comment": rev.id,
+                "id": rev.id,
+                "comment": rev.comment,
                 "images": rev.images,
                 "sellers_id": rev.sellers_id,
                 "products_id": rev.products_id,
@@ -51,19 +52,18 @@ class ReviewRepository:
             created_review = Review(comment=comment, images=images,
                                     sellers_id=sellers_id, products_id=products_id)
             review = created_review.save()
+            return jsonify({
+                "comment": review.comment,
+                "images": review.images,
+                "sellers_id": review.sellers_id,
+                "products_id": review.products_id,
+            })
 
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
-
-        return jsonify({
-            "comment": review.comment,
-            "images": review.images,
-            "sellers_id": review.sellers_id,
-            "products_id": review.products_id,
-        })
 
     def update(self, review_id, **args):
         """ Update a reviews """

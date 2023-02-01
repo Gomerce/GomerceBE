@@ -47,8 +47,6 @@ class OrderResource(Resource):
 
     @staticmethod
     @parse_params(
-        Argument("order_id", location="json",
-                 help="The order_id of the order."),
         Argument("total_cost", location="json",
                  help="The total_cost of the order."),
         Argument("tax", location="json",

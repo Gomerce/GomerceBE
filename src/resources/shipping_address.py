@@ -69,7 +69,16 @@ class ShippingAddressResource(Resource):
             zipcode=zipcode,
             phone=phone
         )
-        return jsonify({"data": address.json})
+        data = {
+            "country": address.country,
+            "id": address.id,
+            "state": address.state,
+            "city": address.city,
+            "street_name": address.street_name,
+            "zipcode": address.zipcode,
+            "phone": address.phone,
+        }
+        return jsonify({"data": data})
 
     @staticmethod
     @parse_params(

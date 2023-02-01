@@ -35,8 +35,18 @@ class CouponRepository:
     def get_all():
         """ Query all Coupons"""
         coupons = Coupon.query.all()
-        all_coupons = [Coupon.json for Coupon in coupons]
-        return all_coupons
+        data = []
+        for coup in coupons:
+            data.append({
+                "id": coup.id,
+                "code": coup.code,
+                "amount": coup.amount,
+                "expires_at": coup.expires_at,
+                "created_at": coup.created_at,
+                "updated_at": coup.updated_at,
+            })
+
+        return data
 
     def update(self, coupon_id, **args):
         """ Update a Coupon's age """
