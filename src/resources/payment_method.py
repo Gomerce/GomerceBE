@@ -20,7 +20,12 @@ class PaymentMethodResource(Resource):
 
         try:
             payment_method = PaymentMethodRepository.get(method_id=method_id)
-            return jsonify({"data": payment_method.json})
+            data = {
+                "id": payment_method.id,
+                "name": payment_method.name,
+                "currency": payment_method.currency,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -35,8 +40,6 @@ class PaymentMethodResource(Resource):
 
     @staticmethod
     @parse_params(
-        Argument("method_id", location="json",
-                 help="The method_id of the payment."),
         Argument("name", location="json",
                  help="The name of the payment."),
         Argument("currency", location="json",
@@ -49,7 +52,8 @@ class PaymentMethodResource(Resource):
             name=name,
             currency=currency,
         )
-        return jsonify({"data": order.json})
+        print(order)
+        return jsonify({"message": f"data updated"})
 
     @staticmethod
     @parse_params(
@@ -64,7 +68,12 @@ class PaymentMethodResource(Resource):
             name=name,
             currency=currency
         )
-        return jsonify({"data": payment.json})
+        data = {
+            "id": payment.id,
+            "name": payment.name,
+            "currency": payment.currency,
+        }
+        return jsonify({"data": data})
 
     def delete(method_id):
         """ delete a payment via the provided id """
