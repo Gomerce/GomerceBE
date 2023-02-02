@@ -19,7 +19,7 @@ class PaymentDetailRepository:
 
         try:
             query = PaymentDetail.query
-            if payment_id:
+            if query:
                 query = query.filter(PaymentDetail.id == payment_id)
 
             payment_detail = query.first()
@@ -32,9 +32,18 @@ class PaymentDetailRepository:
     def getAll():
         """ Query all payment details"""
         payment_details = PaymentDetail.query.all()
-        all_payment_details = [
-            payment_detail.json for payment_detail in payment_details]
-        return all_payment_details
+        data = []
+        for pay in payment_details:
+            data.append({
+                "id": pay.id,
+                "amount": pay.amount,
+                "status": pay.status,
+                "created_at": pay.created_at,
+                "updated_at": pay.updated_at,
+                "orders_id": pay.orders_id,
+                "payment_methods_id": pay.payment_methods_id,
+            })
+        return data
 
     def update(self, payment_id, **args):
         """ Update a Payment details"""

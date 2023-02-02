@@ -22,8 +22,16 @@ class PaymentDetailResource(Resource):
             payment_detail = PaymentDetailRepository.get(payment_id=payment_id)
             if not payment_detail:
                 return jsonify({"message": f" Payment Details with the id {payment_id} not found"})
-            
-            return jsonify({"data": payment_detail.json})
+            data = {
+                "id": payment_detail.id,
+                "amount": payment_detail.amount,
+                "status": payment_detail.status,
+                "created_at": payment_detail.created_at,
+                "updated_at": payment_detail.updated_at,
+                "orders_id": payment_detail.orders_id,
+                "payment_methods_id": payment_detail.payment_methods_id,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -38,8 +46,6 @@ class PaymentDetailResource(Resource):
 
     @staticmethod
     @parse_params(
-        Argument("payment_id", location="json",
-                 help="The payment_id of the payment."),
         Argument("amount", location="json",
                  help="The amount of the payment."),
         Argument("status", location="json",
@@ -58,7 +64,16 @@ class PaymentDetailResource(Resource):
             orders_id=orders_id,
             payment_methods_id=payment_methods_id,
         )
-        return jsonify({"data": order.json})
+        data = {
+            "id": order.id,
+            "amount": order.amount,
+            "status": order.status,
+            "created_at": order.created_at,
+            "updated_at": order.updated_at,
+            "orders_id": order.orders_id,
+            "payment_methods_id": order.payment_methods_id,
+        }
+        return jsonify({"data": data})
 
     @staticmethod
     @parse_params(
@@ -79,7 +94,16 @@ class PaymentDetailResource(Resource):
             orders_id=orders_id,
             payment_methods_id=payment_methods_id,
         )
-        return jsonify({"data": payment.json})
+        data = {
+            "id": payment.id,
+            "amount": payment.amount,
+            "status": payment.status,
+            "created_at": payment.created_at,
+            "updated_at": payment.updated_at,
+            "orders_id": payment.orders_id,
+            "payment_methods_id": payment.payment_methods_id,
+        }
+        return jsonify({"data": data})
 
     def delete(payment_id):
         """ delete a payment via the provided id """

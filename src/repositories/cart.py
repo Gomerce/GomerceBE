@@ -20,6 +20,10 @@ class CartRepository:
         try:
             result = db.session.query(Cart).filter(
                 or_(Cart.id == cart_id, Cart.customer_id == customer_id))
+
+            if not result:
+                raise DataNotFound(f"Cart Detail with {cart_id} not found")
+
             return result
         except:
             print(sys.exc_info())
@@ -71,7 +75,8 @@ class CartRepository:
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
-        except Exception:
+        except Exception as err:
+            print(err)
             raise InternalServerError
 
     @staticmethod

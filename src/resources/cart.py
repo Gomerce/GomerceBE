@@ -25,6 +25,7 @@ class CartResource(Resource):
                 "quantity": cart.quantity,
                 "id": cart.id,
                 "product_id": cart.product_id,
+                "customer_id": cart.customer_id,
                 "unit_price": cart.unit_price,
                 "total_cost": cart.total_cost
             }
@@ -63,6 +64,7 @@ class CartResource(Resource):
             "quantity": cart.quantity,
             "id": cart.id,
             "product_id": cart.product_id,
+            "customer_id": cart.customer_id,
             "unit_price": cart.unit_price,
             "total_cost": cart.total_cost
         }
@@ -83,15 +85,23 @@ class CartResource(Resource):
                  help="The product_id of the cart product."),
     )
     def post(unit_price, quantity, total_cost, customer_id, product_id):
-        """ Create a coupon based on the provided information """
-        coupon = CartRepository.create(
+        """ Create a cart based on the provided information """
+        cart = CartRepository.create(
             unit_price=unit_price,
             quantity=quantity,
             total_cost=total_cost,
             customer_id=customer_id,
             product_id=product_id
         )
-        return jsonify({"data": coupon.json})
+        data = {
+            "quantity": cart.quantity,
+            "id": cart.id,
+            "product_id": cart.product_id,
+            "customer_id": cart.customer_id,
+            "unit_price": cart.unit_price,
+            "total_cost": cart.total_cost
+        }
+        return jsonify({"data": data})
 
     def delete(cart_id):
         """ delete a cart via the provided id """
