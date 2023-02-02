@@ -32,7 +32,8 @@ class CartResource(Resource):
             return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
-        except Exception:
+        except Exception as err:
+            print(err)
             abort(500)
 
     @staticmethod

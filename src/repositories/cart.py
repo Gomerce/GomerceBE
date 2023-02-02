@@ -33,7 +33,7 @@ class CartRepository:
     @staticmethod
     def get_all(customer_id):
         """ Query all Carts"""
-        carts = db.session(Cart).filter(Cart.customer_id == customer_id)
+        carts = Cart.query.filter(Cart.customer_id == customer_id)
         data = []
 
         for cart in carts:
