@@ -98,7 +98,7 @@ class SellerRepository:
             "email": seller.email,
             "firstName": seller.first_name,
             "lastName": seller.last_name, 
-            "token": token
+            # "token": token
             })
 
     @staticmethod

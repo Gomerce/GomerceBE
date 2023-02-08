@@ -14,7 +14,7 @@ class ProductCategoryResource(Resource):
     """ methods relative to the product Category """
 
     @staticmethod
-    @swag_from("../swagger/product_category/get_one.yml")
+    # @swag_from("../swagger/categories/get_one.yml")
     def get_one(product_category_id):
         """ Return a product category key information based on product_category_id """
 
@@ -31,7 +31,7 @@ class ProductCategoryResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/product_categories/get_all.yml")
+    # @swag_from("../swagger/categories/get_all.yml")
     def get_all():
         """ Return all categories key information based on the query parameter """
         product_categories = ProductCategoryRepository.getAll()
