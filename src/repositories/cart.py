@@ -34,6 +34,8 @@ class CartRepository:
     def get_all(customer_id):
         """ Query all Carts"""
         carts = Cart.query.filter(Cart.customer_id == customer_id)
+        if not carts:
+            return []
         data = []
 
         for cart in carts:

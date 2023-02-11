@@ -29,6 +29,8 @@ class CategoriesRepository:
                     or_(ProductCategory.sku == sku, ProductCategory.name == sku))
 
             products = query.products.all()
+            if not products:
+                return []
             all_products = [p.json for p in products]
             return all_products
         except:
@@ -39,12 +41,16 @@ class CategoriesRepository:
     def getAll():
         """ Query all category"""
         categories = ProductCategory.query.all()
+        if not categories:
+            return []
         all_categories = [cat.json for cat in categories]
         return all_categories
 
     def update(self, category_id, **args):
         """ Update a category's age """
         category = self.get(category_id)
+        if not category:
+            return {"message": "No category item"}
         if 'name' in args and args['name'] is not None:
             category.name = args['name']
 
@@ -66,7 +72,6 @@ class CategoriesRepository:
             print(sys.exc_info())
             raise DataNotFound(f"Category with {category_id} not found")
 
-    
     @staticmethod
     def create(name, sku, products):
         """ Create a new category """

@@ -23,6 +23,8 @@ class OrderDetailRepository:
                 query = query.filter(OrderDetail.id == detail_id)
 
             order_detail = query.first()
+            if order_detail:
+                return {}
             return order_detail
         except:
             print(sys.exc_info())

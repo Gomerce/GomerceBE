@@ -38,6 +38,8 @@ class CustomerRepository:
     def getAll():
         """ Query all customers"""
         customers = Customer.query.all()
+        if not customers:
+            return []
         data = []
         for cus in customers:
             data.append({
