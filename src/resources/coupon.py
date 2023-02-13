@@ -11,16 +11,25 @@ from utils.errors import DataNotFound
 
 
 class CouponResource(Resource):
-    """ methods relative to the coupon """
+    """ coupon functionalities """
 
     @staticmethod
     @swag_from("../swagger/coupon/get_one.yml")
     def get_one(coupon_id):
-        """ Return a coupon key information based on coupon_id """
-
+        """ Return a coupon based on id provided"""
         try:
             coupon = CouponRepository.get_one(coupon_id=coupon_id)
-            return jsonify({"data": coupon.json})
+            if not coupon:
+                return jsonify({"message": f" coupon with the id {coupon_id} not found"})
+            data = {
+                "id": coupon.id,
+                "code": coupon.code,
+                "amount": coupon.amount,
+                "expires_at": coupon.expires_at,
+                "created_at": coupon.created_at,
+                "updated_at": coupon.updated_at,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -43,12 +52,21 @@ class CouponResource(Resource):
                  help="The expires_at of the coupon."),
     )
     def update_coupon(coupon_id, code, amount, expires_at):
-        """ Update a copon based on the provided information """
-        repository = CouponRepository()
-        coupon = repository.update(
+        """ Update a copon """
+        repo = CouponRepository()
+        coupon = repo.update(
             coupon_id=coupon_id, code=code, amount=amount, expires_at=expires_at
         )
-        return jsonify({"data": coupon.json})
+        data = {
+            "id": coupon.id,
+            "code": coupon.code,
+            "amount": coupon.amount,
+            "expires_at": coupon.expires_at,
+            "created_at": coupon.created_at,
+            "updated_at": coupon.updated_at,
+        }
+
+        return jsonify({"data": data})
 
     @staticmethod
     @parse_params(
@@ -65,3 +83,8 @@ class CouponResource(Resource):
             amount, code, expires_at
         )
         return jsonify({"data": coupon.json})
+
+    def delete(coupon_id):
+        """ delete a coupoun via the provided id """
+        CouponRepository.delete(coupon_id=coupon_id)
+        return jsonify({"message": "coupon successfully deleted"})

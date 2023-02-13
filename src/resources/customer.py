@@ -20,7 +20,22 @@ class CustomerResource(Resource):
 
         try:
             customer = CustomerRepository.get(customer_id=customer_id)
-            return jsonify({"data": customer.json})
+            if not customer:
+                return jsonify({"message": f" customer with the id {customer_id} not found"})
+            data = {
+                "id": customer.id,
+                "username": customer.username,
+                "first_name": customer.first_name,
+                "last_name": customer.last_name,
+                "email": customer.email,
+                "phone": customer.phone,
+                "country": customer.country,
+                "state": customer.state,
+                "city": customer.city,
+                "street_name": customer.street_name,
+                "zipcode": customer.zipcode,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:

@@ -10,4 +10,8 @@ STORE_BLUEPRINT.route(
     "/stores", methods=['GET'])(StoreResource.get_all)
 STORE_BLUEPRINT.route("/stores", methods=['POST'])(StoreResource.post)
 STORE_BLUEPRINT.route("/stores/<int:store_id>",
-                         methods=['GET'])(StoreResource.get_one)
+                      methods=['GET'])(StoreResource.get_one)
+STORE_BLUEPRINT.route("/stores/<int:store_id>",
+                      methods=["DELETE"])(StoreResource.delete)
+STORE_BLUEPRINT.route("/stores/<int:store_id>",
+                      methods=["PUT"])(StoreResource.update_store)

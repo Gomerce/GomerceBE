@@ -24,6 +24,6 @@ responses:
           "data":
               [
                 { "sku": YYYYYYYYYYYYYYYYYYYY, "created_at": 08-11-2022, "updated_at": 08-11-2022 },
-                { "sku": XXXXXXXXXXXXXXXXXXXX, "created_at": 08-11-2022, "updated_at": 08-11-2022 },
+                { "sku": XXXXXXXXXXXXXXXXXXXX, "created_at": 08-11-2023, "updated_at": 08-11-2023 },
               ],
         }

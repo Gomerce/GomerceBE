@@ -21,6 +21,8 @@ class SellerResource(Resource):
 
         try:
             seller = SellerRepository.get(seller_id=seller_id)
+            if not seller:
+                return jsonify({"message": f" Seller with the id {seller_id} not found"})
             return jsonify({"data": seller.json})
         except DataNotFound as e:
             abort(404, e.message)
