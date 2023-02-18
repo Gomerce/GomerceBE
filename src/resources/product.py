@@ -20,6 +20,9 @@ class ProductResource(Resource):
 
         try:
             product = ProductRepository.get(product_id=product_id)
+            if not product:
+                return jsonify({"message": f" Product with the id {product_id} not found"})
+            
             return jsonify({
                 "id": product.id,
                 "title": product.title,

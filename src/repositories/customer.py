@@ -22,9 +22,11 @@ class CustomerRepository:
             if customer_id:
                 query = query.filter(Customer.id == customer_id)
             if username:
-                query = query.filter(or_(Customer.username == username, Customer.email == username))
+                query = query.filter(
+                    or_(Customer.username == username, Customer.email == username))
             if email:
-                query = query.filter(or_(Customer.email == email, Customer.username == email))
+                query = query.filter(
+                    or_(Customer.email == email, Customer.username == email))
 
             customer = query.first()
             return customer
@@ -36,8 +38,25 @@ class CustomerRepository:
     def getAll():
         """ Query all customers"""
         customers = Customer.query.all()
-        all_customers = [customer.json for customer in customers]
-        return all_customers
+        if not customers:
+            return []
+        data = []
+        for cus in customers:
+            data.append({
+                "id": cus.id,
+                "username": cus.username,
+                "first_name": cus.first_name,
+                "last_name": cus.last_name,
+                "email": cus.email,
+                "phone": cus.phone,
+                "country": cus.country,
+                "state": cus.state,
+                "city": cus.city,
+                "street_name": cus.street_name,
+                "zipcode": cus.zipcode,
+            })
+
+        return data
 
     def update(self, customer_id, **args):
         """ Update a customer's age """

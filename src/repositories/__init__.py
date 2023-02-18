@@ -12,7 +12,7 @@ from .order_detail import OrderDetailRepository
 from .review import ReviewRepository
 from .shipping_address import ShippingAddressRepository
 
-# from .categories import CategoriesRepository
+from .cart import CartRepository
 # from .products import ProductRepository
 # from .sellers import SellerRepository
 from .coupon import CouponRepository

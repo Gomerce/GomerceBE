@@ -1,7 +1,7 @@
 """ Defines the Status repository """
 import sys
 from sqlalchemy import or_, and_
-from models import Status
+from models import Status, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
 from sqlalchemy.exc import IntegrityError, DataError
 
@@ -10,22 +10,17 @@ class StatusRepository:
     """ The repository for the Status model """
 
     @staticmethod
-    def get(status_id, status=None, order_id=None):
+    def get(status_id=None):
         """ Query a Status by status_id """
 
         # make sure one of the parameters was passed
-        if not status_id and not status:
+        if not status_id:
             raise DataNotFound(f"Status not found, no detail provided")
 
         try:
             query = Status.query
             if status_id:
                 query = query.filter(Status.id == status_id)
-            if status:
-                query = query.filter(
-                    or_(Status.status == status, Status.id == status))
-            if order_id:
-                query = query.filter(Status.order_id == order_id)
 
             status = query.first()
             return status
@@ -35,14 +30,22 @@ class StatusRepository:
 
     @staticmethod
     def getAll():
-        """ Query all Statuss"""
-        status = Status.query.all()
-        all_status = [s.json for s in status]
-        return all_status
+        """ Query all categories"""
+        status = db.session.query(Status).all()
+        data = []
+        for st in status:
+            data.append({
+                "status": st.status,
+                "order_id": st.order_id,
+            })
+        return data
 
     def update(self, status_id, **args):
         """ Update a Status's  """
         status = self.get(status_id)
+        if not status:
+            raise DataNotFound(f"Status Detail with {status_id} not found")
+
         if 'status' in args and args['status'] is not None:
             status.status = args['status']
 
@@ -62,3 +65,18 @@ class StatusRepository:
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
+
+    @staticmethod
+    def delete(status_id):
+        """ Delete a status by id """
+        if not status_id:
+            raise DataNotFound(f"Status not found")
+
+        try:
+            query = Status.query.filter(Status.id == status_id).first()
+            if not query:
+                raise DataNotFound(f"Status Detail with {status_id} not found")
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Status with {status_id} not found")

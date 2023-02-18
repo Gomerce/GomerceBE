@@ -20,6 +20,9 @@ class ProductCategoryResource(Resource):
 
         try:
             category = ProductCategoryRepository.get(product_category_id=product_category_id)
+            if not category:
+                return jsonify({"message": f" Category with the id {product_category_id} not found"})
+            
             return jsonify({
                 "id": category.id,
                 "name": category.name,

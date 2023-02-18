@@ -11,4 +11,8 @@ COUPON_BLUEPRINT.route(
     "/coupons", methods=['GET'])(CouponResource.get_all)
 COUPON_BLUEPRINT.route("/coupons", methods=['POST'])(CouponResource.post)
 COUPON_BLUEPRINT.route("/coupons/<int:coupon_id>",
-                         methods=['GET'])(CouponResource.get_one)
+                       methods=['GET'])(CouponResource.get_one)
+COUPON_BLUEPRINT.route("/coupons/<int:coupon_id>",
+                       methods=["DELETE"])(CouponResource.delete)
+COUPON_BLUEPRINT.route("/coupons/<int:coupon_id>",
+                       methods=["PUT"])(CouponResource.update_coupon)
