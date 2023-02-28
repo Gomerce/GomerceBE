@@ -81,9 +81,11 @@ class StoreRepository:
         return store.save()
 
     @staticmethod
-    def create(name, address, email=None, phone=None, email_verified=None,
+    def create(name, address,  phone, email=None, email_verified=None,
                phone_verified=None, sellers_id=None):
         """ Create a new Store """
+        if not name or not address or not phone:
+            raise DataNotFound("name, phone, and address fields are required")
         try:
             new_Store = Store(name=name, address=address,
                               email=email, phone=phone,
@@ -96,8 +98,7 @@ class StoreRepository:
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
-        except Exception as ee:
-            print(ee)
+        except Exception:
             raise InternalServerError
 
     @staticmethod
