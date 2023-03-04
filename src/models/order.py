@@ -2,6 +2,8 @@
 Define the Order model
 """
 import uuid
+
+from sqlalchemy import Numeric
 from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
@@ -15,8 +17,8 @@ class Order(db.Model, BaseModel, metaclass=MetaBaseModel):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
-    total_cost = db.Column(db.Float, nullable=False)
-    tax = db.Column(db.Float, nullable=False)
+    total_cost = db.Column(Numeric(precision=15, scale=2), nullable=False)
+    tax = db.Column(Numeric(precision=15, scale=2), nullable=False)
     delivery_status = db.Column(db.Boolean, nullable=False, default=False)
     delivered_at = db.Column(db.DateTime, nullable=False)
 

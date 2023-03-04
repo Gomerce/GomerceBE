@@ -2,6 +2,7 @@
 Define the Product model
 """
 
+from sqlalchemy import Numeric
 from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
@@ -13,7 +14,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(300), nullable=False)
-    price = db.Column(db.Float(10,2), nullable=False)
+    price = db.Column(Numeric(precision=15, scale=2), nullable=False)
     quantity = db.Column(db.Integer)
     short_desc = db.Column(db.String(500), nullable=False)
     long_desc = db.Column(db.Text())
