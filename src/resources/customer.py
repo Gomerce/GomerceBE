@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import CustomerRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class CustomerResource(Resource):
@@ -43,11 +44,12 @@ class CustomerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/customer/get_all.yml")
-    def get_all():
+    @requires_auth('get:users')
+    def get_all(jwt):
         """ Return all customer key information based on the query parameter """
         customers = CustomerRepository.getAll()
         return jsonify({"data": customers})
-
+    
     @staticmethod
     @parse_params(
         Argument("first_name", location="json",

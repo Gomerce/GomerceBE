@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 import config
 import routes
 from models import db
+from validators.auth import AuthError
 
 # config your API specs
 # you can define multiple specs in the case your api has multiple versions
@@ -98,6 +99,11 @@ def internal_server_error(error):
         "message": "Internal server error"
     }), 500
 
+@server.errorhandler(AuthError)
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
 
 if __name__ == "__main__":
     server.debug = True
