@@ -1,7 +1,7 @@
 """ Defines the product repository """
 import sys
 from sqlalchemy import or_, and_
-from models import Product
+from models import Product, ProductCategory, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
 from sqlalchemy.exc import IntegrityError, DataError
 
@@ -10,34 +10,43 @@ class ProductRepository:
     """ The repository for the products model """
 
     @staticmethod
-    def get(id, title=None, price=None):
+    def get(product_id):
         """ Query product by id """
-        if not id and not title and not price:
+        if not product_id:
             raise DataNotFound(f"can't check for empty product id")
 
         try:
             query = Product.query
             if id:
-                query = query.filter(Product.id == id)
-
-            if title:
-                query = query.filter(
-                    or_(Product.title == title, Product.price == title))
-            if price:
-                query = query.filter(
-                    or_(Product.price == price, Product.title == title))
+                query = query.filter(Product.id == product_id)
             product = query.first()
             return product
         except:
             print(sys.exc_info())
-            raise DataNotFound(f"product with {id} not found")
+            raise DataNotFound(f"product with {product_id} not found")
 
     @staticmethod
     def getAll():
         """ get all product"""
-        products = Product.query.all()
-        all_products = [product.json for product in products]
-        return all_products
+        products = db.session.query(Product).join(ProductCategory).all()
+        all_product = []
+
+        for product in products:
+            all_product.append({
+                "title": product.title,
+                "id": product.id,
+                "price": product.price,
+                "image": product.image,
+                "quantity": product.quantity,
+                "short_desc": product.short_desc,
+                "rating": product.rating,
+                "price": product.price,
+                "sellers_id": product.sellers_id,
+                "product_category": product.product_categories_id,
+                "thumbnail": product.thumbnail,
+            })
+
+        return all_product
 
     def update(self, product_id, **args):
         """ Update a product's """
@@ -65,12 +74,6 @@ class ProductRepository:
 
         if 'image' in args and args['image'] is not None:
             product.image = args['image']
-        
-        if 'sellers_id' in args and args['sellers_id'] is not None:
-            product.sellers_id = args['sellers_id']
-        
-        if 'product_categories_id' in args and args['product_categories_id'] is not None:
-            product.product_categories_id = args['product_categories_id']
 
         return product.save()
 
@@ -94,3 +97,16 @@ class ProductRepository:
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
+
+    @staticmethod
+    def delete(product_id):
+        """ Delete product by product_id """
+
+        if not product_id:
+            raise DataNotFound(f"Product not found")
+        try:
+            query = Product.query.filter(Product.id == product_id).first()
+            return query.delete()
+        except DataNotFound as e:
+            print(sys.exc_info())
+            raise DataNotFound(f"Product with {product_id} not found")

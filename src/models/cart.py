@@ -19,13 +19,13 @@ class Cart(db.Model, BaseModel, metaclass=MetaBaseModel):
     quantity = db.Column(db.Float, nullable=False)
     total_cost = db.Column(db.Float, nullable=False)
 
-    #Foreign Key
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
+    # Foreign Key
+    customer_id = db.Column(db.Integer, db.ForeignKey(
+        "customers.id"), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey(
+        "products.id"), nullable=False)
 
-    #Relationship
+    # Relationship
     # payment_details = db.relationship("PaymentDetail", backref="orders", lazy=True)
     # order_details =  db.relationship("OrderDetail", backref="orders", lazy=True)
     # statuses =  db.relationship("Status", backref="orders", lazy=True)
-
-    

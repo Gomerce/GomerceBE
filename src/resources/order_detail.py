@@ -20,7 +20,19 @@ class OrderDetailResource(Resource):
 
         try:
             order_detail = OrderDetailRepository.get(detail_id=detail_id)
-            return jsonify({"data": order_detail.json})
+            if not order_detail:
+                return jsonify({"message": f" Order with the id {detail_id} not found"})
+            print(order_detail)
+            data = {
+                "id": order_detail.id,
+                "sku": order_detail.sku,
+                "created_at": order_detail.created_at,
+                "updated_at": order_detail.updated_at,
+                "orders_id": order_detail.orders_id,
+                "products_id": order_detail.products_id,
+                "statuses_id": order_detail.statuses_id,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -32,3 +44,69 @@ class OrderDetailResource(Resource):
         """ Return all order detail key information based on the query parameter """
         order_details = OrderDetailRepository.getAll()
         return jsonify({"data": order_details})
+
+    @staticmethod
+    @parse_params(
+        Argument("sku", location="json",
+                 help="The sku of the order."),
+        Argument("order_id", location="json",
+                 help="The order_id of the order."),
+        Argument("products_id", location="json",
+                 help="The products_id of the order."),
+        Argument("statuses_id", location="json",
+                 help="The statuses of the order."),
+    )
+    def update(detail_id, sku, order_id, products_id, statuses_id):
+        """ Update a order """
+        order = OrderDetailRepository().update(
+            detail_id=detail_id,
+            sku=sku, order_id=order_id,
+            products_id=products_id,
+            statuses_id=statuses_id
+        )
+
+        data = {
+            "id": order.id,
+            "sku": order.sku,
+            "created_at": order.created_at,
+            "updated_at": order.updated_at,
+            "orders_id": order.orders_id,
+            "products_id": order.products_id,
+            "statuses_id": order.statuses_id,
+        }
+        return jsonify({"data": data})
+
+    @staticmethod
+    @parse_params(
+        Argument("sku", location="json",
+                 help="The sku of the order."),
+        Argument("products_id", location="json",
+                 help="The products_id of the order."),
+        Argument("orders_id", location="json",
+                 help="The order of the order."),
+        Argument("statuses_id", location="json",
+                 help="The statuses of the order."),
+    )
+    def post(sku, orders_id, products_id, statuses_id):
+        """ Create an order detail """
+
+        order = OrderDetailRepository.create(
+            sku=sku, orders_id=orders_id,
+            products_id=products_id,
+            statuses_id=statuses_id,
+        )
+        data = {
+            "id": order.id,
+            "sku": order.sku,
+            "created_at": order.created_at,
+            "updated_at": order.updated_at,
+            "orders_id": order.orders_id,
+            "products_id": order.products_id,
+            "statuses_id": order.statuses_id,
+        }
+        return jsonify({"data": data})
+
+    def delete(detail_id):
+        """ delete a order via the provided id """
+        OrderDetailRepository.delete(detail_id=detail_id)
+        return jsonify({"message": "order successfully deleted"})

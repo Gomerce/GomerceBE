@@ -36,8 +36,6 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    #Relationship
+    # Relationship
     orders = db.relationship('Order', backref='customers', lazy=True)
     carts = db.relationship('Cart', backref='customers', lazy=True)
-
-    

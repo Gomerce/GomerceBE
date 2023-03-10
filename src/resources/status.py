@@ -20,7 +20,14 @@ class StatusResource(Resource):
 
         try:
             status = StatusRepository.get(status_id=status_id)
-            return jsonify({"data": status.json})
+            if not status:
+                return jsonify({"message": "status not found"})
+            data = {
+                "id": status.id,
+                "status": status.status,
+                "order_id": status.order_id,
+            }
+            return jsonify({"data": data})
         except DataNotFound as e:
             abort(404, e.message)
         except Exception:
@@ -42,11 +49,10 @@ class StatusResource(Resource):
     )
     def update_status(status_id, status, order_id):
         """ Update a status based on the provided information """
-        repository = StatusRepository()
-        status = repository.update(
+        status = StatusRepository().update(
             status_id=status_id, status=status, order_id=order_id
         )
-        return jsonify({"data": status.json})
+        return jsonify({"message": "status successfully updated"})
 
     @staticmethod
     @parse_params(
@@ -60,4 +66,14 @@ class StatusResource(Resource):
         status = StatusRepository.create(
             status=status, order_id=order_id
         )
-        return jsonify({"data": status.json})
+        data = {
+            "status": status.status,
+            "order_id": status.order_id,
+        }
+        return jsonify({"data": data})
+
+    def delete(status_id):
+        """ delete a status via the provided id """
+        StatusRepository.delete(status_id=status_id)
+
+        return jsonify({"message": "status successfully deleted"})
