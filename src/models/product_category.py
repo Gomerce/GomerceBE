@@ -20,4 +20,3 @@ class ProductCategory(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     #Relationship
     products = db.relationship('Product', backref='product_categories', lazy=True)
-    brands = db.relationship('Brand', backref='brands', lazy=True)

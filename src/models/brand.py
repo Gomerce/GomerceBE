@@ -18,8 +18,5 @@ class Brand(db.Model, BaseModel, metaclass=MetaBaseModel):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    #Foregn Keys
-    product_categories_id = db.Column(db.Integer, db.ForeignKey('product_categories.id'), nullable=False)
-
     #Relationship
     products = db.relationship('Product', backref='brands', lazy=True)
