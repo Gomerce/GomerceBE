@@ -13,33 +13,35 @@ AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
 ALGORITHMS = os.getenv('ALGORITHMS')
 API_AUDIENCE = os.getenv('API_AUDIENCE')
 
-## AuthError Exception
+# AuthError Exception
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
 
-## Auth Header
+# Auth Header
 def get_token_auth_header():
-    #Check for Authorization
-    co_auth=request.headers.get('Authorization', None)
+    # Check for Authorization
+    co_auth = request.headers.get('Authorization', None)
 
     if not co_auth:
         raise AuthError({
             'code': '401 Unauthorized',
             'description': 'You are not authorized, Header missing'
-        }, 401) 
+        }, 401)
 
-    #Split bearer and the token
-    co_bearer_split=co_auth.split(' ')
+    # Split bearer and the token
+    co_bearer_split = co_auth.split(' ')
 
     if len(co_bearer_split) != 2 or not co_bearer_split:
         raise AuthError({
             'code': '401 Unauthorized',
             'description': 'You are not authorized to make this request.'
         }, 401)
-    
+
     elif len(co_bearer_split) == 1:
         raise AuthError({
             'code': '401 Unauthorized',
@@ -51,16 +53,17 @@ def get_token_auth_header():
             'code': '401 Unauthorized',
             'description': 'Invalid Token'
         }, 401)
-    
+
     elif co_bearer_split[0].lower() != 'bearer':
         raise AuthError({
             'code': '401 Unauthorized',
             'description': 'Header didn\'t start with bearer.'
         }, 401)
-    
+
     token = co_bearer_split[1]
 
     return token
+
 
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
@@ -68,7 +71,7 @@ def check_permissions(permission, payload):
             'code': '400 Bad Request',
             'description': 'A bad request was made'
         }, 400)
-    
+
     if permission not in payload['permissions']:
         raise AuthError({
             'code': '403 Forbidden',
@@ -77,11 +80,12 @@ def check_permissions(permission, payload):
 
     return True
 
+
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
-    rsa_key={}
+    rsa_key = {}
 
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -99,7 +103,7 @@ def verify_decode_jwt(token):
                 'e': key['e']
             }
 
-    #Verification for RSA Key        
+    # Verification for RSA Key
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -110,8 +114,8 @@ def verify_decode_jwt(token):
                 issuer='https://'+AUTH0_DOMAIN+'/'
             )
             return payload
-    
-    #Failure during verification of RSA Key  
+
+    # Failure during verification of RSA Key
         except ExpiredSignatureError:
             raise AuthError({
                 'code': '401 Unauthorized',
@@ -129,10 +133,11 @@ def verify_decode_jwt(token):
                 'code': '400 Bad Request',
                 'description': 'Unable to parse authentication token.'
             }, 400)
-        
+
     _request_ctx_stack.top.current_user = payload
-    
+
     return verify_decode_jwt(token)
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
