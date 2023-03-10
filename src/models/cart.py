@@ -2,6 +2,8 @@
 Define the Cart model
 """
 import uuid
+
+from sqlalchemy import Numeric
 from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
@@ -15,9 +17,9 @@ class Cart(db.Model, BaseModel, metaclass=MetaBaseModel):
     id = db.Column(db.Integer, primary_key=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
-    unit_price = db.Column(db.Float, nullable=False)
-    quantity = db.Column(db.Float, nullable=False)
-    total_cost = db.Column(db.Float, nullable=False)
+    unit_price = db.Column(Numeric(precision=15, scale=2), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    total_cost = db.Column(Numeric(precision=15, scale=2), nullable=False)
 
     # Foreign Key
     customer_id = db.Column(db.Integer, db.ForeignKey(
