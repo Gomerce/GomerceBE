@@ -21,3 +21,4 @@ from .status import Status
 from .store import Store
 from .cart import Cart
 from .verification_token import VerificationToken
+from .brand import Brand
