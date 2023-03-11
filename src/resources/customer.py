@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import CustomerRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class CustomerResource(Resource):
@@ -15,6 +16,7 @@ class CustomerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/customer/get_one.yml")
+    @requires_auth('get:user')
     def get_one(customer_id):
         """ Return a customer key information based on customer_id """
 
@@ -43,7 +45,8 @@ class CustomerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/customer/get_all.yml")
-    def get_all():
+    @requires_auth('get:users')
+    def get_all(jwt):
         """ Return all customer key information based on the query parameter """
         customers = CustomerRepository.getAll()
         return jsonify({"data": customers})
@@ -58,6 +61,7 @@ class CustomerResource(Resource):
                  help="The age of the customer.")
     )
     # @swag_from("../swagger/customer/PUT.yml")
+    @requires_auth('patch:user')
     def update_customer(customer_id, last_name, first_name, age):
         """ Update a customer based on the provided information """
         print(customer_id)
@@ -77,6 +81,7 @@ class CustomerResource(Resource):
                  help="The age of the customer.")
     )
     # @swag_from("../swagger/customer/POST.yml")
+    @requires_auth('post:user')
     def post(last_name, first_name, age):
         """ Create a customer based on the provided information """
         # Check duplicates

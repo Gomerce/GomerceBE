@@ -36,3 +36,4 @@
 - [Nestor Abiangang](https://github.com/martourez21)
 - [Lawrence Onoja](https://github.com/iamlawrenceonoja)
 - [Iyamu Hope](https://github.com/horpeazy)
+- [Attahiru Kamba](https://github.com/Bappa-Kamba)
