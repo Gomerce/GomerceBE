@@ -1,13 +1,16 @@
 """
 Define the resources for the sellers
 """
-from flask import jsonify, abort
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import SellerRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
+
 # from utils.auth_decorators import seller_auth_required
 
 
@@ -16,13 +19,15 @@ class SellerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/seller/get_one.yml")
+    @requires_auth('get:seller')
     def get_one(seller_id):
         """ Return a seller key information based on seller_id """
 
         try:
             seller = SellerRepository.get(seller_id=seller_id)
             if not seller:
-                return jsonify({"message": f" Seller with the id {seller_id} not found"})
+                return jsonify(
+                    {"message": f" Seller with the id {seller_id} not found"})
             return jsonify({"data": seller.json})
         except DataNotFound as e:
             abort(404, e.message)
@@ -32,6 +37,7 @@ class SellerResource(Resource):
     @staticmethod
     @swag_from("../swagger/seller/get_all.yml")
     # @seller_auth_required
+    @requires_auth('get:sellers')
     def get_all():
         """ Return all seller key information based on the query parameter """
         sellers = SellerRepository.getAll()
@@ -46,15 +52,17 @@ class SellerResource(Resource):
         Argument("phone", location="json",
                  help="The phone details of the seller.")
     )
-    
     # @swag_from("../swagger/seller/PUT.yml")
+    @requires_auth('patch:seller')
     def update_seller(seller_id, last_name, first_name, phone):
         """ Update a seller based on the provided information """
         print(seller_id)
         repository = SellerRepository()
         seller = repository.update(
-            seller_id=seller_id, last_name=last_name, first_name=first_name, phone=phone
-        )
+            seller_id=seller_id,
+            last_name=last_name,
+            first_name=first_name,
+            phone=phone)
         return jsonify({"data": seller.json})
 
     @staticmethod
@@ -73,18 +81,23 @@ class SellerResource(Resource):
                  help="The password of the seller."),
     )
     # @swag_from("../swagger/seller/POST.yml")
+    @requires_auth('post:seller')
     def post(last_name, first_name, phone, username, email, password):
         """ Create a seller based on the provided information """
         # Check duplicates
         seller = SellerRepository.create(
-            last_name=last_name, first_name=first_name, phone=phone, username=username, email=email, password=password
-        )
+            last_name=last_name,
+            first_name=first_name,
+            phone=phone,
+            username=username,
+            email=email,
+            password=password)
         return jsonify({"data": seller.json})
-    
 
+    @requires_auth('delete:seller')
     def delete(seller_id):
         """ delete a seller based on the seller id provided """
         # fetch seller
         seller = SellerRepository.delete(seller_id=seller_id)
 
-        return jsonify({ "message": "seller successfully deleted" })
+        return jsonify({"message": "seller successfully deleted"})

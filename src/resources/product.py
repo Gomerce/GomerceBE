@@ -1,13 +1,15 @@
 """
 Define the resources for the product
 """
-from flask import jsonify, abort
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import ProductRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class ProductResource(Resource):
@@ -15,14 +17,16 @@ class ProductResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product/get_one.yml")
+    @requires_auth('get:product')
     def get_one(product_id):
         """ Return a product key information based on product_id """
 
         try:
             product = ProductRepository.get(product_id=product_id)
             if not product:
-                return jsonify({"message": f" Product with the id {product_id} not found"})
-            
+                return jsonify(
+                    {"message": f" Product with the id {product_id} not found"})
+
             return jsonify({
                 "id": product.id,
                 "title": product.title,
@@ -42,11 +46,12 @@ class ProductResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product/get_all.yml")
+    @requires_auth('get:products')
     def get_all():
         """ Return all products key information based on the query parameter """
         products = ProductRepository.getAll()
         return jsonify({"data": products})
-    
+
     @staticmethod
     @parse_params(
         Argument("title", location="json", required=True,
@@ -64,15 +69,30 @@ class ProductResource(Resource):
         Argument("sellers_id", location="json", required=True,
                  help="The sellers_id that created the product."),
         Argument("product_categories_id", location="json", required=True,
-                 help="The product_categories of the product."),  
+                 help="The product_categories of the product."),
     )
     # @swag_from("../swagger/product/POST.yml")
-    def post(title, price, quantity, short_desc, thumbnail, image, sellers_id, product_categories_id):
+    @requires_auth('post:product')
+    def post(
+            title,
+            price,
+            quantity,
+            short_desc,
+            thumbnail,
+            image,
+            sellers_id,
+            product_categories_id):
         """ Create a product based on the provided information """
         # Check duplicates
         product = ProductRepository.create(
-            title=title, price=price, quantity=quantity, short_desc=short_desc, thumbnail=thumbnail, image=image, sellers_id=sellers_id, product_categories_id=product_categories_id
-        )
+            title=title,
+            price=price,
+            quantity=quantity,
+            short_desc=short_desc,
+            thumbnail=thumbnail,
+            image=image,
+            sellers_id=sellers_id,
+            product_categories_id=product_categories_id)
         return jsonify({
             "title": product.title,
             "price": product.price,
@@ -83,14 +103,15 @@ class ProductResource(Resource):
             "sellers_id": product.sellers_id,
             "product_category_id": product.product_categories_id
         })
-    
+
+    @requires_auth('delete:product')
     def delete(product_id):
         """ delete a product based on the product id provided """
         # fetch product
         product = ProductRepository.delete(product_id=product_id)
 
         return jsonify({"message": "product successfully deleted"})
-    
+
     @staticmethod
     @parse_params(
         Argument("title", location="json", required=True,
@@ -109,16 +130,26 @@ class ProductResource(Resource):
                  help="The rating of the product.")
     )
     # @swag_from("../swagger/product/PUT.yml")
-    def update_product(product_id, title, price, quantity, short_desc, thumbnail, image, rating):
+    @requires_auth('patch:product')
+    def update_product(
+            product_id,
+            title,
+            price,
+            quantity,
+            short_desc,
+            thumbnail,
+            image,
+            rating):
         """ Update a product based on the provided information """
         print(product_id)
         repository = ProductRepository()
         product = repository.update(
-            product_id=product_id, title=title, price=price, quantity=quantity, short_desc=short_desc, thumbnail=thumbnail, image=image, rating=rating
-        )
+            product_id=product_id,
+            title=title,
+            price=price,
+            quantity=quantity,
+            short_desc=short_desc,
+            thumbnail=thumbnail,
+            image=image,
+            rating=rating)
         return jsonify({"message": "updated successfully"})
-
-
-    
-   
-   
