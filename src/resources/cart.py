@@ -5,6 +5,7 @@ from flask import jsonify, abort
 from flasgger import swag_from
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+from validators.auth import requires_auth
 from repositories import CartRepository
 from utils import parse_params
 from utils.errors import DataNotFound
@@ -15,6 +16,7 @@ class CartResource(Resource):
 
     @staticmethod
     # @swag_from("../swagger/coupon/get_one.yml")
+    @requires_auth('get:cart')
     def get_one(card_id):
         """ Return a cart based on id provided"""
         try:
@@ -38,6 +40,7 @@ class CartResource(Resource):
 
     @staticmethod
     # @swag_from("../swagger/coupon/get_all.yml")
+    @requires_auth('get:carts')
     def get_all(customer_id):
         """ Return all cart information based on the query parameter """
         carts = CartRepository.get_all(customer_id=customer_id)
@@ -52,6 +55,7 @@ class CartResource(Resource):
         Argument("total_cost", location="json",
                  help="The total_cost of the cart product."),
     )
+    @requires_auth('patch:cart')
     def update(cart_id, unit_price, quantity, total_cost):
         """ Update a cart """
         repo = CartRepository()
@@ -85,6 +89,7 @@ class CartResource(Resource):
         Argument("product_id", location="json",
                  help="The product_id of the cart product."),
     )
+    @requires_auth('post:cart')
     def post(unit_price, quantity, total_cost, customer_id, product_id):
         """ Create a cart based on the provided information """
         cart = CartRepository.create(
@@ -104,6 +109,7 @@ class CartResource(Resource):
         }
         return jsonify({"data": data})
 
+    @requires_auth('delete:cart')
     def delete(cart_id):
         """ delete a cart via the provided id """
         CartRepository.delete(cart_id=cart_id)

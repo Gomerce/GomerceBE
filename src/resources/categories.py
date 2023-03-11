@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import CategoriesRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class CategoriesResource(Resource):
@@ -43,6 +44,7 @@ class CategoriesResource(Resource):
         Argument("sku", location="json", required=True,
                  help="The sku of the product_category.")
     )
+    @requires_auth('patch:product')
     def update(category_id, name, sku):
         """ Update a category """
         category = CategoriesRepository().update(
@@ -50,6 +52,7 @@ class CategoriesResource(Resource):
         )
         return jsonify({"message": category.json})
 
+    @requires_auth('delete:product')
     def delete(category_id):
         """ delete a category"""
         CategoriesRepository.delete(category_id=category_id)
@@ -64,6 +67,7 @@ class CategoriesResource(Resource):
         Argument("products", location="json", required=True,
                  help="The product of the category.")
     )
+    @requires_auth('post:product')
     def post(name, sku, products):
         """ Create a category """
         category = CategoriesRepository.create(

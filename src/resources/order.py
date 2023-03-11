@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import OrderRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class OrderResource(Resource):
@@ -15,6 +16,7 @@ class OrderResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/order/get_one.yml")
+    @requires_auth('get:order')
     def get_one(order_id):
         """ Return an order key information based on order_id """
 
@@ -42,6 +44,7 @@ class OrderResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/order/get_all.yml")
+    @requires_auth('get:orders')
     def get_all():
         """ Return all order key information based on the query parameter """
         orders = OrderRepository.getAll()
@@ -58,6 +61,7 @@ class OrderResource(Resource):
         Argument("delivered_at", location="json",
                  help="The order of the order."),
     )
+    @requires_auth('patch:order')
     def update_order(order_id, total_cost, tax, delivery_status, delivered_at):
         """ Update a order """
         print("printing orders")
@@ -92,6 +96,7 @@ class OrderResource(Resource):
         Argument("seller_id", location="json",
                  help="The seller_id of the order."),
     )
+    @requires_auth('post:order')
     def post(total_cost, tax, delivery_status, delivered_at,
              customer_id, shipping_address_id, coupon_id, seller_id):
         """ Create an order detail """
@@ -115,6 +120,7 @@ class OrderResource(Resource):
         }
         return jsonify({"data": data})
 
+    @requires_auth('delete:order')
     def delete(order_id):
         """ delete a order via the provided id """
         OrderRepository.delete(order_id=order_id)
