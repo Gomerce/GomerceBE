@@ -1,14 +1,17 @@
 """
 Define the resources for the store
 """
-from flask import jsonify, abort
 import json
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import StoreRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class StoreResource(Resource):
@@ -16,6 +19,7 @@ class StoreResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/store/get_one.yml")
+    @requires_auth('get:store')
     def get_one(store_id):
         """ Return a store key information based on status_id """
 
@@ -42,6 +46,7 @@ class StoreResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/store/get_all.yml")
+    @requires_auth('get:stores')
     def get_all():
         """ Return all store key information based on the query parameter """
         store = StoreRepository.getAll()
@@ -62,12 +67,24 @@ class StoreResource(Resource):
         Argument("phone_verified", location="json",
                  help="The phone_verified of the store."),
     )
-    def update_store(store_id, phone, name, email, address, email_verified, phone_verified):
+    @requires_auth('patch:store')
+    def update_store(
+            store_id,
+            phone,
+            name,
+            email,
+            address,
+            email_verified,
+            phone_verified):
         """ Update a store """
         store = StoreRepository().update(
-            store_id=store_id, phone=phone, name=name, email=email, address=address,
-            email_verified=email_verified, phone_verified=phone_verified
-        )
+            store_id=store_id,
+            phone=phone,
+            name=name,
+            email=email,
+            address=address,
+            email_verified=email_verified,
+            phone_verified=phone_verified)
         data = {
             "id": store.id,
             "name": store.name,
@@ -98,7 +115,15 @@ class StoreResource(Resource):
         Argument("sellers_id", location="json",
                  help="The sellers_id of the store."),
     )
-    def post(phone, name, email, address, email_verified, phone_verified, sellers_id):
+    @requires_auth('post:store')
+    def post(
+            phone,
+            name,
+            email,
+            address,
+            email_verified,
+            phone_verified,
+            sellers_id):
         """ Create a store """
         store = StoreRepository.create(
             name=name, address=address,
@@ -116,6 +141,7 @@ class StoreResource(Resource):
         }
         return jsonify({"data": data})
 
+    @requires_auth('delete:store')
     def delete(store_id):
         """ delete a Store via the provided id """
         StoreRepository.delete(store_id=store_id)

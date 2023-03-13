@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import CouponRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class CouponResource(Resource):
@@ -15,6 +16,7 @@ class CouponResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/coupon/get_one.yml")
+    @requires_auth('get:coupon')
     def get_one(coupon_id):
         """ Return a coupon based on id provided"""
         try:
@@ -37,6 +39,7 @@ class CouponResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/coupon/get_all.yml")
+    @requires_auth('get:coupons')
     def get_all():
         """ Return all coupon key information based on the query parameter """
         coupon = CouponRepository.get_all()
@@ -51,6 +54,7 @@ class CouponResource(Resource):
         Argument("expires_at", location="json",
                  help="The expires_at of the coupon."),
     )
+    @requires_auth('patch:coupon')
     def update_coupon(coupon_id, code, amount, expires_at):
         """ Update a copon """
         repo = CouponRepository()
@@ -77,6 +81,7 @@ class CouponResource(Resource):
         Argument("expires_at", location="json",
                  help="The expires_at of the coupon."),
     )
+    @requires_auth('post:coupon')
     def post(amount, code, expires_at):
         """ Create a coupon based on the provided information """
         coupon = CouponRepository.create(
@@ -84,6 +89,7 @@ class CouponResource(Resource):
         )
         return jsonify({"data": coupon.json})
 
+    @requires_auth('delete:coupon')
     def delete(coupon_id):
         """ delete a coupoun via the provided id """
         CouponRepository.delete(coupon_id=coupon_id)

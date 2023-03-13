@@ -1,13 +1,15 @@
 """
 Define the resources for the payment method
 """
-from flask import jsonify, abort
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import PaymentMethodRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class PaymentMethodResource(Resource):
@@ -15,6 +17,7 @@ class PaymentMethodResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/payment_method/get_one.yml")
+    @requires_auth('get:payment_method')
     def get_one(method_id):
         """ Return a payment method key information based on method_id """
 
@@ -33,6 +36,7 @@ class PaymentMethodResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/payment_method/get_all.yml")
+    @requires_auth('get:payment_methods')
     def get_all():
         """ Return all payment method key information based on the query parameter """
         payment_methods = PaymentMethodRepository.getAll()
@@ -45,6 +49,7 @@ class PaymentMethodResource(Resource):
         Argument("currency", location="json",
                  help="The currency of the payment."),
     )
+    @requires_auth('patch:payment_method')
     def update(method_id, name, currency):
         """ Update a payment method """
         order = PaymentMethodRepository().update(
@@ -62,6 +67,7 @@ class PaymentMethodResource(Resource):
         Argument("currency", location="json",
                  help="The currency of the payment."),
     )
+    @requires_auth('post:payment_method')
     def post(name, currency):
         """ Create an order detail """
         payment = PaymentMethodRepository.create(
@@ -75,6 +81,7 @@ class PaymentMethodResource(Resource):
         }
         return jsonify({"data": data})
 
+    @requires_auth('delete:payment_method')
     def delete(method_id):
         """ delete a payment via the provided id """
         PaymentMethodRepository.delete(method_id=method_id)

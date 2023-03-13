@@ -1,28 +1,33 @@
 """
 Define the resources for the product categories
 """
-from flask import jsonify, abort
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import ProductCategoryRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class ProductCategoryResource(Resource):
     """ methods relative to the product Category """
 
     @staticmethod
-    # @swag_from("../swagger/categories/get_one.yml")
+    @swag_from("../swagger/product_category/get_one.yml")
+    @requires_auth('get:product_category')
     def get_one(product_category_id):
         """ Return a product category key information based on product_category_id """
 
         try:
-            category = ProductCategoryRepository.get(product_category_id=product_category_id)
+            category = ProductCategoryRepository.get(
+                product_category_id=product_category_id)
             if not category:
-                return jsonify({"message": f" Category with the id {product_category_id} not found"})
-            
+                return jsonify(
+                    {"message": f" Category with the id {product_category_id} not found"})
+
             return jsonify({
                 "id": category.id,
                 "name": category.name,
@@ -34,7 +39,8 @@ class ProductCategoryResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/categories/get_all.yml")
+    @swag_from("../swagger/product_categories/get_all.yml")
+    @requires_auth('get:product_categories')
     def get_all():
         """ Return all categories key information based on the query parameter """
         product_categories = ProductCategoryRepository.getAll()
@@ -48,6 +54,7 @@ class ProductCategoryResource(Resource):
                  help="The sku of the product_category.")
     )
     # @swag_from("../swagger/product/POST.yml")
+    @requires_auth('post:product_category')
     def post(name, sku):
         """ Create a category based on the provided information """
         # Check duplicates
@@ -55,14 +62,15 @@ class ProductCategoryResource(Resource):
             name=name, sku=sku
         )
         return jsonify({"data": product_category.json})
-    
+
+    @requires_auth('delete:product_category')
     def delete(category_id):
         """ delete a category based on the category id provided """
         # fetch category
         category = ProductCategoryRepository.delete(category_id=category_id)
 
         return jsonify({"message": "category successfully deleted"})
-    
+
     @staticmethod
     @parse_params(
         Argument("name", location="json", required=True,
@@ -71,6 +79,7 @@ class ProductCategoryResource(Resource):
                  help="The sku of the product_category.")
     )
     # @swag_from("../swagger/category/PUT.yml")
+    @requires_auth('patch:product_category')
     def update_category(category_id, name, sku):
         """ Update a category based on the provided information """
         print(category_id)
@@ -79,5 +88,3 @@ class ProductCategoryResource(Resource):
             category_id=category_id, name=name, sku=sku
         )
         return jsonify({"message": category.json})
-    
-    

@@ -1,14 +1,17 @@
 """
 Define the resources for the review
 """
-from flask import jsonify, abort
+import json
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
-import json
+
 from repositories import ReviewRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class ReviewResource(Resource):
@@ -16,13 +19,15 @@ class ReviewResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/review/get_one.yml")
+    @requires_auth('get:review')
     def get_one(review_id):
         """ Return a review """
 
         try:
             review = ReviewRepository.get(review_id=review_id)
             if not review:
-                return jsonify({"message": f"review with id {review_id} not found"})
+                return jsonify(
+                    {"message": f"review with id {review_id} not found"})
             data = {
                 "id": review.id,
                 "comment": review.comment,
@@ -38,6 +43,7 @@ class ReviewResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/review/get_all.yml")
+    @requires_auth('get:reviews')
     def get_all():
         """ Return all review key information based on the query parameter """
         reviews = ReviewRepository.getAll()
@@ -54,6 +60,7 @@ class ReviewResource(Resource):
         Argument("products_id", location="json",
                  help="The products_id for a review"),
     )
+    @requires_auth('post:review')
     def post(comment, images, sellers_id, products_id):
         """ Create a review """
         review = ReviewRepository.create(
@@ -70,6 +77,7 @@ class ReviewResource(Resource):
         Argument("images", location="json",
                  help="The image for a review.")
     )
+    @requires_auth('patch:review')
     def update(review_id, comment, images):
         """ Update a review"""
         repo = ReviewRepository()
@@ -86,6 +94,7 @@ class ReviewResource(Resource):
 
         return jsonify({"data": data})
 
+    @requires_auth('delete:review')
     def delete(review_id):
         """ delete a review via the provided id """
         ReviewRepository.delete(review_id=review_id)

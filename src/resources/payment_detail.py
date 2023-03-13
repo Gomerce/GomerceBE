@@ -8,6 +8,7 @@ from flask_restful.reqparse import Argument
 from repositories import PaymentDetailRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class PaymentDetailResource(Resource):
@@ -15,6 +16,7 @@ class PaymentDetailResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/payment_detail/get_one.yml")
+    @requires_auth('get:payment_detail')
     def get_one(payment_id):
         """ Return a payment detail key information based on payment_id """
 
@@ -39,6 +41,7 @@ class PaymentDetailResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/payment_detail/get_all.yml")
+    @requires_auth('get:payment_details')
     def get_all():
         """ Return all payment detail key information based on the query parameter """
         payment_details = PaymentDetailRepository.getAll()
@@ -55,6 +58,7 @@ class PaymentDetailResource(Resource):
         Argument("payment_methods_id", location="json",
                  help="The payment_methods_id of the payment."),
     )
+    @requires_auth('patch:payment_detail')
     def update(payment_id, amount, status, orders_id, payment_methods_id):
         """ Update a payment details """
         order = PaymentDetailRepository().update(
@@ -86,6 +90,7 @@ class PaymentDetailResource(Resource):
         Argument("payment_methods_id", location="json",
                  help="The payment_methods_id of the payment."),
     )
+    @requires_auth('post:payment_detail')
     def post(amount, status, orders_id, payment_methods_id):
         """ Create an order detail """
         payment = PaymentDetailRepository.create(
@@ -105,6 +110,7 @@ class PaymentDetailResource(Resource):
         }
         return jsonify({"data": data})
 
+    @requires_auth('delete:payment_detail')
     def delete(payment_id):
         """ delete a payment via the provided id """
         PaymentDetailRepository.delete(payment_id=payment_id)
