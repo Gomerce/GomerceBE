@@ -7,6 +7,7 @@ import config
 import routes
 from models import db
 from validators.auth import AuthError
+from utils.errors import DataNotFound
 
 # config your API specs
 # you can define multiple specs in the case your api has multiple versions
@@ -33,7 +34,8 @@ migrate = Migrate(server, db)
 
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
-        server.register_blueprint(blueprint, url_prefix=config.APPLICATION_ROOT)
+        server.register_blueprint(
+            blueprint, url_prefix=config.APPLICATION_ROOT)
 
 """ Error handling """
 
@@ -99,11 +101,13 @@ def internal_server_error(error):
         "message": "Internal server error"
     }), 500
 
+
 @server.errorhandler(AuthError)
 def handle_auth_error(ex):
     response = jsonify(ex.error)
     response.status_code = ex.status_code
     return response
+
 
 if __name__ == "__main__":
     server.debug = True
