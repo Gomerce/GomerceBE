@@ -7,6 +7,7 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
+
 class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Product model """
 
@@ -24,11 +25,14 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    #Foreign Key
-    sellers_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)
-    product_categories_id = db.Column(db.Integer, db.ForeignKey('product_categories.id'), nullable=False)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'), nullable=False)
+    # Foreign Key
+    sellers_id = db.Column(db.Integer, db.ForeignKey(
+        'sellers.id'), nullable=False)
+    product_categories_id = db.Column(db.Integer, db.ForeignKey(
+        'product_categories.id'), nullable=False)
+    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'), nullable=True)
 
-    #Relationship
+    # Relationship
     reviews = db.relationship('Review', backref='products', lazy=True)
-    order_details = db.relationship('OrderDetail', backref='products', lazy=True)
+    order_details = db.relationship(
+        'OrderDetail', backref='products', lazy=True)

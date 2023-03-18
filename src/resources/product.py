@@ -24,8 +24,9 @@ class ProductResource(Resource):
         try:
             product = ProductRepository.get(product_id=product_id)
             if not product:
-                return jsonify(
-                    {"message": f" Product with the id {product_id} not found"})
+                return jsonify({
+                    "message": f" Product with the id {product_id} not found"
+                })
 
             return jsonify({
                 "id": product.id,
@@ -48,42 +49,75 @@ class ProductResource(Resource):
     @swag_from("../swagger/product/get_all.yml")
     @requires_auth('get:products')
     def get_all():
-        """ Return all products key information based on the query parameter """
+        """
+        Return all products key information based on the query parameter
+        """
         products = ProductRepository.getAll()
         return jsonify({"data": products})
 
     @staticmethod
     @parse_params(
-        Argument("title", location="json", required=True,
+        Argument("title", location="json",
                  help="The title of the product."),
-        Argument("price", location="json", required=True,
+        Argument("price", location="json",
                  help="The price of the product."),
-        Argument("quantity", location="json", required=True,
+        Argument("quantity", location="json",
                  help="The quantity of the product."),
-        Argument("short_desc", location="json", required=True,
+        Argument("short_desc", location="json",
                  help="The short_desc of the product."),
-        Argument("thumbnail", location="json", required=True,
+        Argument("thumbnail", location="json",
                  help="The thumbnail of the product."),
-        Argument("image", location="json", required=True,
+        Argument("image", location="json",
                  help="The image of the product."),
-        Argument("sellers_id", location="json", required=True,
+        Argument("sellers_id", location="json",
                  help="The sellers_id that created the product."),
-        Argument("product_categories_id", location="json", required=True,
+        Argument("product_categories_id", location="json",
                  help="The product_categories of the product."),
     )
     # @swag_from("../swagger/product/POST.yml")
     @requires_auth('post:product')
-    def post(
-            title,
-            price,
-            quantity,
-            short_desc,
-            thumbnail,
-            image,
-            sellers_id,
-            product_categories_id):
+    def post(title, price, quantity, short_desc,
+             thumbnail, image, sellers_id, product_categories_id):
         """ Create a product based on the provided information """
-        # Check duplicates
+
+        if title is None:
+            abort(400, "Sorry, title cannot be null.")
+        if title == "":
+            abort(400, "Sorry, title cannot be empty.")
+        if price is None:
+            abort(400, "Sorry, price cannot be null.")
+        if price == "":
+            abort(400, "Sorry, price cannot be empty.")
+
+        if quantity is None:
+            abort(400, "Sorry, quantity cannot be null.")
+        if quantity == "":
+            abort(400, "Sorry, quantity cannot be empty.")
+
+        if short_desc is None:
+            abort(400, "Sorry, you have to give a short description.")
+        if short_desc == "":
+            abort(400, "Sorry, your description cannit be empty.")
+
+        if thumbnail is None:
+            abort(400, "Sorry, thumbnail cannot be null.")
+        if thumbnail == "":
+            abort(400, "Sorry, thumbnail cannot be empty.")
+
+        if image is None:
+            abort(400, "Sorry, image cannot be null.")
+        if image == "":
+            abort(400, "Sorry, image cannot be empty.")
+
+        if sellers_id is None:
+            abort(400, "Sorry, sellers_id cannot be null.")
+        if sellers_id == "":
+            abort(400, "Sorry, product cannot belong to an empty seller.")
+        if product_categories_id is None:
+            abort(400, "Sorry, product has to belong to a category.")
+        if product_categories_id == "":
+            abort(400, "Sorry, product cannot belong to an empty category.")
+
         product = ProductRepository.create(
             title=title,
             price=price,
@@ -93,8 +127,10 @@ class ProductResource(Resource):
             image=image,
             sellers_id=sellers_id,
             product_categories_id=product_categories_id)
+
         return jsonify({
             "title": product.title,
+            "id": product.id,
             "price": product.price,
             "quantity": product.quantity,
             "short_desc": product.short_desc,
@@ -108,42 +144,84 @@ class ProductResource(Resource):
     def delete(product_id):
         """ delete a product based on the product id provided """
         # fetch product
-        product = ProductRepository.delete(product_id=product_id)
 
-        return jsonify({"message": "product successfully deleted"})
+        product = ProductRepository
+
+        if not (product.get(product_id=product_id)):
+            abort(
+                404, f"Sorry, the product with id {product_id} was not found."
+            )
+
+        product.delete(product_id=product_id)
+
+        return jsonify({
+            "message": f"product with id {product_id} was successfully deleted"
+        })
 
     @staticmethod
     @parse_params(
-        Argument("title", location="json", required=True,
+        Argument("title", location="json",
                  help="The title of the product."),
-        Argument("price", location="json", required=True,
+        Argument("price", location="json",
                  help="The price of the product."),
-        Argument("quantity", location="json", required=True,
+        Argument("quantity", location="json",
                  help="The quantity of the product."),
-        Argument("short_desc", location="json", required=True,
+        Argument("short_desc", location="json",
                  help="The short_desc of the product."),
-        Argument("thumbnail", location="json", required=True,
+        Argument("thumbnail", location="json",
                  help="The thumbnail of the product."),
-        Argument("image", location="json", required=True,
+        Argument("image", location="json",
                  help="The image of the product."),
-        Argument("rating", location="json", required=True,
+        Argument("rating", location="json",
                  help="The rating of the product.")
     )
     # @swag_from("../swagger/product/PUT.yml")
     @requires_auth('patch:product')
-    def update_product(
-            product_id,
-            title,
-            price,
-            quantity,
-            short_desc,
-            thumbnail,
-            image,
-            rating):
+    def update_product(product_id, title, price, quantity,
+                       short_desc, thumbnail, image, rating):
         """ Update a product based on the provided information """
-        print(product_id)
-        repository = ProductRepository()
-        product = repository.update(
+        if product_id is None:
+            abort(400, "Sorry, product_id cannot be null.")
+        if product_id == "":
+            abort(400, "Sorry, product_id cannot be empty.")
+
+        product = ProductRepository()
+
+        if title is None:
+            abort(400, "Sorry, title cannot be null.")
+        if title == "":
+            abort(400, "Sorry, title cannot be empty.")
+        if price is None:
+            abort(400, "Sorry, price cannot be null.")
+        if price == "":
+            abort(400, "Sorry, price cannot be empty.")
+
+        if quantity is None:
+            abort(400, "Sorry, quantity cannot be null.")
+        if quantity == "":
+            abort(400, "Sorry, quantity cannot be empty.")
+
+        if short_desc is None:
+            abort(400, "Sorry, you have to give a short description.")
+        if short_desc == "":
+            abort(400, "Sorry, your description cannit be empty.")
+
+        if thumbnail is None:
+            abort(400, "Sorry, thumbnail cannot be null.")
+        if thumbnail == "":
+            abort(400, "Sorry, thumbnail cannot be empty.")
+
+        if image is None:
+            abort(400, "Sorry, image cannot be null.")
+        if image == "":
+            abort(400, "Sorry, image cannot be empty.")
+
+        if rating is None:
+            abort(400, "Sorry, rating cannot be null.")
+        if rating == "":
+            abort(400, "Sorry, rating cannot be empty.")
+
+        product.update(
             product_id=product_id,
             title=title,
             price=price,
@@ -152,4 +230,7 @@ class ProductResource(Resource):
             thumbnail=thumbnail,
             image=image,
             rating=rating)
-        return jsonify({"message": "updated successfully"})
+
+        return jsonify({
+            "message": f"Product with id {product_id} updated successfully"
+        }),
