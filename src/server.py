@@ -32,7 +32,8 @@ migrate = Migrate(server, db)
 
 for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
-        server.register_blueprint(blueprint, url_prefix=config.APPLICATION_ROOT)
+        server.register_blueprint(
+            blueprint, url_prefix=config.APPLICATION_ROOT)
 
 """ Error handling """
 
