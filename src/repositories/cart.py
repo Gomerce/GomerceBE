@@ -68,6 +68,22 @@ class CartRepository:
     def create(unit_price, quantity, total_cost, product_id, customer_id):
         """ Create a new Cart """
         try:
+
+            if not (type(quantity) is int):
+                raise DataNotFound(f"quantity {quantity} must not an integer ")
+
+            if not (product_id or customer_id):
+                raise DataNotFound(f"both product and customer id required")
+
+            if (unit_price or total_cost) < 0:
+                raise DataNotFound(
+                    f"both price and total cost cannot be a negative value"
+                )
+
+            if not (unit_price or total_cost):
+                raise DataNotFound(
+                    f"both price and total cost must be provided")
+
             new_cart = Cart(unit_price=unit_price,
                             quantity=quantity,
                             total_cost=total_cost,

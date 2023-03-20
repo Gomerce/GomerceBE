@@ -1,5 +1,5 @@
 """
-Define the resources for the Coupon
+Define resources for Coupon
 """
 from flask import jsonify, abort
 from flasgger import swag_from
