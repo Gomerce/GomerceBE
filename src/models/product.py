@@ -30,7 +30,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
         'sellers.id'), nullable=False)
     product_categories_id = db.Column(db.Integer, db.ForeignKey(
         'product_categories.id'), nullable=False)
-    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'), nullable=True)
+    brand_id = db.Column(db.Integer, db.ForeignKey('brands.id'), nullable=False)
 
     # Relationship
     reviews = db.relationship('Review', backref='products', lazy=True)
