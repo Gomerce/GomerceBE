@@ -16,8 +16,8 @@ PRODUCT_BLUEPRINT.route("/products/<int:product_id>",
 
 PRODUCT_BLUEPRINT.route("/products", methods=['POST'])(ProductResource.post)
 
-PRODUCT_BLUEPRINT.route("products/<int:product_id>",
-                       methods=["DELETE"])(ProductResource.delete)
+PRODUCT_BLUEPRINT.route("/products/<int:product_id>",
+                        methods=["DELETE"])(ProductResource.delete)
 
-PRODUCT_BLUEPRINT.route("products/<int:product_id>",
-                       methods=["PUT"])(ProductResource.update_product)
+PRODUCT_BLUEPRINT.route("/products/<int:product_id>",
+                        methods=["PUT"])(ProductResource.update_product)

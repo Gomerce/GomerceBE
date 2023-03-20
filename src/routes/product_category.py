@@ -12,12 +12,13 @@ CATEGORY_BLUEPRINT.route(
     "/categories", methods=['GET'])(ProductCategoryResource.get_all)
 
 CATEGORY_BLUEPRINT.route("/categories/<int:product_category_id>",
-                        methods=['GET'])(ProductCategoryResource.get_one)
+                         methods=['GET'])(ProductCategoryResource.get_one)
 
-CATEGORY_BLUEPRINT.route("/categories", methods=['POST'])(ProductCategoryResource.post)
+CATEGORY_BLUEPRINT.route(
+    "/categories", methods=['POST'])(ProductCategoryResource.post)
 
-CATEGORY_BLUEPRINT.route("categories/<int:category_id>",
-                        methods=["DELETE"])(ProductCategoryResource.delete)
+CATEGORY_BLUEPRINT.route("/categories/<int:category_id>",
+                         methods=["DELETE"])(ProductCategoryResource.delete)
 
-CATEGORY_BLUEPRINT.route("categories/<int:category_id>",
-                       methods=["PUT"])(ProductCategoryResource.update_category)
+CATEGORY_BLUEPRINT.route("/categories/<int:category_id>",
+                         methods=["PUT"])(ProductCategoryResource.update_category)
