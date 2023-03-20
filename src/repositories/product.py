@@ -44,14 +44,14 @@ class ProductRepository:
                 "short_desc": product.short_desc,
                 "rating": product.rating,
                 "thumbnail": product.thumbnail,
-                "image": product.image, 
+                "image": product.image,
                 "price": product.price,
                 "sellers_id": product.sellers_id,
                 "product_category": product.product_categories_id
             })
-            
+
         return data
-    
+
     def update(self, product_id, **args):
         """ Update a product details """
         product = self.get(product_id)
@@ -69,30 +69,40 @@ class ProductRepository:
 
         if 'thumbnail' in args and args['thumbnail'] is not None:
             product.thumbnail = args['thumbnail']
-            
+
         if 'image' in args and args['image'] is not None:
             product.image = args['image']
-            
+
         if 'rating' in args and args['rating'] is not None:
             product.rating = args['rating']
 
         return product.save()
-    
+
     @staticmethod
-    def create(title, price, quantity, short_desc, thumbnail, image, sellers_id, product_categories_id):
+    def create(title, price, quantity, short_desc, thumbnail, image,
+               sellers_id, product_categories_id, brand_id=None,
+               long_desc="Empty", rating=0):
         """ Create a new product """
         try:
-            new_product = Product(title=title, price=price, quantity=quantity, short_desc=short_desc,
-                                  thumbnail=thumbnail, image=image, sellers_id=sellers_id, product_categories_id=product_categories_id)
+            new_product = Product(title=title, price=price, quantity=quantity,
+                                  short_desc=short_desc,
+                                  thumbnail=thumbnail, image=image,
+                                  sellers_id=sellers_id,
+                                  product_categories_id=product_categories_id,
+                                  brand_id=brand_id, long_desc=long_desc,
+                                  rating=rating)
 
             return new_product.save()
 
         except IntegrityError as e:
             message = e.orig.diag.message_detail
+            db.session.rollback()
             raise DuplicateData(message)
+
         except Exception:
+            db.session.rollback()
             raise InternalServerError
-        
+
     @staticmethod
     def delete(product_id):
         """ Delete a product by product_id """
@@ -108,7 +118,4 @@ class ProductRepository:
             return product.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Product with {product_id} not found")\
-
-
-   
+            raise DataNotFound(f"Product with {product_id} not found")

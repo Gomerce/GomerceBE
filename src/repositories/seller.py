@@ -72,37 +72,19 @@ class SellerRepository:
         return seller.save()
 
     @staticmethod
-    def create(username, last_name, first_name, email, password, phone=None):
+    def create(username, last_name, first_name, email, password, phone):
         """ Create a new seller """
         try:
             new_seller = Seller(username=username, first_name=first_name,
                                 last_name=last_name, email=email, phone=phone)
             new_seller.set_password(password)
-
-            if len(password) < 6:
-                return jsonify({"error": "Password must be at least 6 characters"}), 400
-
-            seller = new_seller.save()
+            return new_seller.save()
 
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
         except Exception:
             raise InternalServerError
-
-        token = jwt.encode(
-            {"id": seller.id, "exp": datetime.now() + timedelta(days=1)},
-            os.environ.get("SECRET_KEY"),
-            algorithm="HS256",
-        )
-
-        return jsonify({
-            "seller": seller.username,
-            "email": seller.email,
-            "firstName": seller.first_name,
-            "lastName": seller.last_name,
-            "token": token
-            })
 
     @staticmethod
     def delete(seller_id):
@@ -119,4 +101,4 @@ class SellerRepository:
             return seller.delete()
         except DataNotFound as e:
             print(sys.exc_info())
-            raise DataNotFound(f"Seller with {seller_id} not found")\
+            raise DataNotFound(f"Seller with {seller_id} not found")
