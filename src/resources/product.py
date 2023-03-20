@@ -233,4 +233,4 @@ class ProductResource(Resource):
 
         return jsonify({
             "message": f"Product with id {product_id} updated successfully"
-        }),
+        })
