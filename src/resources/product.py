@@ -17,7 +17,6 @@ class ProductResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product/get_one.yml")
-    @requires_auth('get:product')
     def get_one(product_id):
         """ Return a product key information based on product_id """
 
@@ -47,7 +46,6 @@ class ProductResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product/get_all.yml")
-    @requires_auth('get:products')
     def get_all():
         """
         Return all products key information based on the query parameter
