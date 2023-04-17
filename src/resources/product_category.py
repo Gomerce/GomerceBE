@@ -17,7 +17,6 @@ class ProductCategoryResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product_category/get_one.yml")
-    @requires_auth('get:product_category')
     def get_one(product_category_id):
         """ Return a product category key information based on product_category_id """
 
@@ -40,7 +39,6 @@ class ProductCategoryResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/product_categories/get_all.yml")
-    @requires_auth('get:product_categories')
     def get_all():
         """ Return all categories key information based on the query parameter """
         product_categories = ProductCategoryRepository.getAll()
@@ -91,7 +89,7 @@ class ProductCategoryResource(Resource):
                  help="The sku of the product_category.")
     )
     # @swag_from("../swagger/category/PUT.yml")
-    # @requires_auth('patch:product_category')
+    @requires_auth('patch:product_category')
     def update_category(category_id, name, sku):
         """ Update a category based on the provided information """
         print(category_id)
