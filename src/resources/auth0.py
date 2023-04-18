@@ -31,7 +31,7 @@ class Auth0Resource(Resource):
             + "/v2/logout?"
             + urlencode(
                 {
-                    "returnTo": url_for("home", _external=True),
+                    "returnTo": url_for("get", _external=True),
                     "client_id": config.AUTH0_CLIENT_ID,
                 },
                 quote_via=quote_plus,

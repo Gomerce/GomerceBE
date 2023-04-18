@@ -38,18 +38,19 @@ for blueprint in vars(routes).values():
         server.register_blueprint(
             blueprint, url_prefix=config.APPLICATION_ROOT)
 
-# 👆 We're continuing from the steps above. Append this to your server.py file.
-
 oauth = OAuth(server)
 
 oauth.register(
     "auth0",
     client_id=config.AUTH0_CLIENT_ID,
     client_secret=config.AUTH0_CLIENT_SECRET,
+    api_base_url=config.AUTH0_DOMAIN,
+    access_token_url=config.AUTH0_DOMAIN + "/oauth/token",
+    authorize_url=config.AUTH0_DOMAIN + "/authorize",
     client_kwargs={
         "scope": "openid profile email",
     },
-    server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
+    # server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
 )
 
 
