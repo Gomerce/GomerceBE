@@ -33,6 +33,11 @@ EMAIL_SENDER_EMAIL = os.getenv("EMAIL_SENDER_EMAIL", '')
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
 APP_SECRET = os.getenv('SECRET_KEY', 'gommerce')
 
+# auth0 
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
+AUTH0_CLIENT_ID = os.getenv('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
+AUTH0_AUDIENCE = os.getenv('AUTH0_AUDIENCE')
 
 if DEBUG:
     logging.basicConfig(
