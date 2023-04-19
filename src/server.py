@@ -1,3 +1,4 @@
+from authlib.integrations.flask_client import OAuth
 from flasgger import Swagger
 from flask import Flask, jsonify
 from flask.blueprints import Blueprint
@@ -7,13 +8,13 @@ import config
 import routes
 from models import db
 from validators.auth import AuthError
-from utils.errors import DataNotFound
 
 # config your API specs
 # you can define multiple specs in the case your api has multiple versions
 # ommit configs to get the default (all views exposed in /spec url)
 # rule_filter is a callable that receives "Rule" object and
 #   returns a boolean to filter in only desired views
+
 server = Flask(__name__)
 
 server.config["SWAGGER"] = {
@@ -37,10 +38,27 @@ for blueprint in vars(routes).values():
         server.register_blueprint(
             blueprint, url_prefix=config.APPLICATION_ROOT)
 
+oauth = OAuth(server)
+
+oauth.register(
+    "auth0",
+    client_id=config.AUTH0_CLIENT_ID,
+    client_secret=config.AUTH0_CLIENT_SECRET,
+    api_base_url=config.AUTH0_DOMAIN,
+    access_token_url=config.AUTH0_DOMAIN + "/oauth/token",
+    authorize_url=config.AUTH0_DOMAIN + "/authorize",
+    client_kwargs={
+        "scope": "openid profile email",
+    },
+    # server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
+)
+
+
 """ Error handling """
 
-
 # error handler for 422
+
+
 @server.errorhandler(422)
 def unprocessable(error):
     return jsonify({

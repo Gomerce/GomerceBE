@@ -1,7 +1,8 @@
-from dotenv import load_dotenv
+import datetime
 import logging
 import os
-import datetime
+
+from dotenv import load_dotenv
 
 load_dotenv()
 # Databse configs
@@ -30,9 +31,15 @@ EMAIL_SENDER_EMAIL = os.getenv("EMAIL_SENDER_EMAIL", '')
 
 
 #  google configs
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 APP_SECRET = os.getenv('SECRET_KEY', 'gommerce')
 
+# auth0
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN')
+AUTH0_CLIENT_ID = os.getenv('AUTH0_CLIENT_ID')
+AUTH0_CLIENT_SECRET = os.getenv('AUTH0_CLIENT_SECRET')
+AUTH0_AUDIENCE = os.getenv('AUTH0_AUDIENCE')
+ALGORITHMS = os.getenv('ALGORITHMS')
 
 if DEBUG:
     logging.basicConfig(
