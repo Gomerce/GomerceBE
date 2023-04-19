@@ -14,7 +14,7 @@ from server import oauth
 
 
 class Auth0Resource(Resource):
-    def login_user():
+    def login():
         return oauth.auth0.authorize_redirect(
             redirect_uri=url_for("callback", _external=True)
         )
@@ -22,9 +22,9 @@ class Auth0Resource(Resource):
     def callback():
         token = oauth.auth0.authorize_access_token()
         session["user"] = token
-        return redirect("/")
+        return redirect(url_for("index"))
 
-    def logout_user():
+    def logout():
         session.clear()
         return redirect(
             "https://" + config.AUTH0_DOMAIN

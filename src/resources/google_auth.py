@@ -9,15 +9,17 @@ apply the @login_is_required for users just like applied below
 """
 
 """ when dealing with OAuth 2.0 app secret is necessary"""
+
+
 import os
 import pathlib
+import google.auth.transport.requests
 import requests
-import config
-from flask import session, abort, redirect, request
+from flask import abort, redirect, request, session
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
-import google.auth.transport.requests
+import config
 import server
 server.secret_key = config.APP_SECRET
 """this is to set environment to https because OAuth 2.0 only supports https environments"""
@@ -40,7 +42,7 @@ flow = Flow.from_client_secrets_file(
         "openid"
     ],
     # the redirect URI route to after authorization
-    redirect_uri="http://127.0.0.1:5000/callback"
+    redirect_uri="http://127.0.0.1:3303/api/callback"
 )
 
 
