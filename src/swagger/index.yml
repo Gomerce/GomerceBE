@@ -5,5 +5,9 @@ tags:
 responses:
   200:
     description: The api routes is up and healthy
-    schema:
-      example: { "message": "Welcome to Gomerce API" }
+    content: 
+      application/json:
+        schema:
+          example: { "message": "Welcome to Gomerce API" }
+  500:
+    description: Internal Server Error

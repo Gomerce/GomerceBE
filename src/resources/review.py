@@ -18,7 +18,7 @@ class ReviewResource(Resource):
     """ methods relative to the review """
 
     @staticmethod
-    @swag_from("../swagger/review/get_one.yml")
+    # @swag_from("../swagger/review/get_one.yml")
     def get_one(review_id):
         """ Return a review """
 
@@ -41,7 +41,7 @@ class ReviewResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/review/get_all.yml")
+    # @swag_from("../swagger/review/get_all.yml")
     def get_all():
         """ Return all review key information based on the query parameter """
         reviews = ReviewRepository.getAll()

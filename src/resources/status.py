@@ -16,7 +16,7 @@ class StatusResource(Resource):
     """ methods relative to the status """
 
     @staticmethod
-    @swag_from("../swagger/status/get_one.yml")
+    # @swag_from("../swagger/status/get_one.yml")
     @requires_auth('get:status')
     def get_one(status_id):
         """ Return a status key information based on status_id """
@@ -37,7 +37,7 @@ class StatusResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/status/get_all.yml")
+    # @swag_from("../swagger/status/get_all.yml")
     @requires_auth('get:statuses')
     def get_all():
         """ Return all status key information based on the query parameter """

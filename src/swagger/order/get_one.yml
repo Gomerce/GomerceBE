@@ -1,7 +1,7 @@
 title: Get an order
 description: Return key information of an order given its id
 tags:
-  - order 
+  - orders 
 parameters:
   - name: created_at
     in: path

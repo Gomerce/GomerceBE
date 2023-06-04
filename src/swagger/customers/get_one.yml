@@ -1,7 +1,7 @@
 title: Get a customer
 description: Return a customer key information based on his name
 tags:
-  - customer
+  - Customers
 parameters:
   - name: first_name
     in: path

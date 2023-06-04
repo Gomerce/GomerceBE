@@ -1,0 +1,21 @@
+title: Get all customers
+description: Return all customers key information
+tags:
+  - Customers
+operationId: get_all
+responses:
+  200:
+    description: The customers information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          example:
+            {
+              "data":
+                [
+                  { "last_name": Doe, "first_name": John, "email": "johndoe@example.com" },
+                  { "last_name": "Roe", "first_name": "Jerry", "email": "roejerry@example.com" },
+                  { "last_name": "Moses", "first_name": "Benita", "email": "benita_moses@example.com" }
+                ],
+            }
+security:

@@ -17,14 +17,37 @@ from validators.auth import AuthError
 
 server = Flask(__name__)
 
+# server.config["SWAGGER"] = {
+#     "swagger_version": "2.0",
+#     "title": "Gomerce API",
+#     'uiversion': 3,
+#     "static_url_path": "/apidocs",
+#     'openapi': '3.0.1'
+# }
+
+
 server.config["SWAGGER"] = {
     "swagger_version": "2.0",
     "title": "Gomerce API",
-    'uiversion': 3,
-    "static_url_path": "/apidocs",
-    'openapi': '3.0.1'
+
+    "description": """ Gomerce is a modern ecommerce app designed to provide
+    users with a seamless online shopping experience. With its sleek interface,
+    the app offers a wide range of products from various brands and sellers.
+    It features advanced search and filtering options for easy product
+    discovery. Personalized recommendations and curated collections help users
+    find new items that align with their interests. Gomerce ensures secure
+    transactions through a reliable payment gateway and offers multiple
+    payment options. Additionally, it provides a user-friendly and intuitive
+    interface for managing orders, tracking shipments, and handling returns,
+    ensuring a hassle-free post-purchase experience. """,
+    "termsOfService": "#",
+    "version": "1.0.0",
+    "uiversion": 3,
+    "static_url_path": "/apidocs"
 }
-Swagger(server)
+swagger_config = Swagger.DEFAULT_CONFIG.copy()
+swagger_config["openapi"] = "3.0.3"
+Swagger(server, config=swagger_config)
 
 server.debug = config.DEBUG
 server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI

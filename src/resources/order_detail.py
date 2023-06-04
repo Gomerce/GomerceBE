@@ -15,7 +15,7 @@ class OrderDetailResource(Resource):
     """ methods relative to the order detail """
 
     @staticmethod
-    @swag_from("../swagger/order_detail/get_one.yml")
+    # @swag_from("../swagger/order_detail/get_one.yml")
     @requires_auth('get:order_detail')
     def get_one(detail_id):
         """ Return an order key information based on order_id """
@@ -41,7 +41,7 @@ class OrderDetailResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/order_detail/get_all.yml")
+    # @swag_from("../swagger/order_detail/get_all.yml")
     @requires_auth('get:order_details')
     def get_all():
         """ Return all order detail key information based on the query parameter """
