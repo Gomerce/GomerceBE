@@ -2,20 +2,39 @@ title: Get all customers
 description: Return all customers key information
 tags:
   - Customers
-operationId: get_all
+operationId: 
 responses:
   200:
     description: The customers information were successfully retrieved
     content:
       application/json:
         schema:
-          example:
-            {
-              "data":
-                [
-                  { "last_name": Doe, "first_name": John, "email": "johndoe@example.com" },
-                  { "last_name": "Roe", "first_name": "Jerry", "email": "roejerry@example.com" },
-                  { "last_name": "Moses", "first_name": "Benita", "email": "benita_moses@example.com" }
-                ],
-            }
+          type: array
+          items:
+            type: object
+            properties:
+              last_name:
+                type: string
+                description: The customer's last name
+              first_name:
+                type: string
+                description: The customer's first name
+              email:
+                type: string
+                description: The customer's email address
+            example:
+              {
+                "data":
+                  [
+                    { "last_name": Doe, "first_name": John, "email": "johndoe@example.com" },
+                    { "last_name": "Roe", "first_name": "Jerry", "email": "roejerry@example.com" },
+                    { "last_name": "Moses", "first_name": "Benita", "email": "benita_moses@example.com" }
+                  ],
+              }
+  401:
+    description: Not authenticated
+  403:
+    description: Access token does not have the required scope
 security:
+  Auth0: ["openid", "profile", "email"]
+

@@ -25,30 +25,6 @@ server = Flask(__name__)
 #     'openapi': '3.0.1'
 # }
 
-
-server.config["SWAGGER"] = {
-    "swagger_version": "2.0",
-    "title": "Gomerce API",
-
-    "description": """ Gomerce is a modern ecommerce app designed to provide
-    users with a seamless online shopping experience. With its sleek interface,
-    the app offers a wide range of products from various brands and sellers.
-    It features advanced search and filtering options for easy product
-    discovery. Personalized recommendations and curated collections help users
-    find new items that align with their interests. Gomerce ensures secure
-    transactions through a reliable payment gateway and offers multiple
-    payment options. Additionally, it provides a user-friendly and intuitive
-    interface for managing orders, tracking shipments, and handling returns,
-    ensuring a hassle-free post-purchase experience. """,
-    "termsOfService": "#",
-    "version": "1.0.0",
-    "uiversion": 3,
-    "static_url_path": "/apidocs"
-}
-swagger_config = Swagger.DEFAULT_CONFIG.copy()
-swagger_config["openapi"] = "3.0.3"
-Swagger(server, config=swagger_config)
-
 server.debug = config.DEBUG
 server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI
 server.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = config.SQLALCHEMY_TRACK_MODIFICATIONS  # noqa
@@ -75,6 +51,61 @@ oauth.register(
     },
     # server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
 )
+
+
+# swagger configuration
+
+server.config["SWAGGER"] = {
+    "swagger_version": "2.0",
+    "title": "Gomerce API",
+
+    "description": """ Gomerce is a modern ecommerce app designed to provide
+    users with a seamless online shopping experience. With its sleek interface,
+    the app offers a wide range of products from various brands and sellers.
+    It features advanced search and filtering options for easy product
+    discovery. Personalized recommendations and curated collections help users
+    find new items that align with their interests. Gomerce ensures secure
+    transactions through a reliable payment gateway and offers multiple
+    payment options. Additionally, it provides a user-friendly and intuitive
+    interface for managing orders, tracking shipments, and handling returns,
+    ensuring a hassle-free post-purchase experience. """,
+    "termsOfService": "#",
+    "version": "1.0.0",
+    "uiversion": 3,
+    "static_url_path": "/apidocs",
+    # "securitySchemes": {
+    #     "Auth0": {
+    #         "type": "oauth2",
+    #         "flow": "implicit",
+    #         "authorizationUrl": config.AUTH0_DOMAIN + "/authorize",
+    #         "scopes": {
+    #             "openid": "OpenID Connect",
+    #             "profile": "Access to user profile",
+    #             "email": "Access to user email",
+    #         }
+    #     }
+    # }
+}
+
+swagger_config = Swagger.DEFAULT_CONFIG.copy()
+swagger_config["openapi"] = "3.0.3"
+swagger_config["servers"] = [
+    {"url": "http://127.0.0.1:3303", "description": "Local development server"},  # noqa
+    {"url": "http://3.16.135.85", "description": "Production server"},
+]
+swagger_config["securityDefinitions"] = {
+    "Auth0": {
+        "type": "oauth2",
+        "flow": "implicit",
+        "authorizationUrl": config.AUTH0_DOMAIN + "/authorize",
+        "scopes": {
+            "openid": "OpenID Connect",
+            "profile": "Access to user profile",
+            "email": "Access to user email",
+        }
+    }
+}
+Swagger(server, config=swagger_config)
 
 
 """ Error handling """
