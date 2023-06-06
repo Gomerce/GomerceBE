@@ -35,6 +35,6 @@ responses:
     description: Not authenticated
   403:
     description: Access token does not have the required scope
-security:
-  Auth0: ["openid", "profile", "email"]
-
+security: 
+  - oauth2:
+    - read:users

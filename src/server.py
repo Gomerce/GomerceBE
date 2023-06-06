@@ -9,21 +9,7 @@ import routes
 from models import db
 from validators.auth import AuthError
 
-# config your API specs
-# you can define multiple specs in the case your api has multiple versions
-# ommit configs to get the default (all views exposed in /spec url)
-# rule_filter is a callable that receives "Rule" object and
-#   returns a boolean to filter in only desired views
-
 server = Flask(__name__)
-
-# server.config["SWAGGER"] = {
-#     "swagger_version": "2.0",
-#     "title": "Gomerce API",
-#     'uiversion': 3,
-#     "static_url_path": "/apidocs",
-#     'openapi': '3.0.1'
-# }
 
 server.debug = config.DEBUG
 server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI
@@ -69,44 +55,53 @@ server.config["SWAGGER"] = {
     payment options. Additionally, it provides a user-friendly and intuitive
     interface for managing orders, tracking shipments, and handling returns,
     ensuring a hassle-free post-purchase experience. """,
+
     "termsOfService": "#",
     "version": "1.0.0",
-    "uiversion": 3,
     "static_url_path": "/apidocs",
-    # "securitySchemes": {
-    #     "Auth0": {
-    #         "type": "oauth2",
-    #         "flow": "implicit",
-    #         "authorizationUrl": config.AUTH0_DOMAIN + "/authorize",
-    #         "scopes": {
-    #             "openid": "OpenID Connect",
-    #             "profile": "Access to user profile",
-    #             "email": "Access to user email",
-    #         }
-    #     }
-    # }
+    "servers": [
+        {"url": "http://127.0.0.1:3303", "description": "Local development server"},
+        {"url": "http://3.16.135.85", "description": "Production server"}
+    ],
+    "security": [
+        {
+            "implicit": [
+                "get",
+            ]
+        }
+    ],
+    "components": {
+        "schemas": {},
+        "securitySchemes": {
+            "implicit": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "https://gomerce-users.netlify.app",
+                        "scopes": {
+                            "get": "allows modifying resources",
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 swagger_config = Swagger.DEFAULT_CONFIG.copy()
 swagger_config["openapi"] = "3.0.3"
-swagger_config["servers"] = [
-    {"url": "http://127.0.0.1:3303", "description": "Local development server"},  # noqa
-    {"url": "http://3.16.135.85", "description": "Production server"},
-]
+# Add the security definitions
 swagger_config["securityDefinitions"] = {
-    "Auth0": {
-        "type": "oauth2",
-        "flow": "implicit",
-        "authorizationUrl": config.AUTH0_DOMAIN + "/authorize",
-        "scopes": {
-            "openid": "OpenID Connect",
-            "profile": "Access to user profile",
-            "email": "Access to user email",
-        }
+    "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
     }
 }
-Swagger(server, config=swagger_config)
 
+# Add the security requirement
+swagger_config["security"] = [{"BearerAuth": []}]
+Swagger(server, config=swagger_config)
 
 """ Error handling """
 
