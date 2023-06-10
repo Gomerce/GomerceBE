@@ -63,13 +63,7 @@ server.config["SWAGGER"] = {
         {"url": "http://127.0.0.1:3303", "description": "Local development server"},
         {"url": "http://3.16.135.85", "description": "Production server"}
     ],
-    "security": [
-        {
-            "implicit": [
-                "get",
-            ]
-        }
-    ],
+
     "components": {
         "schemas": {},
         "securitySchemes": {
@@ -77,9 +71,10 @@ server.config["SWAGGER"] = {
                 "type": "oauth2",
                 "flows": {
                     "implicit": {
-                        "authorizationUrl": "https://gomerce-users.netlify.app",
+                        "authorizationUrl": "https://dev-g4gsowubo2qcoa42.us.auth0.com/authorize",
                         "scopes": {
-                            "get": "allows modifying resources",
+                            "get": "allows retrieving resources",
+                            "post": "allows creating of resources",
                         }
                     }
                 }

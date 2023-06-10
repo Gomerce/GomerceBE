@@ -8,6 +8,16 @@ responses:
     content: 
       application/json:
         schema:
-          example: { "message": "Welcome to Gomerce API" }
+          type: object
+          properties:
+          example:
+            message: Welcome to Gomerce API
   500:
     description: Internal Server Error
+    content: 
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Internal Server Error Occured

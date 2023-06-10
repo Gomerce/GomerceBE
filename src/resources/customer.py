@@ -60,7 +60,7 @@ class CustomerResource(Resource):
         Argument("age", location="json",
                  help="The age of the customer.")
     )
-    # @swag_from("../swagger/customers/PUT.yml")
+    @swag_from("../swagger/customers/put.yml")
     @requires_auth('patch:user')
     def update_customer(customer_id, last_name, first_name, age):
         """ Update a customer based on the provided information """
@@ -80,7 +80,7 @@ class CustomerResource(Resource):
         Argument("age", location="json", required=True,
                  help="The age of the customer.")
     )
-    # @swag_from("../swagger/customers/POST.yml")
+    @swag_from("../swagger/customers/post.yml")
     @requires_auth('post:user')
     def post(last_name, first_name, age):
         """ Create a customer based on the provided information """
