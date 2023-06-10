@@ -9,22 +9,7 @@ import routes
 from models import db
 from validators.auth import AuthError
 
-# config your API specs
-# you can define multiple specs in the case your api has multiple versions
-# ommit configs to get the default (all views exposed in /spec url)
-# rule_filter is a callable that receives "Rule" object and
-#   returns a boolean to filter in only desired views
-
 server = Flask(__name__)
-
-server.config["SWAGGER"] = {
-    "swagger_version": "2.0",
-    "title": "Gomerce API",
-    'uiversion': 3,
-    "static_url_path": "/apidocs",
-    'openapi': '3.0.1'
-}
-Swagger(server)
 
 server.debug = config.DEBUG
 server.config["SQLALCHEMY_DATABASE_URI"] = config.DB_URI
@@ -53,6 +38,65 @@ oauth.register(
     # server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
 )
 
+
+# swagger configuration
+
+server.config["SWAGGER"] = {
+    "swagger_version": "2.0",
+    "title": "Gomerce API",
+
+    "description": """ Gomerce is a modern ecommerce app designed to provide
+    users with a seamless online shopping experience. With its sleek interface,
+    the app offers a wide range of products from various brands and sellers.
+    It features advanced search and filtering options for easy product
+    discovery. Personalized recommendations and curated collections help users
+    find new items that align with their interests. Gomerce ensures secure
+    transactions through a reliable payment gateway and offers multiple
+    payment options. Additionally, it provides a user-friendly and intuitive
+    interface for managing orders, tracking shipments, and handling returns,
+    ensuring a hassle-free post-purchase experience. """,
+
+    "termsOfService": "#",
+    "version": "1.0.0",
+    "static_url_path": "/apidocs",
+    "servers": [
+        {"url": "http://127.0.0.1:3303", "description": "Local development server"},
+        {"url": "http://3.16.135.85", "description": "Production server"}
+    ],
+
+    "components": {
+        "schemas": {},
+        "securitySchemes": {
+            "implicit": {
+                "type": "oauth2",
+                "flows": {
+                    "implicit": {
+                        "authorizationUrl": "https://dev-g4gsowubo2qcoa42.us.auth0.com/authorize",
+                        "scopes": {
+                            "get": "allows retrieving resources",
+                            "post": "allows creating of resources",
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+swagger_config = Swagger.DEFAULT_CONFIG.copy()
+swagger_config["openapi"] = "3.0.3"
+# Add the security definitions
+swagger_config["securityDefinitions"] = {
+    "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+    }
+}
+
+# Add the security requirement
+swagger_config["security"] = [{"BearerAuth": []}]
+Swagger(server, config=swagger_config)
 
 """ Error handling """
 

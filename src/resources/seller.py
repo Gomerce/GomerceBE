@@ -21,7 +21,7 @@ class SellerResource(Resource):
     """ methods relative to the seller """
 
     @staticmethod
-    @swag_from("../swagger/seller/get_one.yml")
+    # @swag_from("../swagger/seller/get_one.yml")
     @requires_auth('get:seller')
     def get_one(seller_id):
         """ Return a seller key information based on seller_id """
@@ -38,7 +38,7 @@ class SellerResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/seller/get_all.yml")
+    # @swag_from("../swagger/seller/get_all.yml")
     @requires_auth('get:sellers')
     def get_all():
         """ Return all seller key information based on the query parameter """

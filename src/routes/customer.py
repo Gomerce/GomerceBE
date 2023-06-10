@@ -12,3 +12,5 @@ CUSTOMER_BLUEPRINT.route(
 CUSTOMER_BLUEPRINT.route("/customers", methods=['POST'])(CustomerResource.post)
 CUSTOMER_BLUEPRINT.route("/customers/<int:customer_id>",
                          methods=['GET'])(CustomerResource.get_one)
+CUSTOMER_BLUEPRINT.route("/customers/<int:customer_id>",
+                         methods=['PUT'])(CustomerResource.update_customer)

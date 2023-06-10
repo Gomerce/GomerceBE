@@ -1,0 +1,91 @@
+title: Create a new customer
+description: Create a new customer
+tags:
+  - Customers
+operationId: postcustomer
+
+requestBody:
+  description: Create a new customer
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          last_name:
+            type: string
+            example: Doe
+          first_name:
+            type: string
+            example: John
+          email:
+            type: string
+            format: email
+            example: johndoe@example.com
+        required:
+          - last_name
+          - first_name
+          - email
+  required: true
+
+responses:
+  200:
+    description: The customer was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id: integer
+            last_name:
+              type: string
+            first_name:
+              type: string
+            email:
+              type: string
+              format: email
+          example:
+            id: 2
+            last_name: Doe
+            first_name: John
+            email: johndoe@example.com
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+  409:
+    description: Customer already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing customer with the same details already exists
+
+security:
+  - implicit:
+      - post

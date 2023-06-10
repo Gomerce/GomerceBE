@@ -16,7 +16,7 @@ class PaymentMethodResource(Resource):
     """ methods relative to the payment method """
 
     @staticmethod
-    @swag_from("../swagger/payment_method/get_one.yml")
+    # @swag_from("../swagger/payment_method/get_one.yml")
     @requires_auth('get:payment_method')
     def get_one(method_id):
         """ Return a payment method key information based on method_id """
@@ -35,7 +35,7 @@ class PaymentMethodResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/payment_method/get_all.yml")
+    # @swag_from("../swagger/payment_method/get_all.yml")
     @requires_auth('get:payment_methods')
     def get_all():
         """ Return all payment method key information based on the query parameter """

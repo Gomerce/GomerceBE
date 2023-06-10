@@ -1,0 +1,91 @@
+title: Update a customer
+description: Update customer details
+tags:
+  - Customers
+operationId: patchcustomer
+
+parameters:
+        - name: customerID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update customer details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          last_name:
+            type: string
+            example: Doe
+          first_name:
+            type: string
+            example: MacDonald
+          email:
+            type: string
+            format: email
+            example: macdonalddoe@example.com
+          
+        required:
+          - last_name
+          - first_name
+          - email
+  required: true
+
+responses:
+  200:
+    description: The customer was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id: integer
+            last_name:
+              type: string
+            first_name:
+              type: string
+            email:
+              type: string
+              format: email
+          example:
+            id: 1
+            last_name: Doe
+            first_name: MacDonald
+            email: macdonalddoe@example.com
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

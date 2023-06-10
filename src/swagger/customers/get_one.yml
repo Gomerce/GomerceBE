@@ -1,0 +1,73 @@
+title: Get a customer's detail
+description: Returns a customer's key information
+tags:
+  - Customers
+operationId: getcustomer
+
+parameters:
+        - name: customerID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Customer was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            last_name:
+              type: string
+            first_name:
+              type: string
+            email:
+              type: string
+              format: email
+          required:
+            - id
+            - last_name
+            - first_name
+            - email
+        example:
+          id: 1
+          last_name: Doe
+          first_name: John
+          email: johndoe@example.com
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Customer not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Customer was not found
+
+security:
+  - implicit:
+      - get
