@@ -15,7 +15,7 @@ class CouponResource(Resource):
     """ coupon functionalities """
 
     @staticmethod
-    @swag_from("../swagger/coupon/get_one.yml")
+    # @swag_from("../swagger/coupon/get_one.yml")
     @requires_auth('get:coupon')
     def get_one(coupon_id):
         """ Return a coupon based on id provided"""
@@ -38,7 +38,7 @@ class CouponResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/coupon/get_all.yml")
+    # @swag_from("../swagger/coupon/get_all.yml")
     @requires_auth('get:coupons')
     def get_all():
         """ Return all coupon key information based on the query parameter """

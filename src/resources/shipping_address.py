@@ -16,7 +16,7 @@ class ShippingAddressResource(Resource):
     """ methods relative to the shipping address """
 
     @staticmethod
-    @swag_from("../swagger/shipping_address/get_one.yml")
+    # @swag_from("../swagger/shipping_address/get_one.yml")
     @requires_auth('get:shipping_address')
     def get_one(address_id):
         """ Return an order key information based on address_id """
@@ -40,7 +40,7 @@ class ShippingAddressResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/shipping_address/get_all.yml")
+    # @swag_from("../swagger/shipping_address/get_all.yml")
     @requires_auth('get:shipping_addresses')
     def get_all():
         """ Return all shipping address key information based on the query parameter """

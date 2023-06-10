@@ -16,7 +16,7 @@ class ProductResource(Resource):
     """ methods relative to the product """
 
     @staticmethod
-    @swag_from("../swagger/product/get_one.yml")
+    @swag_from("../swagger/products/get_one.yml")
     def get_one(product_id):
         """ Return a product key information based on product_id """
 
@@ -45,7 +45,7 @@ class ProductResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/product/get_all.yml")
+    @swag_from("../swagger/products/get_all.yml")
     def get_all():
         """
         Return all products key information based on the query parameter

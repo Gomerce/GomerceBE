@@ -18,7 +18,7 @@ class StoreResource(Resource):
     """ methods relative to the status """
 
     @staticmethod
-    @swag_from("../swagger/store/get_one.yml")
+    # @swag_from("../swagger/store/get_one.yml")
     @requires_auth('get:store')
     def get_one(store_id):
         """ Return a store key information based on status_id """
@@ -45,7 +45,7 @@ class StoreResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/store/get_all.yml")
+    # @swag_from("../swagger/store/get_all.yml")
     @requires_auth('get:stores')
     def get_all():
         """ Return all store key information based on the query parameter """

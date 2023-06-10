@@ -15,7 +15,7 @@ class CustomerResource(Resource):
     """ methods relative to the customer """
 
     @staticmethod
-    @swag_from("../swagger/customer/get_one.yml")
+    @swag_from("../swagger/customers/get_one.yml")
     @requires_auth('get:user')
     def get_one(customer_id):
         """ Return a customer key information based on customer_id """
@@ -44,9 +44,9 @@ class CustomerResource(Resource):
             abort(500)
 
     @staticmethod
-    @swag_from("../swagger/customer/get_all.yml")
+    @swag_from("../swagger/customers/get_all.yml")
     @requires_auth('get:users')
-    def get_all(jwt):
+    def get_all():
         """ Return all customer key information based on the query parameter """
         customers = CustomerRepository.getAll()
         return jsonify({"data": customers})
@@ -60,7 +60,7 @@ class CustomerResource(Resource):
         Argument("age", location="json",
                  help="The age of the customer.")
     )
-    # @swag_from("../swagger/customer/PUT.yml")
+    @swag_from("../swagger/customers/put.yml")
     @requires_auth('patch:user')
     def update_customer(customer_id, last_name, first_name, age):
         """ Update a customer based on the provided information """
@@ -80,7 +80,7 @@ class CustomerResource(Resource):
         Argument("age", location="json", required=True,
                  help="The age of the customer.")
     )
-    # @swag_from("../swagger/customer/POST.yml")
+    @swag_from("../swagger/customers/post.yml")
     @requires_auth('post:user')
     def post(last_name, first_name, age):
         """ Create a customer based on the provided information """

@@ -22,7 +22,7 @@ class AuthResource(Resource):
         Argument("password", location="json",
                  help="The password of the customer.")
     )
-    @swag_from("../swagger/auth/login_customer.yml")
+    # @swag_from("../swagger/auth/login_customer.yml")
     def login_user(username, password):
         """ Login a customer annd return basic information if customer exists """
 
@@ -53,7 +53,7 @@ class AuthResource(Resource):
                  help="The url for email confrimation"),
         Argument("phone", location="json"),
     )
-    @swag_from("../swagger/auth/register_customer.yml")
+    # @swag_from("../swagger/auth/register_customer.yml")
     def register_user(email, password, username, first_name, last_name, confirm_url, phone=None):
         """ Register a customer and return the information of customer """
 

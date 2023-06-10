@@ -1,0 +1,54 @@
+title: Get all customers
+description: Return all customers key information
+tags:
+  - Customers
+operationId: getcustomers
+
+responses:
+  200:
+    description: The customers information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              last_name:
+                type: string
+                description: The customer's last name
+              first_name:
+                type: string
+                description: The customer's first name
+              email:
+                type: string
+                description: The customer's email address
+            example:
+              "data":
+                [
+                  { "last_name": Doe, "first_name": John, "email": "johndoe@example.com" },
+                  { "last_name": "Roe", "first_name": "Jerry", "email": "roejerry@example.com" },
+                  { "last_name": "Moses", "first_name": "Benita", "email": "benita_moses@example.com" }
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get
