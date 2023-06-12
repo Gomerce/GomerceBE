@@ -1,0 +1,67 @@
+title: Delete a product category
+description: Delete a product category
+tags:
+  - Product Category
+operationId: deleteproductcategory
+
+parameters:
+        - name: productcategoryID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Product category was successfully deleted base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            sku:
+              type: string
+
+          required:
+            - id
+            - name
+            - sku
+          example:
+            message: The product category was successfully deleted
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Product category not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Product category was not found
+
+security:
+  - implicit:
+      - delete
