@@ -16,7 +16,7 @@ class ProductCategoryResource(Resource):
     """ methods relative to the product Category """
 
     @staticmethod
-    # @swag_from("../swagger/product_category/get_one.yml")
+    @swag_from("../swagger/product_category/get_one.yml")
     def get_one(product_category_id):
         """ Return a product category key information based on product_category_id """
 
@@ -38,7 +38,7 @@ class ProductCategoryResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/product_categories/get_all.yml")
+    @swag_from("../swagger/product_category/get_all.yml")
     def get_all():
         """ Return all categories key information based on the query parameter """
         product_categories = ProductCategoryRepository.getAll()
@@ -51,7 +51,7 @@ class ProductCategoryResource(Resource):
         Argument("sku", location="json",
                  help="The sku of the product_category.")
     )
-    # @swag_from("../swagger/product/POST.yml")
+    @swag_from("../swagger/product_category/post.yml")
     @requires_auth('post:product_category')
     def post(name, sku):
         """ Create a category based on the provided information """
@@ -69,6 +69,7 @@ class ProductCategoryResource(Resource):
         )
         return jsonify({"data": product_category.json})
 
+    @swag_from("../swagger/product_category/delete.yml")
     @requires_auth('delete:product_category')
     def delete(category_id):
         """ delete a category based on the category id provided """
@@ -88,7 +89,7 @@ class ProductCategoryResource(Resource):
         Argument("sku", location="json",
                  help="The sku of the product_category.")
     )
-    # @swag_from("../swagger/category/PUT.yml")
+    @swag_from("../swagger/product_category/put.yml")
     @requires_auth('patch:product_category')
     def update_category(category_id, name, sku):
         """ Update a category based on the provided information """

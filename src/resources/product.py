@@ -72,7 +72,7 @@ class ProductResource(Resource):
         Argument("product_categories_id", location="json",
                  help="The product_categories of the product."),
     )
-    # @swag_from("../swagger/product/POST.yml")
+    @swag_from("../swagger/products/post.yml")
     @requires_auth('post:product')
     def post(title, price, quantity, short_desc,
              thumbnail, image, sellers_id, product_categories_id):
@@ -138,6 +138,7 @@ class ProductResource(Resource):
             "product_category_id": product.product_categories_id
         })
 
+    @swag_from("../swagger/products/delete.yml")
     @requires_auth('delete:product')
     def delete(product_id):
         """ delete a product based on the product id provided """
@@ -173,7 +174,7 @@ class ProductResource(Resource):
         Argument("rating", location="json",
                  help="The rating of the product.")
     )
-    # @swag_from("../swagger/product/PUT.yml")
+    @swag_from("../swagger/products/put.yml")
     @requires_auth('patch:product')
     def update_product(product_id, title, price, quantity,
                        short_desc, thumbnail, image, rating):

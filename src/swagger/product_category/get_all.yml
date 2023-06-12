@@ -1,0 +1,60 @@
+title: Get all product categories
+description: Return all product categories information
+tags:
+  - Product Category
+operationId: getproductcategories
+
+responses:
+  200:
+    description: The product categories information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The product categories's name
+              sku:
+                type: string
+                description: The product categories's sku (stock keeping unit)
+            example:
+              "data":
+                [
+                  { 
+                  "name": "Fashion", 
+                  "sku": "ACME1234", 
+                  },
+                  { 
+                  "name": "Phones and Phones Accessories", 
+                  "sku": "XYZ5678", 
+                  },
+                  { 
+                  "name": "Electronics", 
+                  "sku": "ABCD9876", 
+                  },
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get
