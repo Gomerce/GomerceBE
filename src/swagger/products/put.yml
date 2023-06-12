@@ -1,0 +1,115 @@
+title: Update a product
+description: Update product details
+tags:
+  - Products
+operationId: patchproduct
+
+parameters:
+        - name: productID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update product details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          price:
+            type: string
+          short_desc:
+            type: string
+          seller:
+            type: string
+          product_category:
+            type: string
+          brand:
+            type: string
+        example:
+          id: 2
+          title: XIAOMI Redmi 4GB RAM/64GB ROM Android 12 - Red
+          price: ₦80,000
+          short_desc: Xiaomi Redmi 12C Android Smartphone was launched in December 2022. It is running on the MediaTek MT6769Z Helio G85 (12nm) processor with Mali-G52 MC2 GPU. The phone has 3 GB RAM and 64 GB of internal storage which is expandable using microSDXC (dedicated slot).
+          seller: Riry distribution
+          product_category: Phones and Phones Accessories
+          brand: Xiaomi
+          
+        required:
+          - title
+          - price
+          - short_desc
+          - seller
+          - product_category
+          - brand
+  required: true
+
+responses:
+  200:
+    description: The product was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            price:
+              type: string
+            short_desc:
+              type: string
+            seller:
+              type: string
+            product_category:
+              type: string
+            brand:
+              type: string
+          example:
+            id: 2
+            title: XIAOMI Redmi 4GB RAM/64GB ROM Android 12 - Red
+            price: ₦80,000
+            short_desc: Xiaomi Redmi 12C Android Smartphone was launched in December 2022. It is running on the MediaTek MT6769Z Helio G85 (12nm) processor with Mali-G52 MC2 GPU. The phone has 3 GB RAM and 64 GB of internal storage which is expandable using microSDXC (dedicated slot).
+            seller: Riry distribution
+            product_category: Phones and Phones Accessories
+            brand: Xiaomi
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

@@ -1,8 +1,8 @@
-title: Get a product's detail
-description: Returns a product's key information
+title: Delete a product
+description: Delete a product
 tags:
   - Products
-operationId: getproduct
+operationId: deleteproduct
 
 parameters:
         - name: productID
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Product was successfully retrieved base on ID
+    description: Product was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -43,13 +43,7 @@ responses:
             - product_category
             - brand
           example:
-            id: 1
-            title: Casio MTP-VD02G-1EUDF
-            price: ₦35,000
-            short_desc: This classic timepiece is in a sporty design that is streamlined for casual sophistication. The minimalist analogue design features a handy date display at the 6 o’clock position. Water resistance for daily use frees you from worry when washing up or out in the rain.
-            seller: Margaret Blinks
-            product_category: Fashion
-            brand: Casio
+            message: The product was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -81,4 +75,4 @@ responses:
 
 security:
   - implicit:
-      - get
+      - delete
