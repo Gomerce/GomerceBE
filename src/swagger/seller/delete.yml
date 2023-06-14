@@ -1,0 +1,82 @@
+title: Delete a seller
+description: Delete a seller
+tags:
+  - Sellers
+operationId: deleteseller
+
+parameters:
+        - name: sellerID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Seller was successfully deleted base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            first_name:
+              type: string
+            last_name:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            username:
+              type: string
+            password:
+              type: string
+            rating:
+              type: integer
+
+          required:
+            - id
+            - first_name
+            - last_name
+            - email
+            - phone
+            - username
+            - password
+            - rating
+          example:
+            message: The seller was successfully deleted
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Seller not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Seller was not found
+
+security:
+  - implicit:
+      - delete

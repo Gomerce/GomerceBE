@@ -1,0 +1,66 @@
+title: Delete a review
+description: Delete a review
+tags:
+  - Reiview
+operationId: deletereview
+
+parameters:
+        - name: reviewID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Review was successfully deleted base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            comment:
+              type: string
+            images:
+              type: string
+          required:
+            - id
+            - comment
+            - images
+          example:
+            message: The review was successfully deleted
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Review not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Review was not found
+
+security:
+  - implicit:
+      - delete
