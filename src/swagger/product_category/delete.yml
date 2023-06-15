@@ -1,7 +1,7 @@
 title: Delete a product category
 description: Delete a product category
 tags:
-  - Product Category
+  - Product Categories
 operationId: deleteproductcategory
 
 parameters:

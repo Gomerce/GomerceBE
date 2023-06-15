@@ -1,45 +1,34 @@
-title: Update a product category
-description: Update product category details
+title: Create a new coupon
+description: Create a new coupon
 tags:
-  - Product Categories
-operationId: patchproductcategory
-
-parameters:
-        - name: productcategoryID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - Coupons
+operationId: postcoupon
 
 requestBody:
-  description: Update product category details
+  description: Create a new coupon
   content:
     application/json:
       schema:
         type: object
         properties:
-          id:
-            type: integer
-          name:
+          code:
             type: string
-          sku:
+            example: WG83012
+          Anount:
             type: string
-
-        example:
-          id: 2
-          name: Gaming & Gaming Accessories
-          sku: QWERTY2468
-          
+            example: ₦5,500
+          Expiring Date:
+            type: date
+            example: 2023-10-15
         required:
-          - name
-          - sku
-
+          - code
+          - amount
+          - expires_at
   required: true
 
 responses:
   200:
-    description: The product was Updated successfully
+    description: The coupon was created successfully
     content:
       application/json:
         schema:
@@ -47,16 +36,17 @@ responses:
           properties:
             id:
               type: integer
-            name:
+            code:
               type: string
-            sku:
+            amount:
               type: string
-
+            expires_at:
+              type: string
           example:
-            id: 2
-            title: Gaming & Gaming Accessories
-            price: QWERTY2468
-
+            id: 4
+            code: WG83012
+            amount: ₦5,500
+            expiring date: 2023-10-15
   400:
     description: invalid input
     content:
@@ -85,7 +75,16 @@ responses:
           properties:
           example:
             message: Access token does not have the required scope
+  409:
+    description: Coupon already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing coupon with the same details already exists
 
 security:
   - implicit:
-      - patch
+      - post

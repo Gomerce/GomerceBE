@@ -1,11 +1,11 @@
-title: Update a product category
-description: Update product category details
+title: Update a coupon
+description: Update coupon details
 tags:
-  - Product Categories
-operationId: patchproductcategory
+  - Coupons
+operationId: patchcoupon
 
 parameters:
-        - name: productcategoryID
+        - name: couponID
           in: path
           required: true
           schema:
@@ -13,7 +13,7 @@ parameters:
             format: int64
 
 requestBody:
-  description: Update product category details
+  description: Update coupon details
   content:
     application/json:
       schema:
@@ -21,25 +21,27 @@ requestBody:
         properties:
           id:
             type: integer
-          name:
+          code:
             type: string
-          sku:
+          amount:
             type: string
-
+          expires_at:
+            type: string
         example:
           id: 2
-          name: Gaming & Gaming Accessories
-          sku: QWERTY2468
+          code: DD82930
+          amount: ₦8,000
+          expires: 2024-03-19
           
         required:
-          - name
-          - sku
-
+          - code
+          - amount
+          - expires_at
   required: true
 
 responses:
   200:
-    description: The product was Updated successfully
+    description: The coupon was Updated successfully
     content:
       application/json:
         schema:
@@ -47,16 +49,19 @@ responses:
           properties:
             id:
               type: integer
-            name:
+            code:
               type: string
-            sku:
+            amount:
+              type: string
+            expires_at:
               type: string
 
           example:
             id: 2
-            title: Gaming & Gaming Accessories
-            price: QWERTY2468
-
+            code: DD82930
+            amount: ₦8,000
+            expires: 2024-03-19
+            
   400:
     description: invalid input
     content:
