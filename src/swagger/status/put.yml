@@ -1,11 +1,11 @@
-title: Update a product category
-description: Update product category details
+title: Update a status
+description: Update status details
 tags:
-  - Product Categories
-operationId: patchproductcategory
+  - Statuses
+operationId: patchstatus
 
 parameters:
-        - name: productcategoryID
+        - name: statusID
           in: path
           required: true
           schema:
@@ -13,7 +13,7 @@ parameters:
             format: int64
 
 requestBody:
-  description: Update product category details
+  description: Update status details
   content:
     application/json:
       schema:
@@ -21,25 +21,25 @@ requestBody:
         properties:
           id:
             type: integer
-          name:
+          status:
             type: string
-          sku:
-            type: string
-
+          order_id:
+            type: integer
+          
         example:
           id: 2
-          name: Gaming & Gaming Accessories
-          sku: QWERTY2468
+          status: Delivery in Progress
+          order_id: 27292010
           
         required:
-          - name
-          - sku
+          - status
+          - order_id
 
   required: true
 
 responses:
   200:
-    description: The product was Updated successfully
+    description: The status was Updated successfully
     content:
       application/json:
         schema:
@@ -47,16 +47,15 @@ responses:
           properties:
             id:
               type: integer
-            name:
+            status:
               type: string
-            sku:
-              type: string
-
+            order_id:
+              type: integer
+            
           example:
             id: 2
-            title: Gaming & Gaming Accessories
-            price: QWERTY2468
-
+            status: Delivery in Progress
+            order_id: 27292010
   400:
     description: invalid input
     content:

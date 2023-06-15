@@ -1,21 +1,69 @@
-title: Get a status
-description: Return a status key information based on his name
+title: Get a status's detail
+description: Returns a status's key information
 tags:
-  - status
+  - Statuses
+operationId: getstatus
+
 parameters:
-  - name: status
-    in: path
-    type: string
-    description: the name of the status
-  - name: order_id
-    in: path
-    type: int
-    description: the order_id of the status
+        - name: statusID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
 responses:
   200:
-    description: The status's information were successfully retrieved
-    schema:
-      example:
-        status:
-          status: sold
-          order_id: 2
+    description: Status was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            status:
+              type: string
+            order_id:
+              type: integer
+
+          required:
+            - id
+            - status
+            - order_id
+          example:
+            id: 1
+            status: Pending Payment
+            order_id: 92837202
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Status not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Status was not found
+
+security:
+  - implicit:
+      - get

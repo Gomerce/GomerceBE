@@ -16,7 +16,7 @@ class StatusResource(Resource):
     """ methods relative to the status """
 
     @staticmethod
-    # @swag_from("../swagger/status/get_one.yml")
+    @swag_from("../swagger/status/get_one.yml")
     @requires_auth('get:status')
     def get_one(status_id):
         """ Return a status key information based on status_id """
@@ -37,7 +37,7 @@ class StatusResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/status/get_all.yml")
+    @swag_from("../swagger/status/get_all.yml")
     @requires_auth('get:statuses')
     def get_all():
         """ Return all status key information based on the query parameter """
@@ -51,6 +51,7 @@ class StatusResource(Resource):
         Argument("order_id", location="json",
                  help="The order_id of the Statuses."),
     )
+    @swag_from("../swagger/status/put.yml")
     @requires_auth('patch:status')
     def update_status(status_id, status, order_id):
         """ Update a status based on the provided information """
@@ -66,6 +67,7 @@ class StatusResource(Resource):
         Argument("order_id", location="json",
                  help="The order_id of the Statuses."),
     )
+    @swag_from("../swagger/status/post.yml")
     @requires_auth('post:status')
     def post(status, order_id):
         """ Create a status based on the provided information """
@@ -78,6 +80,7 @@ class StatusResource(Resource):
         }
         return jsonify({"data": data})
 
+    @swag_from("../swagger/status/delete.yml")
     @requires_auth('delete:status')
     def delete(status_id):
         """ delete a status via the provided id """
