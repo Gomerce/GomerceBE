@@ -1,41 +1,77 @@
-title: Get a review
-description: Return key information of a review given its id
+title: Get a review's detail
+description: Returns a review's key information
 tags:
-  - review
+  - Reviews
+operationId: getreview
+
 parameters:
-  - name: comment
-    in: path
-    type: string
-    description: the comment for a review
-  - name: images
-    in: path
-    type: string
-    description: the image for a review
-  - name: sellers_id
-    in: path
-    type: int
-    description: the sellers id for areview
-  - name: products_id
-    in: path
-    type: int
-    description: the product id for areview
-  - name: created_at
-    in: path
-    type: datetime
-    description: the date a review was created
-  - name: updated_at
-    in: path
-    type: datetime
-    description: the date a review was updated
+        - name: reviewID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
 responses:
   200:
-    description: The review's information were successfully retrieved
-    schema:
-    example:
-      data:
-        comment: Best service ever!!!
-        image: image.png
-        created_at: 08-11-2022
-        updated_at: 08-11-2022
-        sellers_id: 2
-        products_id: 0
+    description: Review was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            comment:
+              type: string
+            images:
+              type: string
+            sellers_id:
+              type: integer
+            products_id:
+              type: integer
+            
+          required:
+            - id
+            - comment
+            - images
+            - sellers_id
+            - products_id
+          example:
+            id: 1
+            comment: I enjoyed the service rendered, 
+            images: http://unsplash123.com, 
+            sellers_id: 12,
+            products_id: 9
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Review not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Review was not found
+
+security:
+  - implicit:
+      - get

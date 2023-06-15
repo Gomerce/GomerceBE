@@ -18,7 +18,7 @@ class ReviewResource(Resource):
     """ methods relative to the review """
 
     @staticmethod
-    # @swag_from("../swagger/review/get_one.yml")
+    @swag_from("../swagger/review/get_one.yml")
     def get_one(review_id):
         """ Return a review """
 
@@ -41,7 +41,7 @@ class ReviewResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/review/get_all.yml")
+    @swag_from("../swagger/review/get_all.yml")
     def get_all():
         """ Return all review key information based on the query parameter """
         reviews = ReviewRepository.getAll()
@@ -58,6 +58,7 @@ class ReviewResource(Resource):
         Argument("products_id", location="json",
                  help="The products_id for a review"),
     )
+    @swag_from("../swagger/review/post.yml")
     @requires_auth('post:review')
     def post(comment, images, sellers_id, products_id):
         """ Create a review """
@@ -75,6 +76,8 @@ class ReviewResource(Resource):
         Argument("images", location="json",
                  help="The image for a review.")
     )
+    @swag_from("../swagger/review/put.yml")
+    
     @requires_auth('patch:review')
     def update(review_id, comment, images):
         """ Update a review"""
@@ -91,6 +94,8 @@ class ReviewResource(Resource):
         }
 
         return jsonify({"data": data})
+
+    @swag_from("../swagger/review/delete.yml")
 
     @requires_auth('delete:review')
     def delete(review_id):

@@ -21,7 +21,7 @@ class SellerResource(Resource):
     """ methods relative to the seller """
 
     @staticmethod
-    # @swag_from("../swagger/seller/get_one.yml")
+    @swag_from("../swagger/seller/get_one.yml")
     @requires_auth('get:seller')
     def get_one(seller_id):
         """ Return a seller key information based on seller_id """
@@ -38,7 +38,7 @@ class SellerResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/seller/get_all.yml")
+    @swag_from("../swagger/seller/get_all.yml")
     @requires_auth('get:sellers')
     def get_all():
         """ Return all seller key information based on the query parameter """
@@ -54,7 +54,7 @@ class SellerResource(Resource):
         Argument("phone", location="json",
                  help="The phone details of the seller.")
     )
-    # @swag_from("../swagger/seller/PUT.yml")
+    @swag_from("../swagger/seller/put.yml")
     @requires_auth('patch:seller')
     def update_seller(seller_id, last_name, first_name, phone):
         """ Update a seller based on the provided information """
@@ -98,7 +98,7 @@ class SellerResource(Resource):
         Argument("password", location="json",
                  help="The password of the seller.")
     )
-    # @swag_from("../swagger/seller/POST.yml")
+    @swag_from("../swagger/seller/post.yml")
     @requires_auth('post:seller')
     def post(last_name, first_name, phone, username, email, password):
         """ Create a seller based on the provided information """
@@ -175,7 +175,7 @@ class SellerResource(Resource):
                 "lastName": seller.last_name,
                 "token": token
             })
-
+    @swag_from("../swagger/seller/delete.yml")
     @requires_auth('delete:seller')
     def delete(seller_id):
         """ delete a seller based on the seller id provided """
