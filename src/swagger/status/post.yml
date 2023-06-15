@@ -1,45 +1,32 @@
-title: Update a product category
-description: Update product category details
+title: Create a new status
+description: Create a new status
 tags:
-  - Product Categories
-operationId: patchproductcategory
-
-parameters:
-        - name: productcategoryID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - Statuses
+operationId: poststatus
 
 requestBody:
-  description: Update product category details
+  description: Create a new status
   content:
     application/json:
       schema:
         type: object
         properties:
-          id:
+          status:
+            type: string
+            example: Pending Acceptance
+          order_id:
             type: integer
-          name:
-            type: string
-          sku:
-            type: string
+            example: 28271902
 
-        example:
-          id: 2
-          name: Gaming & Gaming Accessories
-          sku: QWERTY2468
-          
         required:
-          - name
-          - sku
+          - status
+          - order_id
 
   required: true
 
 responses:
   200:
-    description: The product was Updated successfully
+    description: The product was created successfully
     content:
       application/json:
         schema:
@@ -47,16 +34,15 @@ responses:
           properties:
             id:
               type: integer
-            name:
+            status:
               type: string
-            sku:
-              type: string
+            order_id:
+              type: integer
 
           example:
-            id: 2
-            title: Gaming & Gaming Accessories
-            price: QWERTY2468
-
+            id: 4
+            status: Pending Acceptance
+            order_id: 28271902
   400:
     description: invalid input
     content:
@@ -85,7 +71,16 @@ responses:
           properties:
           example:
             message: Access token does not have the required scope
+  409:
+    description: Status already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing Status with the same details already exists
 
 security:
   - implicit:
-      - patch
+      - post

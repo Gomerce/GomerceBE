@@ -1,8 +1,8 @@
-title: Get a coupon's detail
-description: Returns a coupon's key information
+title: Delete a coupon
+description: Delete a coupon
 tags:
   - Coupons
-operationId: getcoupon
+operationId: deletecoupon
 
 parameters:
         - name: couponID
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Coupon was successfully retrieved base on ID
+    description: Coupon was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -34,10 +34,7 @@ responses:
             - amount
             - expires_at
           example:
-            id: 1
-            code: BD28309
-            amount: ₦2000
-            expires_at: 2022-06-02
+            message: The coupon was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -69,4 +66,4 @@ responses:
 
 security:
   - implicit:
-      - get
+      - delete

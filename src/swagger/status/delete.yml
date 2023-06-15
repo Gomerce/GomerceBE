@@ -1,11 +1,11 @@
-title: Get a coupon's detail
-description: Returns a coupon's key information
+title: Delete a status
+description: Delete a status
 tags:
-  - Coupons
-operationId: getcoupon
+  - Statuses
+operationId: deletestatus
 
 parameters:
-        - name: couponID
+        - name: statusID
           in: path
           required: true
           schema:
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Coupon was successfully retrieved base on ID
+    description: Status was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -22,22 +22,17 @@ responses:
           properties:
             id:
               type: integer
-            code:
+            status:
               type: string
-            amount:
-              type: string
-            expires_at:
-              type: string
+            order_id:
+              type: integer
+
           required:
             - id
-            - code
-            - amount
-            - expires_at
+            - status
+            - order_id
           example:
-            id: 1
-            code: BD28309
-            amount: ₦2000
-            expires_at: 2022-06-02
+            message: The status was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -58,15 +53,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Coupon not found
+    description: Status not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Coupon was not found
+            message: The Status was not found
 
 security:
   - implicit:
-      - get
+      - delete
