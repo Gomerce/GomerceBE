@@ -1,25 +1,62 @@
-title: Get all status
-description: Return all status key information based the query parameter
+title: Get all statuses
+description: Return all statuses information
 tags:
-  - status
-parameters:
-  - name: status
-    in: query
-    type: string
-    description: the status of the statuses
-  - name: order_id
-    in: query
-    type: int
-    description: the order id of the status
+  - Statuses
+operationId: getstatuses
+
 responses:
   200:
-    description: The status information were successfully retrieved
-    schema:
-      example:
-        {
-          "data":
-            [
-              { "status": sold,  "order_id": 3 },
-              { "status": available,  "order_id": 2},
-            ],
-        }
+    description: The statuses information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              status:
+                type: string
+                description: The orders statuses
+              order_id:
+                type: integer
+                description: The order ist
+
+            example:
+              "data":
+                [
+                  { 
+                  "status": "Pending Payment", 
+                  "order_id": 92837202
+                  },
+                  { 
+                  "status": "Delivered", 
+                  "order_id": 27292010
+                  },
+                  { 
+                  "status": "Processing", 
+                  "order_id": 92920002
+                  },
+
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get

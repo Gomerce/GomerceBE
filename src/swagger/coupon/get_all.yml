@@ -1,29 +1,67 @@
-title: Get all coupon
-description: Return all coupon key information based the query parameter
+title: Get all coupons
+description: Return all coupons information
 tags:
-  - coupon
-parameters:
-  - name: code
-    in: query
-    type: string
-    description: the code of the coupon
-  - name: amount
-    in: query
-    type: float
-    description: the amount of the coupon
-  - name: expires_at
-    in: query
-    type: datetime
-    description: the expires_at id of the coupon
+  - Coupons
+operationId: getcoupons
+
 responses:
   200:
-    description: The coupon information were successfully retrieved
-    schema:
-      example:
-        {
-          "data":
-            [
-              { "code": R3626, "amount": 100.00,"expires_at": 2/3/2023},
-              { "code": R354, "amount": 100.00, "expires_at": 2/3/2023},
-            ],
-        }
+    description: The coupons information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                description: The coupons's code
+              amount:
+                type: string
+                description: The coupons's amount
+              expires_at:
+                type: string
+                description: The coupons's expiring dates
+
+            example:
+              "data":
+                [
+                  { 
+                  "code": "BD28309 ", 
+                  "amount": "₦2000", 
+                  "expires_at": "2022-06-02"
+                  },
+                  { 
+                  "code": "OC23459 ", 
+                  "amount": "₦15000", 
+                  "expires_at": "2024-01-18"
+                  },
+                  { 
+                  "code": "DD29482 ", 
+                  "amount": "₦10000", 
+                  "expires_at": "2023-12-22"
+                  },
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get
