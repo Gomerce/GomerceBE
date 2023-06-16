@@ -1,0 +1,116 @@
+title: Update a shipping address
+description: Update shipping address details
+tags:
+  - Shipping Addresses
+operationId: patchshippingaddress
+
+parameters:
+        - name: shippingaddressID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update shipping address details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          country:
+            type: string
+          state:
+            type: string
+          city:
+            type: string
+          street_name:
+            type: string
+          zipcode:
+            type: integer
+          phone:
+            type: string
+        example:
+          id: 1
+          country: Nigeria
+          state: Rivers
+          city: Port Harcourt
+          street_name: 3 Olusegun Obasanjo Street
+          zipcode: 500200
+          phone: +2348000000000
+          
+        required:
+          - id
+          - country
+          - state
+          - city
+          - street_name
+          - zipcode
+          - phone
+  required: true
+
+responses:
+  200:
+    description: The product was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            country:
+              type: string
+            state:
+              type: string
+            city:
+              type: string
+            street_name:
+              type: string
+            zipcode:
+              type: integer
+            phone:
+              type: string
+          example:
+            id: 1
+            country: Nigeria
+            state: Rivers
+            city: Port Harcourt
+            street_name: 3 Olusegun Obasanjo Street
+            zipcode: 500200
+            phone: +2348000000000
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

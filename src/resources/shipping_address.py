@@ -16,7 +16,7 @@ class ShippingAddressResource(Resource):
     """ methods relative to the shipping address """
 
     @staticmethod
-    # @swag_from("../swagger/shipping_address/get_one.yml")
+    @swag_from("../swagger/shipping_address/get_one.yml")
     @requires_auth('get:shipping_address')
     def get_one(address_id):
         """ Return an order key information based on address_id """
@@ -40,7 +40,7 @@ class ShippingAddressResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/shipping_address/get_all.yml")
+    @swag_from("../swagger/shipping_address/get_all.yml")
     @requires_auth('get:shipping_addresses')
     def get_all():
         """ Return all shipping address key information based on the query parameter """
@@ -62,6 +62,7 @@ class ShippingAddressResource(Resource):
         Argument("street_name", location="json",
                  help="The street_name of the address."),
     )
+    @swag_from("../swagger/shipping_address/put.yml")
     @requires_auth('patch:shipping_address')
     def update_address(
             address_id,
@@ -107,6 +108,7 @@ class ShippingAddressResource(Resource):
         Argument("street_name", location="json",
                  help="The street_name of the address."),
     )
+    @swag_from("../swagger/shipping_address/post.yml")
     @requires_auth('post:shipping_address')
     def post(country, state, city, street_name, zipcode, phone):
         """ Create a address based on the provided information """
@@ -120,6 +122,7 @@ class ShippingAddressResource(Resource):
         )
         return jsonify({"data": data.json})
 
+    @swag_from("../swagger/shipping_address/delete.yml")
     @requires_auth('delete:shipping_address')
     def delete(address_id):
         """ delete a address via the provided id """

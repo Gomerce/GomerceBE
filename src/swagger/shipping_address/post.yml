@@ -1,0 +1,111 @@
+title: Create a new shipping address
+description: Create a new shipping address
+tags:
+  - Shipping Addresses
+operationId: postshipping address
+
+requestBody:
+  description: Create a new shipping address
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          country:
+            type: string
+            example: Nigeria
+          state:
+            type: string
+            example: Rivers
+          city:
+            type: string
+            example: Port Harcourt
+          street_name:
+            type: string
+            example: 51 Woji Street, GRA
+          zipcode:
+            type: string
+            example: 500220
+          phone:
+            type: string
+            example: +2348000892029
+        required:
+          - country
+          - state
+          - city
+          - street_name
+          - zipcode
+          - phone
+  required: true
+
+responses:
+  200:
+    description: The Shipping Address was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            country:
+              type: string
+            state:
+              type: string
+            city:
+              type: string
+            street_name:
+              type: string
+            zipcode:
+              type: string
+            phone:
+              type: string
+          example:
+            id: 4
+            country: Nigeria
+            state: Rivers
+            city: Port Harcourt
+            street_name: 51 Woji Street, GRA
+            zipcode: 500220
+            phone: 2348000892029
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+  409:
+    description: Shipping Address already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing Shipping Address with the same details already exists
+
+security:
+  - implicit:
+      - post
