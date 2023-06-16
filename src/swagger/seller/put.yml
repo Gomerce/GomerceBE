@@ -1,0 +1,94 @@
+title: Update a seller
+description: Update seller details
+tags:
+  - Sellers
+operationId: patchseller
+
+parameters:
+  - name: sellerID
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
+
+requestBody:
+  description: Update seller details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          first_name:
+            type: string
+          last_name:
+            type: string
+          phone:
+            type: string
+        example:
+          id: 2
+          first_name: Badman
+          last_name: Commmando
+          phone: +9134567897654
+
+        required:
+          - first_name
+          - last_name
+          - phone
+  required: true
+
+responses:
+  200:
+    description: The seller information was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            first_name:
+              type: string
+            last_name:
+              type: string
+            phone:
+              type: string
+          example:
+            id: 2
+            first_name: Badman
+            last_name: Commmando
+            phone: +9134567897654
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

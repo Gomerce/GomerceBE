@@ -1,8 +1,8 @@
-title: Get a review's detail
-description: Returns a review's key information
+title: Delete a review
+description: Delete a review
 tags:
-  - Reviews
-operationId: getreview
+  - Reiviews
+operationId: deletereview
 
 parameters:
         - name: reviewID
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Review was successfully retrieved base on ID
+    description: Review was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -26,23 +26,12 @@ responses:
               type: string
             images:
               type: string
-            sellers_id:
-              type: integer
-            products_id:
-              type: integer
-            
           required:
             - id
             - comment
             - images
-            - sellers_id
-            - products_id
           example:
-            id: 1
-            comment: I enjoyed the service rendered, 
-            images: http://unsplash123.com, 
-            sellers_id: 12,
-            products_id: 9
+            message: The review was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -74,4 +63,4 @@ responses:
 
 security:
   - implicit:
-      - get
+      - delete
