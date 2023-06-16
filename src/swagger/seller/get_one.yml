@@ -5,12 +5,12 @@ tags:
 operationId: getseller
 
 parameters:
-        - name: sellerID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - name: sellerID
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
 
 responses:
   200:

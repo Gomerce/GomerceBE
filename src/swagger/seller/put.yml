@@ -5,12 +5,12 @@ tags:
 operationId: patchseller
 
 parameters:
-        - name: sellerID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - name: sellerID
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
 
 requestBody:
   description: Update seller details
@@ -32,7 +32,7 @@ requestBody:
           first_name: Badman
           last_name: Commmando
           phone: +9134567897654
-          
+
         required:
           - first_name
           - last_name
@@ -69,7 +69,7 @@ responses:
           properties:
           example:
             message: invalid input, object invalid
-  
+
   401:
     description: Not authenticated
     content:

@@ -39,7 +39,7 @@ requestBody:
 
 responses:
   200:
-    description: The product was Updated successfully
+    description: The review was Updated successfully
     content:
       application/json:
         schema:

@@ -40,7 +40,7 @@ requestBody:
 
 responses:
   200:
-    description: The product was created successfully
+    description: The seller was created successfully
     content:
       application/json:
         schema:

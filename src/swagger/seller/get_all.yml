@@ -17,19 +17,19 @@ responses:
               first_name:
                 type: string
                 description: The seller's first name
-                last_name:
+              last_name:
                 type: string
                 description: The seller's last name
-                email:
+              email:
                 type: string
                 description: The seller's email
-                phone:
+              phone:
                 type: string
                 description: The seller's phone number
-                username:
+              username:
                 type: string
                 description: The seller's username
-                rating:
+              rating:
                 type: integer
                 description: The seller's rating
                 
@@ -45,7 +45,8 @@ responses:
                     "rating": 25
                   },
                   { 
-                    "last_name": "Roe", "first_name": "Jerry", 
+                    "first_name": "Jerry",
+                    "last_name": "Roe",  
                     "email": Roe@gomerce.be,
                     "phone": +234873455623
                     "username": "RoeGomerce"
