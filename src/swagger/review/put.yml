@@ -1,0 +1,95 @@
+title: Update a review
+description: Update review details
+tags:
+  - Reviews
+operationId: patchreview
+
+parameters:
+        - name: reviewID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update review details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          comment:
+            type: string
+          images:
+            type: string
+        example:
+          id: 2
+          comment: The seller added a free phone case to the device with a wireless charger for the device. 
+          images: "https://unsplash/phone321.com"
+          
+        required:
+          - comment
+          - images
+          - sellers_id
+          - products_id
+  required: true
+
+responses:
+  200:
+    description: The review was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            comment:
+              type: string
+            image:
+              type: string
+            sellers_id:
+              type: integer
+            products_id:
+              type: integer
+          example:
+            id: 4
+            comment: The seller added a free phone case to the device with a wireless charger for the device.
+            images: "https://unsplash/phone321.com"
+            sellers_id: 12
+            products_id: 3
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

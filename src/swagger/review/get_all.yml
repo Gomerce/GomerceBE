@@ -1,41 +1,67 @@
-title: Get all reviews
-description: Return all review key information based on the query parameter
+title: Get all review
+description: Return all review key information based the query parameter
 tags:
-  - reviews
-parameters:
-  - name: comment
-    in: query
-    type: string
-    description: the comment for a review
-  - name: images
-    in: query
-    type: string
-    description: the image for a review
-  - name: sellers_id
-    in: query
-    type: int
-    description: the sellers id for a review
-  - name: products_id
-    in: query
-    type: int
-    description: the products id for a review
-  - name: created_at
-    in: query
-    type: datetime
-    description: the date the review was created
-  - name: updated_at
-    in: query
-    type: datetime
-    description: the date the review was updated
+  - Reviews
+operationId: getreview
+
 responses:
   200:
-    description: The reviews were successfully retrieved
-    schema:
-      example:
-        {
-          "data":
-              [
-                { "comment": "Best service ever!!!", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
-                { "comment": "Swift delivery", "created_at": 08-11-2022, "updated_at": 08-11-2022 },
-              ],
-        }
+    description: The review categories information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              comment:
+                type: string
+                description: A comment
+              images:
+                type: string
+                description: An image of item reviewd
+              sellers_id:
+                type: integer
+                description: The seller's id
+              products_id:
+                type: integer
+                description: The product's id
+                
+            example:
+              "data":
+                [
+                  { 
+                    "comment": I enjoyed the service rendered, 
+                    "images": http://unsplash123.com, 
+                    "sellers_id": 12,
+                    "products_id": 9
+                  },
+                  { 
+                    "comment": Best seller, 
+                    "images": http://unsplash22223.com, 
+                    "sellers_id": 2,
+                    "products_id": 25
+                  },
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get
