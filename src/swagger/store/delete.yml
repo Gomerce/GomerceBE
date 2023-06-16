@@ -1,11 +1,11 @@
-title: Get a shipping address's detail
-description: Returns a shipping address's key information
+title: Delete a store
+description: Delete a store
 tags:
-  - Shipping Addresses
-operationId: getshippingaddress
+  - Stores
+operationId: deletestore
 
 parameters:
-        - name: shippingaddressID
+        - name: storeID
           in: path
           required: true
           schema:
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Shipping Address was successfully retrieved base on ID
+    description: Store was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -22,34 +22,26 @@ responses:
           properties:
             id:
               type: integer
-            country:
+            name:
               type: string
-            state:
+            address:
               type: string
-            city:
+            email:
               type: string
-            street_name:
-              type: string
-            zipcode:
-              type: integer
             phone:
               type: string
+            sellers_id:
+              type: integer
+
           required:
             - id
-            - country
-            - state
-            - city
-            - street_name
-            - zipcode
+            - name
+            - address
+            - email
             - phone
+            - sellers_id
           example:
-            id: 1
-            country: Nigeria
-            state: Rivers
-            city: Port Harcourt
-            street_name: 3 Olu Obasanjo Street
-            zipcode: 500200
-            phone: +2348011111111
+            message: The store was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -70,15 +62,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Shipping Address not found
+    description: Store not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Shipping Address was not found
+            message: The Store was not found
 
 security:
   - implicit:
-      - get
+      - delete

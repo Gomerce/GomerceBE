@@ -1,8 +1,8 @@
-title: Get a shipping address's detail
-description: Returns a shipping address's key information
+title: Delete a shipping address
+description: Delete a shipping address
 tags:
   - Shipping Addresses
-operationId: getshippingaddress
+operationId: deleteshippingaddress
 
 parameters:
         - name: shippingaddressID
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Shipping Address was successfully retrieved base on ID
+    description: The Shipping Address was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -43,13 +43,7 @@ responses:
             - zipcode
             - phone
           example:
-            id: 1
-            country: Nigeria
-            state: Rivers
-            city: Port Harcourt
-            street_name: 3 Olu Obasanjo Street
-            zipcode: 500200
-            phone: +2348011111111
+            message: The shipping address was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -81,4 +75,4 @@ responses:
 
 security:
   - implicit:
-      - get
+      - delete
