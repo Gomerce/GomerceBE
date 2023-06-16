@@ -1,18 +1,84 @@
-title: Get a seller
-description: Return a seller key information based on his name
+title: Get a seller's detail
+description: Returns a seller's key information
 tags:
-  - seller
+  - Sellers
+operationId: getseller
+
 parameters:
-  - name: first_name
+  - name: sellerID
     in: path
-    type: string
-    description: the first name of the seller
+    required: true
+    schema:
+      type: integer
+      format: int64
+
 responses:
   200:
-    description: The seller's information were successfully retrieved
-    schema:
-      example:
-        seller:
-          last_name: Doe
-          first_name: John
-          phone: 01-2345-6789
+    description: Seller was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            first_name:
+              type: string
+            last_name:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            username:
+              type: string
+            rating:
+              type: integer
+          required:
+            - id
+            - first_name
+            - last_name
+            - email
+            - phone
+            - username
+            - rating
+          example:
+            id: 1
+            first_name: Roe
+            last_name: Jerry
+            email: Roe@gomerce.be
+            phone: +234873455623
+            username: "RoeGomerce"
+            rating: 125
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Seller not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Seller was not found
+
+security:
+  - implicit:
+      - get

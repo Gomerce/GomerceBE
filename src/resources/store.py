@@ -18,7 +18,7 @@ class StoreResource(Resource):
     """ methods relative to the status """
 
     @staticmethod
-    # @swag_from("../swagger/store/get_one.yml")
+    @swag_from("../swagger/store/get_one.yml")
     @requires_auth('get:store')
     def get_one(store_id):
         """ Return a store key information based on status_id """
@@ -45,7 +45,7 @@ class StoreResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/store/get_all.yml")
+    @swag_from("../swagger/store/get_all.yml")
     @requires_auth('get:stores')
     def get_all():
         """ Return all store key information based on the query parameter """
@@ -67,6 +67,7 @@ class StoreResource(Resource):
         Argument("phone_verified", location="json",
                  help="The phone_verified of the store."),
     )
+    @swag_from("../swagger/store/put.yml")
     @requires_auth('patch:store')
     def update_store(
             store_id,
@@ -115,6 +116,7 @@ class StoreResource(Resource):
         Argument("sellers_id", location="json",
                  help="The sellers_id of the store."),
     )
+    @swag_from("../swagger/store/post.yml")
     @requires_auth('post:store')
     def post(
             phone,
@@ -141,6 +143,7 @@ class StoreResource(Resource):
         }
         return jsonify({"data": data})
 
+    @swag_from("../swagger/store/delete.yml")
     @requires_auth('delete:store')
     def delete(store_id):
         """ delete a Store via the provided id """

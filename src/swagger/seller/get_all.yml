@@ -1,25 +1,77 @@
 title: Get all sellers
 description: Return all sellers key information based the query parameter
 tags:
-  - sellers
-parameters:
-  - name: first_name
-    in: query
-    type: string
-    description: the first name of the customer
-  - name: last_name
-    in: query
-    type: string
-    description: the last name of the customer
+  - Sellers
+operationId: getsellers
+
 responses:
   200:
-    description: The sellers information were successfully retrieved
-    schema:
-      example:
-        {
-          "data":
-            [
-              { "last_name": Doe, "first_name": John, "age": 30 },
-              { "last_name": "Roe", "first_name": "Jerry", "age": 23 },
-            ],
-        }
+    description: The sellers categories information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              first_name:
+                type: string
+                description: The seller's first name
+              last_name:
+                type: string
+                description: The seller's last name
+              email:
+                type: string
+                description: The seller's email
+              phone:
+                type: string
+                description: The seller's phone number
+              username:
+                type: string
+                description: The seller's username
+              rating:
+                type: integer
+                description: The seller's rating
+                
+            example:
+              "data":
+                [
+                  { 
+                    "last_name": "Doe", 
+                    "first_name": "John", 
+                    "email": "admin@admin.com",
+                    "phone": +234819566023,
+                    "username": "DoeSeller",
+                    "rating": 25
+                  },
+                  { 
+                    "first_name": "Jerry",
+                    "last_name": "Roe",  
+                    "email": "Roe@gomerce.be",
+                    "phone": +234873455623,
+                    "username": "RoeGomerce",
+                    "rating": 125
+                  },
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - get

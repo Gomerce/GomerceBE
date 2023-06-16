@@ -1,46 +1,83 @@
-title: Get a store
-description: Return a store key information based on his name
+title: Get a store's detail
+description: Returns a store's key information
 tags:
-  - store
+  - Stores
+operationId: getstore
+
 parameters:
-  - name: name
+  - name: storeID
     in: path
-    type: string
-    description: the name of the store
-  - name: address
-    in: path
-    type: string
-    description: the address of the store
-  - name: phone
-    in: path
-    type: int
-    description: the phone of the store
-  - name: email
-    in: path
-    type: string
-    description: the email of the store
-  - name: email_verified
-    in: path
-    type: string
-    description: the email_verified of the store
-  - name: phone_verified
-    in: path
-    type: int
-    description: the phone_verified of the store
-  - name: sellers_id
-    in: path
-    type: int
-    description: the sellers_id of the store
+    required: true
+    schema:
+      type: integer
+      format: int64
+
 responses:
   200:
-    description: The store's information were successfully retrieved
-    schema:
-      example:
-        store:
-          name: shp1
-          address: address1
-          phone: 090383793
-          email: email@email.com
-          phone_verified: 090383793
-          email_verified: email2@email.com
-          sellers_id: 2
+    description: Store was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            address:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            sellers_id:
+              type: string
+
+          required:
+            - id
+            - name
+            - address
+            - email
+            - phone
+            - sellers_id
+
+          example:
+            id: 2
+            name: Pea Body Cosmetics
+            address: 15 Emekuku Street, Owerri
+            email: peacosmetics@admin.com
+            phone: +2348689300321
+            sellers_id: "1"
+
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Store not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Store was not found
+
+security:
+  - implicit:
+      - get

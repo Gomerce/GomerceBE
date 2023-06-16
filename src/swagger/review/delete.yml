@@ -1,11 +1,11 @@
-title: Get a shipping address's detail
-description: Returns a shipping address's key information
+title: Delete a review
+description: Delete a review
 tags:
-  - Shipping Addresses
-operationId: getshippingaddress
+  - Reviews
+operationId: deletereview
 
 parameters:
-        - name: shippingaddressID
+        - name: reviewID
           in: path
           required: true
           schema:
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Shipping Address was successfully retrieved base on ID
+    description: Review was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -22,34 +22,16 @@ responses:
           properties:
             id:
               type: integer
-            country:
+            comment:
               type: string
-            state:
-              type: string
-            city:
-              type: string
-            street_name:
-              type: string
-            zipcode:
-              type: integer
-            phone:
+            images:
               type: string
           required:
             - id
-            - country
-            - state
-            - city
-            - street_name
-            - zipcode
-            - phone
+            - comment
+            - images
           example:
-            id: 1
-            country: Nigeria
-            state: Rivers
-            city: Port Harcourt
-            street_name: 3 Olu Obasanjo Street
-            zipcode: 500200
-            phone: +2348011111111
+            message: The review was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -70,15 +52,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Shipping Address not found
+    description: Review not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Shipping Address was not found
+            message: The Review was not found
 
 security:
   - implicit:
-      - get
+      - delete

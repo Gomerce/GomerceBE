@@ -22,8 +22,8 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
     username = db.Column(db.String(32), nullable=False, unique=True)
     password = db.Column(db.Text(), nullable=False)
     rating = db.Column(db.Integer)
-    email_verified= db.Column(db.Boolean)
-    phone_verified= db.Column(db.Boolean)
+    email_verified = db.Column(db.Boolean)
+    phone_verified = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
@@ -33,7 +33,7 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    #Relationship
+    # Relationship
     reviews = db.relationship('Review', backref='sellers', lazy=True)
     stores = db.relationship('Store', backref='sellers', lazy=True)
     orders = db.relationship('Order', backref='sellers', lazy=True)

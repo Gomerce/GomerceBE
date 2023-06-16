@@ -1,11 +1,11 @@
-title: Get a shipping address's detail
-description: Returns a shipping address's key information
+title: Delete a seller
+description: Delete a seller
 tags:
-  - Shipping Addresses
-operationId: getshippingaddress
+  - Sellers
+operationId: deleteseller
 
 parameters:
-        - name: shippingaddressID
+        - name: sellerID
           in: path
           required: true
           schema:
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Shipping Address was successfully retrieved base on ID
+    description: Seller was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -22,34 +22,32 @@ responses:
           properties:
             id:
               type: integer
-            country:
+            first_name:
               type: string
-            state:
+            last_name:
               type: string
-            city:
+            email:
               type: string
-            street_name:
-              type: string
-            zipcode:
-              type: integer
             phone:
               type: string
+            username:
+              type: string
+            password:
+              type: string
+            rating:
+              type: integer
+
           required:
             - id
-            - country
-            - state
-            - city
-            - street_name
-            - zipcode
+            - first_name
+            - last_name
+            - email
             - phone
+            - username
+            - password
+            - rating
           example:
-            id: 1
-            country: Nigeria
-            state: Rivers
-            city: Port Harcourt
-            street_name: 3 Olu Obasanjo Street
-            zipcode: 500200
-            phone: +2348011111111
+            message: The seller was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -70,15 +68,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Shipping Address not found
+    description: Seller not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Shipping Address was not found
+            message: The Seller was not found
 
 security:
   - implicit:
-      - get
+      - delete

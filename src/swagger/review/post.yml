@@ -1,0 +1,88 @@
+title: Create a new review
+description: Create a new review
+tags:
+  - Reviews
+operationId: postreview
+
+requestBody:
+  description: Create a new review
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          comment:
+            type: string
+            example: The seller added a free phone case to the device
+          images:
+            type: string
+            example: "https://unsplash.com"
+          sellers_id:
+            type: id
+            example: 12
+          products_id:
+            type: id
+            example: 3
+        required:
+          - comment
+          - images
+          - sellers_id
+          - products_id
+  required: true
+
+responses:
+  200:
+    description: The review was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            comment:
+              type: string
+            image:
+              type: string
+            sellers_id:
+              type: integer
+            products_id:
+              type: integer
+          example:
+            id: 4
+            comment: The seller added a free phone case to the device
+            images: "https://unsplash.com"
+            sellers_id: 12
+            products_id: 3
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - post

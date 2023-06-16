@@ -1,0 +1,107 @@
+title: Create a new store
+description: Create a new store
+tags:
+  - Stores
+operationId: poststore
+
+requestBody:
+  description: Create a new store
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            example: Banda Wears
+          address:
+            type: string
+            example: Briston Street, off Udu Road, Warri
+          phone:
+            type: string
+            example: +23480903314
+          email:
+            type: string
+            example: bandawears@gmin.com
+          sellers_id:
+            type: integer
+            example: 4
+
+        required:
+          - id
+          - name
+          - address
+          - email
+          - phone
+          - sellers_id
+  required: true
+
+responses:
+  200:
+    description: The store was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            address:
+              type: string
+            email:
+              type: string
+            phone:
+              type: string
+            sellers_id:
+              type: integer
+          
+          example:
+            id: 2
+            name: Banda Wears
+            address: Briston Street, off Udu Road, Warri
+            phone: +23480903314
+            email: bandawears@gmin.com
+            sellers_id: 4
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+  409:
+    description: Store already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing store with the same details already exists, please login
+
+security:
+  - implicit:
+      - post

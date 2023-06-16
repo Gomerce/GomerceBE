@@ -1,0 +1,111 @@
+title: Update a store
+description: Update store details
+tags:
+  - Stores
+operationId: patchstore
+
+parameters:
+  - name: storeID
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
+
+requestBody:
+  description: Update store details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+          address:
+            type: string
+          phone:
+            type: string
+          email:
+            type: string
+          sellers_id:
+            type: integer
+
+        example:
+          id: 2
+          name: Brenda Wears
+          address: Briston Street, off Udu Road, Warri
+          phone: +23487345314
+          email: brendawears@gmin.com
+          sellers_id: 4
+
+        required:
+          - name
+          - address
+          - email
+          - phone
+          - sellers_id
+
+  required: true
+
+responses:
+  200:
+    description: The store information was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            address:
+              type: string
+            phone:
+              type: string
+            email:
+              type: string
+            sellers_id:
+              type: integer
+
+          example:
+            id: 2
+            name: Brenda Wears
+            address: Briston Street, off Udu Road, Warri
+            phone: +23487345314
+            email: brendawears@gmin.com
+            sellers_id: 4
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch
