@@ -1,20 +1,20 @@
-title: Get a store's detail
-description: Returns a store's key information
+title: Delete a store
+description: Delete a store
 tags:
   - Stores
-operationId: getstore
+operationId: deletestore
 
 parameters:
-  - name: storeID
-    in: path
-    required: true
-    schema:
-      type: integer
-      format: int64
+        - name: storeID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
 
 responses:
   200:
-    description: Store was successfully retrieved base on ID
+    description: Store was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -31,7 +31,7 @@ responses:
             phone:
               type: string
             sellers_id:
-              type: string
+              type: integer
 
           required:
             - id
@@ -40,15 +40,8 @@ responses:
             - email
             - phone
             - sellers_id
-
           example:
-            id: 2
-            name: Pea Body Cosmetics
-            address: 15 Emekuku Street, Owerri
-            email: peacosmetics@admin.com
-            phone: +2348689300321
-            sellers_id: "1"
-
+            message: The store was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -80,4 +73,4 @@ responses:
 
 security:
   - implicit:
-      - get
+      - delete

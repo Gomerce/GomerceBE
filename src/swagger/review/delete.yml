@@ -1,7 +1,7 @@
 title: Delete a review
 description: Delete a review
 tags:
-  - Reiviews
+  - Reviews
 operationId: deletereview
 
 parameters:

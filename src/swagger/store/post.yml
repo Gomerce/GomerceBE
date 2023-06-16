@@ -1,46 +1,44 @@
-title: Create a new seller
-description: Create a new seller
+title: Create a new store
+description: Create a new store
 tags:
-  - Sellers
-operationId: postseller
+  - Stores
+operationId: poststore
 
 requestBody:
-  description: Create a new seller
+  description: Create a new store
   content:
     application/json:
       schema:
         type: object
         properties:
-          first_name:
+          name:
             type: string
-            example: Bandana
-          last_name:
+            example: Banda Wears
+          address:
             type: string
-            example: Briston
+            example: Briston Street, off Udu Road, Warri
           phone:
             type: string
-            example: +23480901000
-          username:
-            type: string
-            example: 2pac
+            example: +23480903314
           email:
             type: string
-            example: briston@example.be.com
-          password:
-            type: string
-            example: p**********s
+            example: bandawears@gmin.com
+          sellers_id:
+            type: integer
+            example: 4
+
         required:
-          - first_name
-          - last_name
-          - phone
-          - username
+          - id
+          - name
+          - address
           - email
-          - password
+          - phone
+          - sellers_id
   required: true
 
 responses:
   200:
-    description: The seller was created successfully
+    description: The store was created successfully
     content:
       application/json:
         schema:
@@ -48,26 +46,24 @@ responses:
           properties:
             id:
               type: integer
-            first_name:
+            name:
               type: string
-            last_name:
-              type: string
-            phone:
-              type: string
-            username:
+            address:
               type: string
             email:
               type: string
-            password:
+            phone:
               type: string
+            sellers_id:
+              type: integer
+          
           example:
             id: 2
-            first_name: Bandana
-            last_name: Briston
-            phone: +23480901000
-            username: 2pac
-            email: briston@example.be.com
-            password: p************s
+            name: Banda Wears
+            address: Briston Street, off Udu Road, Warri
+            phone: +23480903314
+            email: bandawears@gmin.com
+            sellers_id: 4
   400:
     description: invalid input
     content:
@@ -97,14 +93,14 @@ responses:
           example:
             message: Access token does not have the required scope
   409:
-    description: Seller already exists
+    description: Store already exists
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: An existing seller with the same details already exists, please login
+            message: An existing store with the same details already exists, please login
 
 security:
   - implicit:
