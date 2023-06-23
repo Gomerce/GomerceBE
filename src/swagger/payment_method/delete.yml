@@ -1,0 +1,60 @@
+title: Delete a payment method
+description: Delete a payment method
+tags:
+  - Payment-Method
+operationId: deletepaymentmethod
+
+parameters:
+        - name: method_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Payment Method was successfully deleted base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+          required:
+            - payment_id
+          example:
+            message: The payment method was successfully deleted
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Payment Method not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Payment Method was not found
+
+security:
+  - implicit:
+      - delete
