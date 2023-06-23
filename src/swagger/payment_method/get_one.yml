@@ -1,31 +1,64 @@
-title: Get a payment method
-description: Return key information of a payment method given its id
+title: Get a payment method's detail
+description: Returns a payment method's key information
 tags:
-  - payment-method
+  - Payment-Method
+operationId: getpaymentmethod
+
 parameters:
-  - name: name
-    in: path
-    type: int
-    description: the name of the payment detail
-  - name: currency
-    in: path
-    type: int
-    description: the name of the payment detail
-  - name: created_at
-    in: path
-    type: datetime
-    description: the date an payment was created
-  - name: updated_at
-    in: path
-    type: datetime
-    description: the date an payment was updated
+        - name: method_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
 responses:
   200:
-    description: The payment method was successfully retrieved
-    schema:
-    example:
-      data:
-        created_at: 08-11-2022
-        updated_at: 08-11-2022
-        name: "PayPal"
-        currency: "USD"
+    description: Payment Method was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            currency:
+              type: string
+          example:
+            id: 1
+            name: Wire Transfer
+            currency: USD
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Payment Method not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Payment Method was not found
+
+security:
+  - implicit:
+      - get
