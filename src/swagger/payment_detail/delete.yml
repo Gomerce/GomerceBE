@@ -1,0 +1,60 @@
+title: Delete a payment detail
+description: Delete a payment detail
+tags:
+  - Payment-Detail
+operationId: deletepaymentdetail
+
+parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+responses:
+  200:
+    description: Payment Detail was successfully deleted base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+          required:
+            - payment_id
+          example:
+            message: The payment detail was successfully deleted
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Payment Detail not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Payment Detail was not found
+
+security:
+  - implicit:
+      - delete
