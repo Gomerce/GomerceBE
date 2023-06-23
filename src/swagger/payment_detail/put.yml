@@ -1,0 +1,134 @@
+title: Update a payment detail
+description: Update payment detail information
+tags:
+  - Payment-Detail
+operationId: patchpaymentdetail
+
+parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: amount
+          in: path
+          required: true
+          schema:
+            type: float
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: orders_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: payment_methods_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+requestBody:
+  description: Update payment detail
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          payment_id:
+            type: integer
+          amount:
+            type: string
+          status:
+            type: string
+          orders_id:
+            type: integer
+          payment_methods_id:
+            type: integer
+        example:
+          id: 1
+          amount: 123.45
+          status: "Partly Paid"
+          created_at: 08-11-2022
+          updated_at: 08-11-2022
+          orders_id: 3
+          payment_methods_id: 2
+          
+        required:
+          - id
+          - amount
+          - status
+          - created_at
+          - updated_at
+          - orders_id
+          - payment_methods_id
+  required: true
+
+responses:
+  200:
+    description: The payment detail was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            amount:
+              type: float
+            atatus:
+              type: string
+            created_at:
+              type: datetime
+            updated_at:
+              type: datetime
+            orders_id:
+              type: integer
+            payment_methods_id:
+              type: integer
+          example:
+            data:              
+              id: 1
+              amount: 123.45
+              status: "Partly Paid"
+              created_at: 08-11-2022
+              updated_at: 08-11-2022
+              orders_id: 3
+              payment_methods_id: 2
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

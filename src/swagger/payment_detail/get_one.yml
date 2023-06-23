@@ -1,32 +1,77 @@
-title: Get a payment detail
-description: Return key information of a payment detail given its id
+title: Get a payment detail's information
+description: Returns a payment detail's key information
 tags:
-  - payment-detail
+  - Product-Detail
+operationId: getpaymentdetail
+
 parameters:
-  - name: amount
-    in: path
-    type: int
-    description: the amout for the payment detail
-  - name: status
-    in: path
-    type: string
-    description: the status for the payment detail
-  - name: created_at
-    in: path
-    type: datetime
-    description: the date a payment was created
-  - name: updated_at
-    in: path
-    type: datetime
-    description: the date a payment was updated
-  
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
 responses:
   200:
-    description: The payment detail was successfully retrieved
-    schema:
-    example:
-      data:
-        created_at: 08-11-2022
-        updated_at: 08-11-2022
-        amount: 123.45
-        status: "Partly Paid"
+    description: Payment detail was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            amount:
+              type: float
+            atatus:
+              type: string
+            created_at:
+              type: datetime
+            updated_at:
+              type: datetime
+            orders_id:
+              type: integer
+            payment_methods_id:
+              type: integer
+          example:
+            data:              
+              id: 1
+              amount: 123.45
+              status: "Partly Paid"
+              created_at: 08-11-2022
+              updated_at: 08-11-2022
+              orders_id: 3
+              payment_methods_id: 2
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Payment detail not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Product was not found
+
+security:
+  - implicit:
+      - get
