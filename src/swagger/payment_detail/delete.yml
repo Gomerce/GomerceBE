@@ -1,8 +1,8 @@
-title: Get a payment detail's information
-description: Returns a payment detail's key information
+title: Delete a payment detail
+description: Delete a payment detail
 tags:
-  - Product-Detail
-operationId: getpaymentdetail
+  - Payment-Detail
+operationId: deletepaymentdetail
 
 parameters:
         - name: payment_id
@@ -14,35 +14,18 @@ parameters:
 
 responses:
   200:
-    description: Payment detail was successfully retrieved base on ID
+    description: Payment Detail was successfully deleted base on ID
     content:
       application/json:
         schema:
           type: object
           properties:
-            id:
-              type: integer
-            amount:
-              type: float
-            atatus:
+            message:
               type: string
-            created_at:
-              type: datetime
-            updated_at:
-              type: datetime
-            orders_id:
-              type: integer
-            payment_methods_id:
-              type: integer
+          required:
+            - payment_id
           example:
-            data:              
-              id: 1
-              amount: 123.45
-              status: "Partly Paid"
-              created_at: 08-11-2022
-              updated_at: 08-11-2022
-              orders_id: 3
-              payment_methods_id: 2
+            message: The payment detail was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -63,15 +46,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Payment detail not found
+    description: Payment Detail not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Product was not found
+            message: The Payment Detail was not found
 
 security:
   - implicit:
-      - get
+      - delete
