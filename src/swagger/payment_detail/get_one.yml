@@ -70,7 +70,7 @@ responses:
           type: object
           properties:
           example:
-            message: The Product was not found
+            message: The payment detail was not found
 
 security:
   - implicit:
