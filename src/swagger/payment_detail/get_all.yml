@@ -2,7 +2,7 @@ title: Get all payment details
 description: Return all payment details information
 tags:
   - Payment-Details
-operationId: getpaymentdetail
+operationId: getpaymentdetails
 
 responses:
   200:
