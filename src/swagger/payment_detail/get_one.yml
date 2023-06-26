@@ -1,7 +1,7 @@
 title: Get a payment detail's information
 description: Returns a payment detail's key information
 tags:
-  - Product-Detail
+  - Product-Details
 operationId: getpaymentdetail
 
 parameters:
