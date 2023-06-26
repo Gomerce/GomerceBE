@@ -1,7 +1,7 @@
 title: Get a payment method's detail
 description: Returns a payment method's key information
 tags:
-  - Payment-Method
+  - Payment-Methods
 operationId: getpaymentmethod
 
 parameters:
