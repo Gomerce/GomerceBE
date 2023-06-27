@@ -1,7 +1,7 @@
 title: Get all payment methods
 description: Return all payment methods information
 tags:
-  - Payment-Methods
+  - Payment Methods
 operationId: getpaymentmethods
 
 responses:

@@ -1,11 +1,11 @@
 title: Get a payment detail's information
 description: Returns a payment detail's key information
 tags:
-  - Product-Details
+  - Payment Details
 operationId: getpaymentdetail
 
 parameters:
-        - name: payment_id
+        - name: payment_details_id
           in: path
           required: true
           schema:

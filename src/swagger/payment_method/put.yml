@@ -1,26 +1,16 @@
 title: Update a payment method
 description: Update payment method details
 tags:
-  - Payment-Methods
+  - Payment Methods
 operationId: patchpaymentmethod
 
 parameters:
-        - name: method_id
+        - name: payment_method_id
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        - name: name
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: currency
-          in: path
-          required: true
-          schema:
-            type: string 
 
 requestBody:
   description: Update payment method details

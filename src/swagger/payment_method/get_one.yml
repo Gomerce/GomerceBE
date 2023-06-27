@@ -1,11 +1,11 @@
 title: Get a payment method's detail
 description: Returns a payment method's key information
 tags:
-  - Payment-Methods
+  - Payment Methods
 operationId: getpaymentmethod
 
 parameters:
-        - name: method_id
+        - name: payment_method_id
           in: path
           required: true
           schema:

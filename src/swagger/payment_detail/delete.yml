@@ -1,11 +1,11 @@
 title: Delete a payment detail
 description: Delete a payment detail
 tags:
-  - Payment-Details
+  - Payment Details
 operationId: deletepaymentdetail
 
 parameters:
-        - name: payment_id
+        - name: payment_details_id
           in: path
           required: true
           schema:

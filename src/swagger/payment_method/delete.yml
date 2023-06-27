@@ -1,11 +1,11 @@
 title: Delete a payment method
 description: Delete a payment method
 tags:
-  - Payment-Methods
+  - Payment Methods
 operationId: deletepaymentmethod
 
 parameters:
-        - name: method_id
+        - name: payment_method_id
           in: path
           required: true
           schema:

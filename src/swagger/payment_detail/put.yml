@@ -1,38 +1,17 @@
 title: Update a payment detail
 description: Update payment detail information
 tags:
-  - Payment-Details
+  - Payment Details
 operationId: patchpaymentdetail
 
 parameters:
-        - name: payment_id
+        - name: payment_details_id
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        - name: amount
-          in: path
-          required: true
-          schema:
-            type: float
-        - name: status
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: orders_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: payment_methods_id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+
 
 requestBody:
   description: Update payment detail

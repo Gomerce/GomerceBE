@@ -1,7 +1,7 @@
 title: Create a new payment method
 description: Create a new payment method
 tags:
-  - Payment-Methods
+  - Payment Methods
 operationId: postpaymentmethod
 
 requestBody:
