@@ -1,7 +1,7 @@
 title: Create a new payment detail
 description: Create a new payment detail
 tags:
-  - Product-Detail
+  - Payment-Details
 operationId: postpaymentdetail
 
 requestBody:
@@ -12,13 +12,17 @@ requestBody:
         type: object
         properties:
           amount:
-            type: float
+            type: float            
+            example: 123.34
           status:
             type: string
+            example: Partly Paid
           orders_id:
             type: integer
+            example: 1
           payment_methods_id:
             type: integer
+            example: 2
         required:
           - amount
           - status
@@ -28,7 +32,7 @@ requestBody:
 
 responses:
   200:
-    description: The product was created successfully
+    description: The payment detail was created successfully
     content:
       application/json:
         schema:

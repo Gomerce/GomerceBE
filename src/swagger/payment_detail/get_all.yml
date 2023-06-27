@@ -1,12 +1,12 @@
 title: Get all payment details
 description: Return all payment details information
 tags:
-  - Payment-Detail
-operationId: getpaymentdetail
+  - Payment-Details
+operationId: getpaymentdetails
 
 responses:
   200:
-    description: The payment detail information were successfully retrieved
+    description: The payment details information were successfully retrieved
     content:
       application/json:
         schema:
