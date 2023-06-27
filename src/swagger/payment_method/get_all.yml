@@ -1,34 +1,56 @@
 title: Get all payment methods
-description: Return all payment methods
+description: Return all payment methods information
 tags:
-  - payment-methods
-parameters:
-  - name: name
-    in: query
-    type: string
-    description: the name of payment method
-  - name: currency
-    in: query
-    type: string
-    description: the currency for the payment method
-  - name: created_at
-    in: query
-    type: datetime
-    description: the date the payment method was created
-  - name: updated_at
-    in: query
-    type: datetime
-    description: the date the payment method was updated
+  - Payment Methods
+operationId: getpaymentmethods
+
 responses:
   200:
-    description: The payment methods were successfully retrieved
-    schema:
-    example:
-      {
-        "data":
-            [
-              { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "Wire Transfer", "currency": "CHF" },
-              { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "PayPal", "currency": "USD" },
-            ],
-      }
+    description: The payment methods information were successfully retrieved
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: the name of payment method
+              currency:
+                type: string
+                description: the currency for the payment method
+              created_at:
+                type: datetime
+                description: the date the payment method was created
+              updated_at:
+                type: datetime
+                description: the date the payment method was updated
+            example:
+              "data":
+                [
+                  { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "Wire Transfer", "currency": "CHF" },
+                  { "created_at": 08-11-2022, "updated_at": 08-11-2022, "name": "PayPal", "currency": "USD" },
+                ]
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
 
+security:
+  - implicit:
+      - get

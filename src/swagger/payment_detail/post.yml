@@ -1,0 +1,104 @@
+title: Create a new payment detail
+description: Create a new payment detail
+tags:
+  - Payment Details
+operationId: postpaymentdetail
+
+requestBody:
+  description: Create a new payment detail
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          amount:
+            type: float            
+            example: 123.34
+          status:
+            type: string
+            example: Partly Paid
+          orders_id:
+            type: integer
+            example: 1
+          payment_methods_id:
+            type: integer
+            example: 2
+        required:
+          - amount
+          - status
+          - orders_id
+          - payment_methods_id
+  required: true
+
+responses:
+  200:
+    description: The payment detail was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            amount:
+              type: float
+            atatus:
+              type: string
+            created_at:
+              type: datetime
+            updated_at:
+              type: datetime
+            orders_id:
+              type: integer
+            payment_methods_id:
+              type: integer
+          example:
+            id: 1
+            amount: 123.45
+            status: "Partly Paid"
+            created_at: 08-11-2022
+            updated_at: 08-11-2022
+            orders_id: 3
+            payment_methods_id: 2
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+  409:
+    description: Payment detail already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing payment detail with the same information already exists
+
+
+security:
+  - implicit:
+      - post

@@ -1,11 +1,11 @@
-title: Get a payment method's detail
-description: Returns a payment method's key information
+title: Delete a payment detail
+description: Delete a payment detail
 tags:
-  - Payment Methods
-operationId: getpaymentmethod
+  - Payment Details
+operationId: deletepaymentdetail
 
 parameters:
-        - name: payment_method_id
+        - name: payment_details_id
           in: path
           required: true
           schema:
@@ -14,22 +14,18 @@ parameters:
 
 responses:
   200:
-    description: Payment Method was successfully retrieved base on ID
+    description: Payment Detail was successfully deleted base on ID
     content:
       application/json:
         schema:
           type: object
           properties:
-            id:
-              type: integer
-            name:
+            message:
               type: string
-            currency:
-              type: string
+          required:
+            - payment_id
           example:
-            id: 1
-            name: Wire Transfer
-            currency: USD
+            message: The payment detail was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -50,15 +46,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Payment Method not found
+    description: Payment Detail not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The Payment Method was not found
+            message: The Payment Detail was not found
 
 security:
   - implicit:
-      - get
+      - delete

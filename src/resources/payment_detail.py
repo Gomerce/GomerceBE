@@ -15,7 +15,7 @@ class PaymentDetailResource(Resource):
     """ methods relative to the payment detail """
 
     @staticmethod
-    # @swag_from("../swagger/payment_detail/get_one.yml")
+    @swag_from("../swagger/payment_detail/get_one.yml")
     @requires_auth('get:payment_detail')
     def get_one(payment_id):
         """ Return a payment detail key information based on payment_id """
@@ -40,7 +40,7 @@ class PaymentDetailResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/payment_detail/get_all.yml")
+    @swag_from("../swagger/payment_detail/get_all.yml")
     @requires_auth('get:payment_details')
     def get_all():
         """ Return all payment detail key information based on the query parameter """
@@ -48,6 +48,7 @@ class PaymentDetailResource(Resource):
         return jsonify({"data": payment_details})
 
     @staticmethod
+    @swag_from("../swagger/payment_detail/put.yml")
     @parse_params(
         Argument("amount", location="json",
                  help="The amount of the payment."),
@@ -80,15 +81,16 @@ class PaymentDetailResource(Resource):
         return jsonify({"data": data})
 
     @staticmethod
+    @swag_from("../swagger/payment_detail/post.yml")
     @parse_params(
         Argument("amount", location="json",
-                 help="The amount of the payment."),
+                help="The amount of the payment."),
         Argument("status", location="json",
-                 help="The status of the payment."),
+                help="The status of the payment."),
         Argument("orders_id", location="json",
-                 help="The orders_id of the payment."),
+                help="The orders_id of the payment."),
         Argument("payment_methods_id", location="json",
-                 help="The payment_methods_id of the payment."),
+                help="The payment_methods_id of the payment."),
     )
     @requires_auth('post:payment_detail')
     def post(amount, status, orders_id, payment_methods_id):
@@ -110,6 +112,7 @@ class PaymentDetailResource(Resource):
         }
         return jsonify({"data": data})
 
+    @swag_from("../swagger/payment_detail/delete.yml")
     @requires_auth('delete:payment_detail')
     def delete(payment_id):
         """ delete a payment via the provided id """

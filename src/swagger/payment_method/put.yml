@@ -1,0 +1,81 @@
+title: Update a payment method
+description: Update payment method details
+tags:
+  - Payment Methods
+operationId: patchpaymentmethod
+
+parameters:
+        - name: payment_method_id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update payment method details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          method_id:
+            type: integer
+          name:
+            type: string
+          currency:
+            type: string
+        example:
+          method_id: 2
+          name: Wire Transfer
+          currency: NGN
+        required:
+          - method_id
+          - name
+          - currency
+  required: true
+
+responses:
+  200:
+    description: The payment method was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+          example:
+            message: data updated
+  400:
+    description: invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch
