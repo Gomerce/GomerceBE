@@ -7,6 +7,7 @@ from . import db
 from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
+
 class ProductCategory(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Product Category model """
 
@@ -18,5 +19,9 @@ class ProductCategory(db.Model, BaseModel, metaclass=MetaBaseModel):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    #Relationship
-    products = db.relationship('Product', backref='product_categories', lazy=True)
+    # Relationship
+    products = db.relationship(
+        'Product', backref='product_categories', lazy=True)
+
+    products_subcategories = db.relationship(
+        'ProductSubcategory', backref='product_categories', lazy=True)
