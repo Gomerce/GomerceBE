@@ -1,0 +1,100 @@
+title: Create a new order detail
+description: Create a new order detail
+tags:
+  - Order Details
+operationId: postorderdetail
+
+requestBody:
+  description: Create a new order detail
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          sku:
+            type: string
+            example: BL300
+          orders_id:
+            type: integer
+            example: 5
+          products_id:
+            type: integer
+            example: 11
+          statuses_id:
+            type: integer
+            example: 3
+
+        required:
+          - sku
+          - orders_id
+          - products_id
+          - statuses_id
+
+  required: true
+
+responses:
+  200:
+    description: The order detail was created successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            sku:
+              type: string
+            orders_id:
+              type: integer
+            products_id:
+              type: integer
+            statuses_id:
+              type: integer
+          
+          example:
+            id: 6
+            sku: BL300
+            orders_id: 5
+            products_id: 11
+            statuses_id: 3
+  400:
+    description: Invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+  409:
+    description: Order detail already exists
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: An existing order details with the same information already exists
+
+security:
+  - implicit:
+      - post
