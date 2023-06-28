@@ -1,0 +1,136 @@
+title: Update an order
+description: Update order details
+tags:
+  - Orders
+operationId: patchorder
+
+parameters:
+        - name: orderID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update order details
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          total_cost:
+              type: integer
+          tax:
+            type: integer
+          delivery_status:
+            type: string
+          delivered_at:
+            type: datetime
+          customer_id:
+            type: integer
+          shipping_id:
+            type: integer
+          coupon_id:
+            type: integer
+          seller_id:
+            type: integer
+        
+        example:
+          id: 7
+          title: Order 38888
+          total_cost: ₦45,000
+          tax: 0
+          delivery_status: Pending
+          delivered_at: 2023-05-29
+          shipping_id: 2
+          coupon_id: 8
+
+          
+        required:
+          - title
+          - total_cost
+          - tax
+          - delivery_status
+          - delivered_at
+          - customer_id
+          - shipping_id
+          - coupon_id
+          - seller_id
+
+  required: true
+
+responses:
+  200:
+    description: The order was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            total_cost:
+              type: integer
+            tax:
+              type: integer
+            delivery_status:
+              type: string
+            delivered_at:
+              type: datetime
+            customer_id:
+              type: integer
+            shipping_id:
+              type: integer
+            coupon_id:
+              type: integer
+            seller_id:
+              type: integer
+          
+          example:
+            id: 7
+            title: Order 38888
+            total_cost: ₦45,000
+            tax: 0
+            delivery_status: Pending
+            delivered_at: 2023-05-29
+            shipping_id: 2
+            coupon_id: 8
+  400:
+    description: Invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

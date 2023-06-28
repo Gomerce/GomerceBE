@@ -1,11 +1,11 @@
-title: Get an order detail's detail
-description: Returns an order detail's key information
+title: Delete an order
+description: Delete an order
 tags:
-  - Order Details
-operationId: getorderdetail
+  - Orders
+operationId: deleteorder
 
 parameters:
-        - name: orderdetailID
+        - name: orderID
           in: path
           required: true
           schema:
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Product was successfully retrieved base on ID
+    description: Order was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -22,29 +22,39 @@ responses:
           properties:
             id:
               type: integer
-            sku:
+            title:
               type: string
-            orders_id:
+            total_cost:
               type: integer
-            products_id:
+            tax:
               type: integer
-            statuses_id:
+            delivery_status:
+              type: string
+            delivered_at:
+              type: datetime
+            customer_id:
+              type: integer
+            shipping_id:
+              type: integer
+            coupon_id:
+              type: integer
+            seller_id:
               type: integer
 
           required:
             - id
-            - sku
-            - orders_id
-            - products_id
-            - statuses_id
+            - title
+            - total_cost
+            - tax
+            - delivery_status
+            - delivered_at
+            - customer_id
+            - shipping_id
+            - coupon_id
+            - seller_id
 
           example:
-            id: 1
-            sku: SU235
-            orders_id: 4
-            products_id: 1
-            statuses_id: 2
-
+            message: The order was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -65,15 +75,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Order detail not found
+    description: Order not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The order detail was not found
+            message: The order was not found
 
 security:
   - implicit:
-      - get
+      - delete

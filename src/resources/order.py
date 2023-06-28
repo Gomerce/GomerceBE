@@ -61,6 +61,7 @@ class OrderResource(Resource):
         Argument("delivered_at", location="json",
                  help="The order of the order."),
     )
+    @swag_from("../swagger/order/put.yml")
     @requires_auth('patch:order')
     def update_order(order_id, total_cost, tax, delivery_status, delivered_at):
         """ Update a order """
@@ -96,6 +97,7 @@ class OrderResource(Resource):
         Argument("seller_id", location="json",
                  help="The seller_id of the order."),
     )
+    @swag_from("../swagger/order/post.yml")
     @requires_auth('post:order')
     def post(total_cost, tax, delivery_status, delivered_at,
              customer_id, shipping_address_id, coupon_id, seller_id):
@@ -120,6 +122,7 @@ class OrderResource(Resource):
         }
         return jsonify({"data": data})
 
+    @swag_from("../swagger/order/delete.yml")
     @requires_auth('delete:order')
     def delete(order_id):
         """ delete a order via the provided id """

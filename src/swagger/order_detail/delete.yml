@@ -1,8 +1,8 @@
-title: Get an order detail's detail
-description: Returns an order detail's key information
+title: Delete an order detail
+description: Delete a order detail
 tags:
   - Order Details
-operationId: getorderdetail
+operationId: deleteorderdetail
 
 parameters:
         - name: orderdetailID
@@ -14,7 +14,7 @@ parameters:
 
 responses:
   200:
-    description: Product was successfully retrieved base on ID
+    description: Order detail was successfully deleted base on ID
     content:
       application/json:
         schema:
@@ -39,12 +39,7 @@ responses:
             - statuses_id
 
           example:
-            id: 1
-            sku: SU235
-            orders_id: 4
-            products_id: 1
-            statuses_id: 2
-
+            message: The order detail was successfully deleted
   401:
     description: Not authenticated
     content:
@@ -65,15 +60,15 @@ responses:
             message: Access token does not have the required scope
 
   404:
-    description: Order detail not found
+    description: Order details not found
     content:
       application/json:
         schema:
           type: object
           properties:
           example:
-            message: The order detail was not found
+            message: The order details was not found
 
 security:
   - implicit:
-      - get
+      - delete

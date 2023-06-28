@@ -16,22 +16,22 @@ responses:
             properties:
               title:
                 type: string
-                description: The products's title
+                description: The products' title
               price:
                 type: string
-                description: The products's price
+                description: The products' price
               short_desc:
                 type: string
-                description: The products's short description
+                description: The products' short description
               seller:
                 type: string
-                description: The products's seller
+                description: The products' seller
               product_category:
                 type: string
-                description: The products's category
+                description: The products' category
               brand:
                 type: string
-                description: The products's brand
+                description: The products' brand
             example:
               "data":
                 [
