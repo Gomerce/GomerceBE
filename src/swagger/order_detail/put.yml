@@ -1,0 +1,105 @@
+title: Update an order detail
+description: Update order detail information
+tags:
+  - Order Details
+operationId: patchorderdetail
+
+parameters:
+        - name: orderdetailID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+requestBody:
+  description: Update order detail information
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          id:
+            type: integer
+          sku:
+            type: string
+          orders_id:
+            type: integer
+          products_id:
+            type: integer
+          statuses_id:
+            type: integer
+
+        example:
+          id: 9
+          sku: DC445
+          orders_id: 6
+          products_id: 1
+          statuses_id: 1
+          
+        required:
+          - id
+          - sku
+          - orders_id
+          - products_id
+          - statuses_id
+
+  required: true
+
+responses:
+  200:
+    description: The order detail was Updated successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            sku:
+              type: string
+            orders_id:
+              type: integer
+            products_id:
+              type: integer
+            statuses_id:
+              type: integer
+
+          example:
+            id: 9
+            sku: DC445
+            orders_id: 6
+            products_id: 1
+            statuses_id: 1
+  400:
+    description: Invalid input
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Invalid input, object invalid
+  
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+security:
+  - implicit:
+      - patch

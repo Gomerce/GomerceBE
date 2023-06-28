@@ -1,41 +1,98 @@
-title: Get an order
-description: Return key information of an order given its id
+title: Get a order's detail
+description: Returns a order's key information
 tags:
-  - orders 
+  - Orders
+operationId: getorder
+
 parameters:
-  - name: created_at
-    in: path
-    type: datetime
-    description: the date an order was created
-  - name: updated_at
-    in: path
-    type: datetime
-    description: the date an order was updated
-  - name: total_cost
-    in: path
-    type: float
-    description: the date an order was created
-  - name: tax
-    in: path
-    type: float
-    description: the tax for an order
-  - name: delivery_status
-    in: path
-    type: boolean
-    description: the status of a delivery
-  - name: delivered_at
-    in: path
-    type: datetime
-    description: the date an order was delivered
+        - name: orderID
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+
 responses:
   200:
-    description: The order's information were successfully retrieved
-    schema:
-    example:
-      data:
-        created_at: 08-11-2022
-        updated_at: 08-11-2022
-        total_cost: 123.45
-        tax: 12.34
-        delivery_status: False
-        delivered_at: 08-11-2022
+    description: Order was successfully retrieved base on ID
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            total_cost:
+              type: integer
+            tax:
+              type: integer
+            delivery_status:
+              type: string
+            delivered_at:
+              type: datetime
+            customer_id:
+              type: integer
+            shipping_id:
+              type: integer
+            coupon_id:
+              type: integer
+            seller_id:
+              type: integer
+
+          required:
+            - id
+            - title
+            - total_cost
+            - tax
+            - delivery_status
+            - delivered_at
+            - customer_id
+            - shipping_id
+            - coupon_id
+            - seller_id
+
+          example:
+            id: 1
+            title: Order 388884548
+            total_cost: ₦5,000
+            tax: 0
+            delivery_status: Delivered
+            delivered_at: 2023-06-28
+            customer_id: 1
+            shipping_id: 1
+            coupon_id: 1
+            seller_id: 1 
+  401:
+    description: Not authenticated
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Not authenticated
+  403:
+    description: Access token does not have the required scope
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: Access token does not have the required scope
+
+  404:
+    description: Order not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+          example:
+            message: The Order was not found
+
+security:
+  - implicit:
+      - get
