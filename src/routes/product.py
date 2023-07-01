@@ -21,3 +21,6 @@ PRODUCT_BLUEPRINT.route("/products/<int:product_id>",
 
 PRODUCT_BLUEPRINT.route("/products/<int:product_id>",
                         methods=["PUT"])(ProductResource.update_product)
+
+PRODUCT_BLUEPRINT.route("/products/search/",
+                        methods=["POST"])(ProductResource.search_product)

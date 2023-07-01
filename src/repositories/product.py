@@ -28,6 +28,51 @@ class ProductRepository:
         except DataNotFound as e:
             print(sys.exc_info())
             raise DataNotFound(f"Product with {product_id} not found")
+        
+    @staticmethod
+    def search_filter(title, min=None, max=None, category=None):
+        try:
+            products = None
+            if title and isinstance(title, str):
+                search = title.strip() 
+                products = Product.query.filter(or_(Product.title.ilike(f'%{search}%'), Product.short_desc.ilike(f'%{search}%'))).all()
+                
+            if min and isinstance(min, float):
+                products = Product.query.filter(Product.price >= float(min)).all()
+                
+            if max and isinstance(max, float):
+                products = Product.query.filter(Product.price <= float(max)).all()
+            if max and title:
+                query = Product.query.filter(Product.title.ilike(f'%{title}%'))
+                products = query.filter(Product.price >= float(max)) # chaining the previous query and thus filtering it
+                
+            if min and title:
+                query = Product.query.filter(Product.title.ilike(f'%{title}%'))
+                products = query.filter(Product.price <float(min))
+                
+            if category:
+                products = Product.query.join(ProductCategory).filter(ProductCategory.name.ilike(f'%{category}%')).all()
+                
+            response = []
+            for product in products:
+                response.append({
+                    'id': product.id,
+                    'title': product.title,
+                    'price': str(product.price),
+                    'quantity': product.quantity,
+                    'short_desc': product.short_desc,
+                    'long_desc': product.long_desc,
+                    'rating': product.rating,
+                    'thumbnail': product.thumbnail,
+                    'image': product.image,
+                    'created_at': product.created_at,
+                    'updated_at': product.updated_at
+                })
+
+            return response
+        except DataNotFound as e:
+            raise DataNotFound(f"Search field cannot be empty else check for the correct data type of float and string")
+
 
     @staticmethod
     def getAll():
