@@ -4,7 +4,7 @@ from .seller import SELLER_BLUEPRINT
 from .product import PRODUCT_BLUEPRINT
 # from .categories import CATEGORIES_BLUEPRINT
 from .product_category import CATEGORY_BLUEPRINT
-from .auth import AUTH_BLUEPRINT
+# from .auth import AUTH_BLUEPRINT
 from .auth0 import AUTH0_BLUEPRINT
 
 from .payment_detail import PAYMENT_DETAIL_BLUEPRINT

@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 import config
 import routes
 from models import db
+from resources import oauth
 from validators.auth import AuthError
 
 server = Flask(__name__)
@@ -23,7 +24,8 @@ for blueprint in vars(routes).values():
         server.register_blueprint(
             blueprint, url_prefix=config.APPLICATION_ROOT)
 
-oauth = OAuth(server)
+oauth.init_app(server)
+oauth.app = server
 
 oauth.register(
     "auth0",

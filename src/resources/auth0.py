@@ -3,17 +3,20 @@ Define the resources for the customer, vendor and admin auth
 
 """
 
-from os import environ as env
 from urllib.parse import quote_plus, urlencode
 
+from authlib.integrations.flask_client import OAuth
 from flask import redirect, session, url_for
 from flask_restful import Resource
 
 import config
-from server import oauth
+
+oauth = OAuth()
 
 
 class Auth0Resource(Resource):
+    """ This class define Auth0 Resource """
+
     def login():
         return oauth.auth0.authorize_redirect(
             redirect_uri=url_for("callback", _external=True)
