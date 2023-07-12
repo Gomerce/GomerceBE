@@ -42,7 +42,7 @@ flow = Flow.from_client_secrets_file(
         "openid"
     ],
     # the redirect URI route to after authorization
-    redirect_uri="http://127.0.0.1:3303/api/callback"
+    redirect_uri="http://localhost:3303/api/callback"
 )
 
 
@@ -76,7 +76,14 @@ class GoogleResource:
     '''
     @staticmethod
     def callback():
-        flow.fetch_token(authorization_response=request.url)
+        fragment_params = dict(request.args)
+        access_token = fragment_params.get("access_token")
+
+        if access_token is None:
+            return "Access token not found", 400
+
+        flow.fetch_token(authorization_response=request.url.replace("?", "#"),
+                         code=request.args["access_token"])
 
         if not session["state"] == request.args["state"]:
             abort(500)

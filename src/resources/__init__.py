@@ -3,8 +3,8 @@ from .customer import CustomerResource
 from .seller import SellerResource
 from .product import ProductResource
 from .product_category import ProductCategoryResource
-from .auth import AuthResource
-from .auth0 import Auth0Resource
+# from .auth import AuthResource
+from .auth0 import Auth0Resource, oauth
 
 from .payment_detail import PaymentDetailResource
 from .payment_method import PaymentMethodResource
