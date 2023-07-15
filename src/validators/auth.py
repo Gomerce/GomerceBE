@@ -6,6 +6,8 @@ from flask import _request_ctx_stack, request
 from jose import ExpiredSignatureError, JWTError, jwt
 
 import config
+import requests
+import os
 
 AUTH0_DOMAIN = config.AUTH0_DOMAIN
 ALGORITHMS = config.ALGORITHMS
@@ -80,8 +82,9 @@ def check_permissions(permission, payload):
 
 
 def verify_decode_jwt(token):
-    jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
-    jwks = json.loads(jsonurl.read())
+    jsonurl = requests.get(
+        f'https://{os.getenv("AUTH0_DOMAIN")}/.well-known/jwks.json')
+    jwks = json.loads(jsonurl.text)
     unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}
 
