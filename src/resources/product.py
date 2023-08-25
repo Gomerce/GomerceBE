@@ -137,6 +137,12 @@ class ProductResource(Resource):
             "sellers_id": product.sellers_id,
             "product_category_id": product.product_categories_id
         })
+        
+   
+    def search_product(title, min, max, category):
+        products = ProductRepository.search_filter(title=title, min=min, max=max, category=category)
+        return jsonify({"data": products})
+        
 
     @swag_from("../swagger/products/delete.yml")
     @requires_auth('delete:product')
@@ -145,12 +151,10 @@ class ProductResource(Resource):
         # fetch product
 
         product = ProductRepository
-
         if not (product.get(product_id=product_id)):
             abort(
                 404, f"Sorry, the product with id {product_id} was not found."
             )
-
         product.delete(product_id=product_id)
 
         return jsonify({
@@ -233,3 +237,4 @@ class ProductResource(Resource):
         return jsonify({
             "message": f"Product with id {product_id} updated successfully"
         })
+
