@@ -1,3 +1,5 @@
+""" This Module Defines all Auth """
+
 import json
 from functools import wraps
 from urllib.request import urlopen
@@ -22,6 +24,7 @@ class AuthError(Exception):
 
 # Auth Header
 def get_token_auth_header():
+
     # Check for Authorization
     co_auth = request.headers.get('Authorization', None)
 
@@ -73,7 +76,7 @@ def check_permissions(permission, payload):
     if permission not in payload['permissions']:
         raise AuthError({
             'code': '403 Forbidden',
-            'description': 'Your request is forbidden because you don\'t have the permission to perform this task'
+            'description': 'Your request is forbidden because you don\'t have the permission to perform this task'  # noqa
         }, 403)
 
     return True
@@ -111,9 +114,11 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://'+AUTH0_DOMAIN+'/'
             )
+            _request_ctx_stack.top.current_user = payload
             return payload
 
     # Failure during verification of RSA Key
+
         except ExpiredSignatureError:
             raise AuthError({
                 'code': '401 Unauthorized',
@@ -123,7 +128,7 @@ def verify_decode_jwt(token):
         except JWTError:
             raise AuthError({
                 'code': '401 Unauthorized',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
+                'description': 'Incorrect claims. Please, check the audience and issuer.'  # noqa
             }, 401)
 
         except Exception:
@@ -131,8 +136,6 @@ def verify_decode_jwt(token):
                 'code': '400 Bad Request',
                 'description': 'Unable to parse authentication token.'
             }, 400)
-
-    _request_ctx_stack.top.current_user = payload
 
     return verify_decode_jwt(token)
 

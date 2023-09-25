@@ -73,5 +73,4 @@ responses:
             message: The Review was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

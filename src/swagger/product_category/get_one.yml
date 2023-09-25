@@ -66,5 +66,4 @@ responses:
             message: The Product category was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

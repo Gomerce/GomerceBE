@@ -1,6 +1,7 @@
 """
 Define the resources for the product categories
 """
+
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource
@@ -18,14 +19,15 @@ class ProductCategoryResource(Resource):
     @staticmethod
     @swag_from("../swagger/product_category/get_one.yml")
     def get_one(product_category_id):
-        """ Return a product category key information based on product_category_id """
+        """ Return a product category key information based on
+        product_category_id """
 
         try:
             category = ProductCategoryRepository.get(
                 product_category_id=product_category_id)
             if not category:
                 return jsonify(
-                    {"message": f" Category with the id {product_category_id} not found"})
+                    {"message": f" Category with the id {product_category_id} not found"})  # noqa
 
             return jsonify({
                 "id": category.id,
@@ -40,7 +42,8 @@ class ProductCategoryResource(Resource):
     @staticmethod
     @swag_from("../swagger/product_category/get_all.yml")
     def get_all():
-        """ Return all categories key information based on the query parameter """
+        """ Return all categories key information based on the query
+        parameter """
         product_categories = ProductCategoryRepository.getAll()
         return jsonify({"data": product_categories})
 

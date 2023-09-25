@@ -1,7 +1,7 @@
 """
 Define the resources for the review
 """
-import json
+
 
 from flasgger import swag_from
 from flask import abort, jsonify
@@ -77,7 +77,6 @@ class ReviewResource(Resource):
                  help="The image for a review.")
     )
     @swag_from("../swagger/review/put.yml")
-    
     @requires_auth('patch:review')
     def update(review_id, comment, images):
         """ Update a review"""
@@ -96,7 +95,6 @@ class ReviewResource(Resource):
         return jsonify({"data": data})
 
     @swag_from("../swagger/review/delete.yml")
-
     @requires_auth('delete:review')
     def delete(review_id):
         """ delete a review via the provided id """

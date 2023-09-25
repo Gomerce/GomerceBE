@@ -1,9 +1,12 @@
 """ Defines the Payment Detail repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import PaymentDetail
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class PaymentDetailRepository:
@@ -15,7 +18,7 @@ class PaymentDetailRepository:
 
         # make sure one of the parameters was passed
         if not payment_id:
-            raise DataNotFound(f"Payment Detail not found, no detail provided")
+            raise DataNotFound("Payment Detail not found, no detail provided")
 
         try:
             query = PaymentDetail.query
@@ -24,13 +27,15 @@ class PaymentDetailRepository:
 
             payment_detail = query.first()
             return payment_detail
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Payment Detail with {payment_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all payment details"""
+
         payment_details = PaymentDetail.query.all()
         data = []
         for pay in payment_details:
@@ -47,6 +52,7 @@ class PaymentDetailRepository:
 
     def update(self, payment_id, **args):
         """ Update a Payment details"""
+
         payment = self.get(payment_id)
         if 'amount' in args and args['amount'] is not None:
             payment.amount = args['amount']
@@ -54,18 +60,19 @@ class PaymentDetailRepository:
             payment.status = args['status']
         if 'orders_id' in args and args['orders_id'] is not None:
             payment.orders_id = args['orders_id']
-        if 'payment_methods_id' in args and args['payment_methods_id'] is not None:
+        if 'payment_methods_id' in args and args['payment_methods_id'] is not None:  # noqa
             payment.payment_methods_id = args['payment_methods_id']
         return payment.save()
 
     @staticmethod
     def create(amount, status, orders_id, payment_methods_id):
         """ Create a new payment Details """
+
         try:
             payment_detail = PaymentDetail(amount=amount,
                                            status=status,
                                            orders_id=orders_id,
-                                           payment_methods_id=payment_methods_id,
+                                           payment_methods_id=payment_methods_id,  # noqa
                                            )
             return payment_detail.save()
         except IntegrityError as e:
@@ -77,8 +84,9 @@ class PaymentDetailRepository:
     @staticmethod
     def delete(payment_id):
         """ Delete Payment Detail by id """
+
         if not payment_id:
-            raise DataNotFound(f"PaymentDetail not found")
+            raise DataNotFound("PaymentDetail not found")
 
         try:
             query = PaymentDetail.query.filter(
@@ -87,6 +95,7 @@ class PaymentDetailRepository:
                 raise DataNotFound(
                     f"Payments Detail with {payment_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"PaymentDetail with {payment_id} not found")

@@ -1,6 +1,7 @@
 """
 Define the resources for the shipping address
 """
+
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource
@@ -43,7 +44,7 @@ class ShippingAddressResource(Resource):
     @swag_from("../swagger/shipping_address/get_all.yml")
     @requires_auth('get:shipping_addresses')
     def get_all():
-        """ Return all shipping address key information based on the query parameter """
+        """ Return all shipping address key information based on the query parameter """  # noqa
         addresses = ShippingAddressRepository.getAll()
         return jsonify({"data": addresses})
 

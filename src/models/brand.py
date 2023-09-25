@@ -2,10 +2,11 @@
 Define the Product Category model
 """
 
-from tokenize import Name
+from datetime import datetime
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from datetime import datetime
+
 
 class Brand(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Brand model """
@@ -18,5 +19,6 @@ class Brand(db.Model, BaseModel, metaclass=MetaBaseModel):
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    #Relationship
+    # Relationship
+
     products = db.relationship('Product', backref='brands', lazy=True)

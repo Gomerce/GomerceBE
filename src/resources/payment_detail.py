@@ -1,10 +1,13 @@
 """
 Define the resources for the payment details
 """
-from flask import jsonify, abort
+
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import PaymentDetailRepository
 from utils import parse_params
 from utils.errors import DataNotFound
@@ -23,7 +26,7 @@ class PaymentDetailResource(Resource):
         try:
             payment_detail = PaymentDetailRepository.get(payment_id=payment_id)
             if not payment_detail:
-                return jsonify({"message": f" Payment Details with the id {payment_id} not found"})
+                return jsonify({"message": f" Payment Details with the id {payment_id} not found"})  # noqa
             data = {
                 "id": payment_detail.id,
                 "amount": payment_detail.amount,
@@ -43,7 +46,7 @@ class PaymentDetailResource(Resource):
     @swag_from("../swagger/payment_detail/get_all.yml")
     @requires_auth('get:payment_details')
     def get_all():
-        """ Return all payment detail key information based on the query parameter """
+        """ Return all payment detail key information based on the query parameter """  # noqa
         payment_details = PaymentDetailRepository.getAll()
         return jsonify({"data": payment_details})
 
@@ -84,13 +87,13 @@ class PaymentDetailResource(Resource):
     @swag_from("../swagger/payment_detail/post.yml")
     @parse_params(
         Argument("amount", location="json",
-                help="The amount of the payment."),
+                 help="The amount of the payment."),
         Argument("status", location="json",
-                help="The status of the payment."),
+                 help="The status of the payment."),
         Argument("orders_id", location="json",
-                help="The orders_id of the payment."),
+                 help="The orders_id of the payment."),
         Argument("payment_methods_id", location="json",
-                help="The payment_methods_id of the payment."),
+                 help="The payment_methods_id of the payment."),
     )
     @requires_auth('post:payment_detail')
     def post(amount, status, orders_id, payment_methods_id):

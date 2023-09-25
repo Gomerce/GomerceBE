@@ -1,10 +1,13 @@
 """
 Define the resources for the order
 """
-from flask import jsonify, abort
+
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import OrderRepository
 from utils import parse_params
 from utils.errors import DataNotFound
@@ -23,7 +26,7 @@ class OrderResource(Resource):
         try:
             order = OrderRepository.get(order_id=order_id)
             if not order:
-                return jsonify({"message": f" Order with the id {order_id} not found"})
+                return jsonify({"message": f" Order with the id {order_id} not found"})  # noqa
             data = {
                 "id": order.id,
                 "tax": order.tax,
@@ -76,7 +79,7 @@ class OrderResource(Resource):
             delivered_at=delivered_at,
         )
 
-        return jsonify({"message": f"order with the id {order_id} updated successfully"})
+        return jsonify({"message": f"order with the id {order} updated successfully"})  # noqa
 
     @staticmethod
     @parse_params(

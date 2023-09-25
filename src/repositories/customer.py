@@ -73,13 +73,16 @@ class CustomerRepository:
         return customer.save()
 
     @staticmethod
-    def create(username, last_name, first_name, email, password, phone=None, country=None,
-               state=None, city=None, street_name=None, zipcode=None):
+    def create(username, last_name, first_name, email, password, phone=None,
+               country=None, state=None, city=None, street_name=None,
+               zipcode=None):
         """ Create a new customer """
         try:
-            new_customer = Customer(username=username, first_name=first_name, last_name=last_name,
-                                    email=email, phone=phone, country=country, state=state, city=city,
-                                    street_name=street_name, zipcode=zipcode)
+            new_customer = Customer(username=username, first_name=first_name,
+                                    last_name=last_name, email=email,
+                                    phone=phone, country=country, state=state,
+                                    city=city, street_name=street_name,
+                                    zipcode=zipcode)
             new_customer.set_password(password)
 
             return new_customer.save()

@@ -2,10 +2,12 @@
 Define the Product model
 """
 
+from datetime import datetime
+
 from sqlalchemy import Numeric
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from datetime import datetime
 
 
 class Product(db.Model, BaseModel, metaclass=MetaBaseModel):

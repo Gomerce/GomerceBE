@@ -79,5 +79,4 @@ responses:
             message: The Store was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

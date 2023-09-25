@@ -2,9 +2,10 @@
 Define the Order Detail model
 """
 
+from datetime import datetime
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from datetime import datetime
 
 
 class OrderDetail(db.Model, BaseModel, metaclass=MetaBaseModel):

@@ -68,5 +68,4 @@ responses:
             message: The Coupon was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

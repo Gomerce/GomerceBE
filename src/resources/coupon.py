@@ -1,10 +1,11 @@
 """
 Define the resources for the Coupon
 """
-from flask import jsonify, abort
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import CouponRepository
 from utils import parse_params
 from utils.errors import DataNotFound
@@ -16,13 +17,12 @@ class CouponResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/coupon/get_one.yml")
-    @requires_auth('get:coupon')
     def get_one(coupon_id):
         """ Return a coupon based on id provided"""
         try:
             coupon = CouponRepository.get_one(coupon_id=coupon_id)
             if not coupon:
-                return jsonify({"message": f" coupon with the id {coupon_id} not found"})
+                return jsonify({"message": f" coupon with the id {coupon_id} not found"})  # noqa
             data = {
                 "id": coupon.id,
                 "code": coupon.code,
@@ -39,7 +39,6 @@ class CouponResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/coupon/get_all.yml")
-    @requires_auth('get:coupons')
     def get_all():
         """ Return all coupon key information based on the query parameter """
         coupon = CouponRepository.get_all()
@@ -60,7 +59,8 @@ class CouponResource(Resource):
         """ Update a copon """
         repo = CouponRepository()
         coupon = repo.update(
-            coupon_id=coupon_id, code=code, amount=amount, expires_at=expires_at
+            coupon_id=coupon_id, code=code, amount=amount,
+            expires_at=expires_at
         )
         data = {
             "id": coupon.id,

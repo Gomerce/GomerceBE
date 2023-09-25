@@ -1,10 +1,12 @@
 """ Defines the Product Category repository """
+
+
 import sys
-from sqlalchemy import or_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import ProductCategory, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError
-from flask import jsonify
 
 
 class ProductCategoryRepository:
@@ -17,7 +19,7 @@ class ProductCategoryRepository:
         # make sure one of the parameters was passed
         if not product_category_id:
             raise DataNotFound(
-                f"Product category not found, no detail provided")
+                "Product category not found, no detail provided")
 
         try:
             query = ProductCategory.query
@@ -26,7 +28,8 @@ class ProductCategoryRepository:
 
             product_category = query.first()
             return product_category
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(
                 f"Product Category with {product_category_id} not found")
@@ -34,6 +37,7 @@ class ProductCategoryRepository:
     @staticmethod
     def getAll():
         """ Query all categories"""
+
         product_categories = db.session.query(ProductCategory).all()
 
         data = []
@@ -49,6 +53,7 @@ class ProductCategoryRepository:
 
     def update(self, category_id, **args):
         """ Update a category details """
+
         product_category = self.get(category_id)
         if 'name' in args and args['name'] is not None:
             product_category.name = args['name']
@@ -61,6 +66,7 @@ class ProductCategoryRepository:
     @staticmethod
     def create(name, sku):
         """ Create a new category """
+
         try:
             new_product_category = ProductCategory(name=name, sku=sku)
 
@@ -69,6 +75,7 @@ class ProductCategoryRepository:
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
+
         except Exception:
             raise InternalServerError
 
@@ -78,7 +85,7 @@ class ProductCategoryRepository:
 
         # make sure product_id was passed
         if not category_id:
-            raise DataNotFound(f"Category not found, no detail provided")
+            raise DataNotFound("Category not found, no detail provided")
 
         try:
             query = ProductCategory.query.filter(
@@ -87,6 +94,7 @@ class ProductCategoryRepository:
                 raise DataNotFound(
                     f"Category with {category_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Category with {category_id} not found")

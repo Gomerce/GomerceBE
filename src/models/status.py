@@ -4,7 +4,6 @@ Define the Status model
 
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from sqlalchemy import ForeignKey
 
 
 class Status(db.Model, BaseModel, metaclass=MetaBaseModel):
