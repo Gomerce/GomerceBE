@@ -1,10 +1,13 @@
 """ Defines the Shipping Address repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from flask import jsonify
+from sqlalchemy.exc import IntegrityError
+
 from models import ShippingAddress
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
-from flask import jsonify
 
 
 class ShippingAddressRepository:
@@ -17,7 +20,7 @@ class ShippingAddressRepository:
         # make sure one of the parameters was passed
         if not address_id:
             raise DataNotFound(
-                f"Shipping Address not found, no detail provided")
+                "Shipping Address not found, no detail provided")
 
         try:
             query = ShippingAddress.query
@@ -26,13 +29,15 @@ class ShippingAddressRepository:
 
             address_item = query.first()
             return address_item
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Shipping Address with {address_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all shipping addresses"""
+
         addresses = ShippingAddress.query.all()
         data = []
         for add in addresses:
@@ -51,6 +56,7 @@ class ShippingAddressRepository:
     @staticmethod
     def create(country, state, city, street_name, zipcode, phone):
         """ Create a new address """
+
         try:
             created_address = ShippingAddress(
                 country=country,
@@ -60,11 +66,12 @@ class ShippingAddressRepository:
                 zipcode=zipcode,
                 street_name=street_name
             )
-            review = created_address.save()
+            created_address = created_address.save()
 
         except IntegrityError as e:
             message = e.orig.diag.message_detail
             raise DuplicateData(message)
+
         except Exception:
             raise InternalServerError
 
@@ -79,6 +86,7 @@ class ShippingAddressRepository:
 
     def update(self, address_id, **args):
         """ Update a address """
+
         address = self.get(address_id)
         if not address:
             raise DataNotFound(f"Address Detail with {address_id} not found")
@@ -106,8 +114,9 @@ class ShippingAddressRepository:
     @staticmethod
     def delete(address_id):
         """ Delete a address by address_id """
+
         if not address_id:
-            raise DataNotFound(f"Address not found")
+            raise DataNotFound("Address not found")
 
         try:
             query = ShippingAddress.query.filter(
@@ -116,6 +125,7 @@ class ShippingAddressRepository:
                 raise DataNotFound(
                     f"Address Detail with {address_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Address with {address_id} not found")

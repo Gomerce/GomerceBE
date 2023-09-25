@@ -1,4 +1,7 @@
-from authlib.integrations.flask_client import OAuth
+"""
+This module define all necessary configuration for server to run
+"""
+
 from flasgger import Swagger
 from flask import Flask, jsonify
 from flask.blueprints import Blueprint
@@ -9,6 +12,7 @@ import routes
 from models import db
 from resources import oauth
 from validators.auth import AuthError
+
 
 server = Flask(__name__)
 
@@ -37,7 +41,7 @@ oauth.register(
     client_kwargs={
         "scope": "openid profile email",
     },
-    # server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'
+    server_metadata_url=f'https://{config.AUTH0_DOMAIN}/.well-known/openid-configuration'  # noqa
 )
 
 
@@ -62,24 +66,16 @@ server.config["SWAGGER"] = {
     "version": "1.0.0",
     "static_url_path": "/apidocs",
     "servers": [
-        {"url": "http://127.0.0.1:3303", "description": "Local development server"},
+        {"url": "http://127.0.0.1:3303", "description": "Local development server"},  # noqa
         {"url": "http://3.16.135.85", "description": "Production server"}
     ],
 
     "components": {
         "schemas": {},
         "securitySchemes": {
-            "implicit": {
-                "type": "oauth2",
-                "flows": {
-                    "implicit": {
-                        "authorizationUrl": "https://dev-g4gsowubo2qcoa42.us.auth0.com/authorize",
-                        "scopes": {
-                            "get": "allows retrieving resources",
-                            "post": "allows creating of resources",
-                        }
-                    }
-                }
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
             }
         }
     }
@@ -87,26 +83,33 @@ server.config["SWAGGER"] = {
 
 swagger_config = Swagger.DEFAULT_CONFIG.copy()
 swagger_config["openapi"] = "3.0.3"
+
+
 # Add the security definitions
 swagger_config["securityDefinitions"] = {
     "BearerAuth": {
-        "type": "apiKey",
+        "type": "bearer",
         "name": "Authorization",
         "in": "header"
     }
 }
 
 # Add the security requirement
-swagger_config["security"] = [{"BearerAuth": []}]
+
+
+swagger_config["security"] = [{"bearerAuth": []}]
 Swagger(server, config=swagger_config)
 
-""" Error handling """
 
+""" Error handling """
 # error handler for 422
 
 
 @server.errorhandler(422)
 def unprocessable(error):
+    """ This Functions Catches 422 Error """
+
+    print(error)
     return jsonify({
         "success": False,
         "error": 422,
@@ -115,8 +118,12 @@ def unprocessable(error):
 
 
 # error handler for 400
+
+
 @server.errorhandler(400)
 def bad_request(error):
+    """ This Functions Catches 400 Error """
+
     print(error)
     return jsonify({
         "success": False,
@@ -126,8 +133,12 @@ def bad_request(error):
 
 
 # error handler for 401
+
+
 @server.errorhandler(401)
 def unauthorized(error):
+    """ This Functions Catches 401 Error """
+
     return jsonify({
         "success": False,
         "error": 401,
@@ -136,8 +147,12 @@ def unauthorized(error):
 
 
 # error handler for 403
+
+
 @server.errorhandler(403)
 def forbidden(error):
+    """ This Functions Catches 403 Error """
+
     return jsonify({
         "success": False,
         "error": 403,
@@ -146,8 +161,12 @@ def forbidden(error):
 
 
 # error handler for 404
+
+
 @server.errorhandler(404)
 def not_found(error):
+    """ This Functions Catches 404 Error """
+
     return jsonify({
         "success": False,
         "error": 404,
@@ -156,8 +175,12 @@ def not_found(error):
 
 
 # error handler for 500
+
+
 @server.errorhandler(500)
 def internal_server_error(error):
+    """ This Functions Catches 500 Error """
+
     print({"error": error})
     return jsonify({
         "success": False,
@@ -168,6 +191,8 @@ def internal_server_error(error):
 
 @server.errorhandler(AuthError)
 def handle_auth_error(ex):
+    """ This Functions AuthError """
+
     response = jsonify(ex.error)
     response.status_code = ex.status_code
     return response

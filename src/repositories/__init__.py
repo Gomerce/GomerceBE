@@ -13,9 +13,6 @@ from .review import ReviewRepository
 from .shipping_address import ShippingAddressRepository
 
 from .cart import CartRepository
-# from .products import ProductRepository
-# from .sellers import SellerRepository
 from .coupon import CouponRepository
 from .status import StatusRepository
 from .store import StoreRepository
-

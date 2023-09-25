@@ -1,10 +1,12 @@
 """ Defines the Product repository """
+
+
 import sys
-from sqlalchemy import or_
-from models import db, Product, ProductCategory
-from utils.errors import DataNotFound, DuplicateData, InternalServerError
+
 from sqlalchemy.exc import IntegrityError
-from flask import jsonify
+
+from models import Product, ProductCategory, db
+from utils.errors import DataNotFound, DuplicateData, InternalServerError
 
 
 class ProductRepository:
@@ -16,7 +18,7 @@ class ProductRepository:
 
         # make sure one of the parameters was passed
         if not product_id:
-            raise DataNotFound(f"Product not found, no detail provided")
+            raise DataNotFound("Product not found, no detail provided")
 
         try:
             query = Product.query
@@ -24,8 +26,10 @@ class ProductRepository:
                 query = query.filter(Product.id == product_id)
 
             product = query.first()
+
             return product
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Product with {product_id} not found")
         
@@ -84,7 +88,6 @@ class ProductRepository:
             data.append({
                 "title": product.title,
                 "id": product.id,
-                "price": product.price,
                 "quantity": product.quantity,
                 "short_desc": product.short_desc,
                 "rating": product.rating,
@@ -99,6 +102,7 @@ class ProductRepository:
 
     def update(self, product_id, **args):
         """ Update a product details """
+
         product = self.get(product_id)
         if 'title' in args and args['title'] is not None:
             product.title = args['title']
@@ -125,9 +129,10 @@ class ProductRepository:
 
     @staticmethod
     def create(title, price, quantity, short_desc, thumbnail, image,
-               sellers_id, product_categories_id, brand_id=None,
-               long_desc="Empty", rating=0):
+               sellers_id, product_categories_id, brand_id,
+               long_desc, rating):
         """ Create a new product """
+
         try:
             new_product = Product(title=title, price=price, quantity=quantity,
                                   short_desc=short_desc,
@@ -154,13 +159,14 @@ class ProductRepository:
 
         # make sure product_id was passed
         if not product_id:
-            raise DataNotFound(f"Product not found, no detail provided")
+            raise DataNotFound("Product not found, no detail provided")
 
         try:
             query = Product.query.filter(Product.id == product_id)
 
             product = query.first()
             return product.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Product with {product_id} not found")

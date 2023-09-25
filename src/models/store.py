@@ -2,12 +2,10 @@
 Define the Store model
 """
 
-from email.policy import default
-from . import db
-from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from . import db
+from .abc import BaseModel, MetaBaseModel
 
 
 class Store(db.Model, BaseModel, metaclass=MetaBaseModel):

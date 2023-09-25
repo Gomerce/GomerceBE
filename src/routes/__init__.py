@@ -16,7 +16,7 @@ from .shipping_address import SHIPPING_ADDRESS_BLUEPRINT
 
 # from .products import PRODUCT_BLUEPRINT
 # from .sellers import SELLER_BLUEPRINT
-from .google_auth import GOOGLE_BLUEPRINT
+# from .google_auth import GOOGLE_BLUEPRINT
 
 from .store import STORE_BLUEPRINT
 from .status import STATUS_BLUEPRINT

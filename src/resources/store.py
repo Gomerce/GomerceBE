@@ -1,7 +1,6 @@
 """
 Define the resources for the store
 """
-import json
 
 from flasgger import swag_from
 from flask import abort, jsonify

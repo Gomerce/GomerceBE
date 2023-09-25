@@ -1,9 +1,12 @@
 """ Defines the Payment Method repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import PaymentMethod, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class PaymentMethodRepository:
@@ -15,7 +18,7 @@ class PaymentMethodRepository:
 
         # make sure one of the parameters was passed
         if not method_id:
-            raise DataNotFound(f"Payment Method not found, no detail provided")
+            raise DataNotFound("Payment Method not found, no detail provided")
 
         try:
             query = PaymentMethod.query
@@ -23,13 +26,15 @@ class PaymentMethodRepository:
                 query = query.filter(PaymentMethod.id == method_id)
 
             return query.first()
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Payment Method with {method_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all payment methods"""
+
         payment_methods = db.session.query(PaymentMethod).all()
         data = []
         for pay in payment_methods:
@@ -45,6 +50,7 @@ class PaymentMethodRepository:
 
     def update(self, method_id, **args):
         """ Update a Payment Method"""
+
         pay_method = self.get(method_id)
         if 'name' in args and args['name'] is not None:
             pay_method.name = args['name']
@@ -55,6 +61,7 @@ class PaymentMethodRepository:
     @staticmethod
     def create(name, currency):
         """ Create a new payment method """
+
         try:
 
             pay_method = PaymentMethod(name=name, currency=currency)
@@ -70,8 +77,9 @@ class PaymentMethodRepository:
     @staticmethod
     def delete(method_id):
         """ Delete Payment Method by id """
+
         if not method_id:
-            raise DataNotFound(f"Payment Method not found")
+            raise DataNotFound("Payment Method not found")
 
         try:
             query = PaymentMethod.query.filter(
@@ -82,6 +90,7 @@ class PaymentMethodRepository:
             db.session.delete(query)
             db.session.commit()
             return query
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Payment Method with {method_id} not found")

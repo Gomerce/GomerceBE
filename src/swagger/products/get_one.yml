@@ -80,5 +80,4 @@ responses:
             message: The Product was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

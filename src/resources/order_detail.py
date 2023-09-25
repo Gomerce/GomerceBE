@@ -1,10 +1,13 @@
 """
 Define the resources for the order detail
 """
-from flask import jsonify, abort
+
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
+
 from repositories import OrderDetailRepository
 from utils import parse_params
 from utils.errors import DataNotFound
@@ -23,7 +26,7 @@ class OrderDetailResource(Resource):
         try:
             order_detail = OrderDetailRepository.get(detail_id=detail_id)
             if not order_detail:
-                return jsonify({"message": f" Order with the id {detail_id} not found"})
+                return jsonify({"message": f" Order with the id {detail_id} not found"})  # noqa
             print(order_detail)
             data = {
                 "id": order_detail.id,
@@ -44,7 +47,7 @@ class OrderDetailResource(Resource):
     @swag_from("../swagger/order_detail/get_all.yml")
     @requires_auth('get:order_details')
     def get_all():
-        """ Return all order detail key information based on the query parameter """
+        """ Return all order detail key information based on the query parameter """  # noqa
         order_details = OrderDetailRepository.getAll()
         return jsonify({"data": order_details})
 

@@ -1,9 +1,13 @@
 """
 Define the Shipping Address model
 """
+
+
+from datetime import datetime
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from datetime import datetime
+
 
 class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     """ The Shipping Address model """
@@ -21,6 +25,4 @@ class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
     updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
     # Relationship
-    orders = db.relationship('Order', backref='shipping_addresses', lazy=True)    
-
-    
+    orders = db.relationship('Order', backref='shipping_addresses', lazy=True)

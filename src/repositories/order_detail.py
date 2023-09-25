@@ -1,9 +1,12 @@
 """ Defines the Order Detail repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import OrderDetail
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class OrderDetailRepository:
@@ -15,7 +18,7 @@ class OrderDetailRepository:
 
         # make sure one of the parameters was passed
         if not detail_id:
-            raise DataNotFound(f"Order Detail not found, no detail provided")
+            raise DataNotFound("Order Detail not found, no detail provided")
 
         try:
             query = OrderDetail.query
@@ -26,13 +29,15 @@ class OrderDetailRepository:
             if order_detail:
                 return {}
             return order_detail
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Order Detail with {detail_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all order details"""
+
         order_details = OrderDetail.query.all()
         data = []
         for order in order_details:
@@ -50,6 +55,7 @@ class OrderDetailRepository:
 
     def update(self, detail_id, **args):
         """ Update a order details"""
+
         order_details = self.get(detail_id)
         if not order_details:
             raise DataNotFound(f"Order Detail with {detail_id} not found")
@@ -66,6 +72,7 @@ class OrderDetailRepository:
     @staticmethod
     def create(sku, orders_id, products_id, statuses_id):
         """ Create a new Order Details """
+
         try:
             order_detail = OrderDetail(sku=sku, orders_id=orders_id,
                                        products_id=products_id,
@@ -82,8 +89,9 @@ class OrderDetailRepository:
     @staticmethod
     def delete(detail_id):
         """ Delete a OrderDetail by id """
+
         if not detail_id:
-            raise DataNotFound(f"OrderDetail not found")
+            raise DataNotFound("OrderDetail not found")
 
         try:
             query = OrderDetail.query.filter(
@@ -91,7 +99,8 @@ class OrderDetailRepository:
             if not query:
                 raise DataNotFound(f"Order Detail with {detail_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(
                 f"Order Detail with {detail_id} not found")

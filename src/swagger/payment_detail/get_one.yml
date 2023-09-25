@@ -73,5 +73,4 @@ responses:
             message: The payment detail was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

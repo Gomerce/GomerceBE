@@ -1,6 +1,11 @@
 """
 Define the resources for the sellers
 """
+
+import os
+from datetime import datetime, timedelta
+
+import jwt
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource
@@ -10,11 +15,6 @@ from repositories import SellerRepository
 from utils import parse_params
 from utils.errors import DataNotFound
 from validators.auth import requires_auth
-import jwt
-import os
-from datetime import datetime, timedelta
-
-# from utils.auth_decorators import seller_auth_required
 
 
 class SellerResource(Resource):
@@ -22,7 +22,6 @@ class SellerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/seller/get_one.yml")
-    @requires_auth('get:seller')
     def get_one(seller_id):
         """ Return a seller key information based on seller_id """
 
@@ -39,7 +38,6 @@ class SellerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/seller/get_all.yml")
-    @requires_auth('get:sellers')
     def get_all():
         """ Return all seller key information based on the query parameter """
         sellers = SellerRepository.getAll()
@@ -175,6 +173,7 @@ class SellerResource(Resource):
                 "lastName": seller.last_name,
                 "token": token
             })
+
     @swag_from("../swagger/seller/delete.yml")
     @requires_auth('delete:seller')
     def delete(seller_id):

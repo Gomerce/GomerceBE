@@ -80,5 +80,4 @@ responses:
             message: The Shipping Address was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

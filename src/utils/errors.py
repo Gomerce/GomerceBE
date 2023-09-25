@@ -19,30 +19,35 @@ class Unauthorized(Exception):
     def __init__(self, message) -> None:
         self.code = 401
         self.message = message
+        print(sys.exc_info())
 
 
 class AccessDenied(Exception):
     def __init__(self, message) -> None:
         self.code = 403
         self.message = message
+        print(sys.exc_info())
 
 
 class DataNotFound(Exception):
     def __init__(self, message) -> None:
         self.code = 404
         self.message = message
+        print(sys.exc_info())
 
 
 class ResourceNotCreated(Exception):
     def __init__(self, message) -> None:
         self.code = 500
         self.message = message
+        print(sys.exc_info())
 
 
 class NotificationFailed(Exception):
     def __init__(self, message) -> None:
         self.code = 500
         self.message = message
+        print(sys.exc_info())
 
 
 errors = {

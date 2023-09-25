@@ -1,9 +1,13 @@
 """ Defines the Cart repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
+
 from models import Cart, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class CartRepository:
@@ -15,7 +19,7 @@ class CartRepository:
 
         # ensure that atleast one parameter is passed
         if not cart_id and not customer_id:
-            raise DataNotFound(f"Cart id must be provided")
+            raise DataNotFound("Cart id must be provided")
 
         try:
             result = db.session.query(Cart).filter(
@@ -25,7 +29,7 @@ class CartRepository:
                 raise DataNotFound(f"Cart Detail with {cart_id} not found")
 
             return result
-        except:
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(
                 f"Cart with {cart_id or customer_id } not found")
@@ -33,6 +37,7 @@ class CartRepository:
     @staticmethod
     def get_all(customer_id):
         """ Query all Carts"""
+
         carts = Cart.query.filter(Cart.customer_id == customer_id)
         if not carts:
             return []
@@ -50,6 +55,7 @@ class CartRepository:
 
     def update(self, cart_id, **args):
         """ Update a Cart"""
+
         cart = self.get_one(cart_id)
         if not cart:
             raise DataNotFound(f"Order Detail with {cart_id} not found")
@@ -67,22 +73,23 @@ class CartRepository:
     @staticmethod
     def create(unit_price, quantity, total_cost, product_id, customer_id):
         """ Create a new Cart """
+
         try:
 
             if not (type(quantity) is int):
                 raise DataNotFound(f"quantity {quantity} must not an integer ")
 
             if not (product_id or customer_id):
-                raise DataNotFound(f"both product and customer id required")
+                raise DataNotFound("both product and customer id required")
 
             if (unit_price or total_cost) < 0:
                 raise DataNotFound(
-                    f"both price and total cost cannot be a negative value"
+                    "both price and total cost cannot be a negative value"
                 )
 
             if not (unit_price or total_cost):
                 raise DataNotFound(
-                    f"both price and total cost must be provided")
+                    "both price and total cost must be provided")
 
             new_cart = Cart(unit_price=unit_price,
                             quantity=quantity,
@@ -100,14 +107,15 @@ class CartRepository:
     @staticmethod
     def delete(cart_id):
         """ Delete a cart by id """
+
         if not cart_id:
-            raise DataNotFound(f"Cart not found")
+            raise DataNotFound("Cart not found")
 
         try:
             query = Cart.query.filter(Cart.id == cart_id).first()
             if not query:
                 raise DataNotFound(f"Cart Detail with {cart_id} not found")
             return query.delete()
-        except DataNotFound as e:
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Cart with {cart_id} not found")

@@ -1,12 +1,12 @@
 """
 Define the Seller model
 """
-import uuid
-from . import db
-from .abc import BaseModel, MetaBaseModel
 from datetime import datetime
 
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from . import db
+from .abc import BaseModel, MetaBaseModel
 
 
 class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):

@@ -56,5 +56,4 @@ responses:
             message: Access token does not have the required scope
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

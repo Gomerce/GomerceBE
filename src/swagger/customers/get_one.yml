@@ -69,5 +69,4 @@ responses:
             message: The Customer was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []
