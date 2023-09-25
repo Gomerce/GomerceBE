@@ -1,6 +1,8 @@
 """
 Define the resources for the customers
 """
+
+
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource

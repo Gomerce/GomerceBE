@@ -65,5 +65,4 @@ responses:
             message: The Status was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

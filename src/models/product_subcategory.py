@@ -2,10 +2,10 @@
 Define the Product Subcategory model
 """
 
-from tokenize import Name
+from datetime import datetime
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
-from datetime import datetime
 
 
 class ProductSubcategory(db.Model, BaseModel, metaclass=MetaBaseModel):

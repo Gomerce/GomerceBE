@@ -1,6 +1,8 @@
 """
 Define the REST verbs relative to the index route
 """
+
+
 from flasgger import swag_from
 from flask.json import jsonify
 from flask_restful import Resource

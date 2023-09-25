@@ -1,9 +1,12 @@
 """ Defines the Status repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import Status, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class StatusRepository:
@@ -15,7 +18,7 @@ class StatusRepository:
 
         # make sure one of the parameters was passed
         if not status_id:
-            raise DataNotFound(f"Status not found, no detail provided")
+            raise DataNotFound("Status not found, no detail provided")
 
         try:
             query = Status.query
@@ -24,13 +27,15 @@ class StatusRepository:
 
             status = query.first()
             return status
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Status with {status_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all categories"""
+
         status = db.session.query(Status).all()
         data = []
         for st in status:
@@ -42,6 +47,7 @@ class StatusRepository:
 
     def update(self, status_id, **args):
         """ Update a Status's  """
+
         status = self.get(status_id)
         if not status:
             raise DataNotFound(f"Status Detail with {status_id} not found")
@@ -56,6 +62,7 @@ class StatusRepository:
     @staticmethod
     def create(status, order_id):
         """ Create a new Status """
+
         try:
             new_Status = Status(status=status, order_id=order_id)
 
@@ -69,14 +76,16 @@ class StatusRepository:
     @staticmethod
     def delete(status_id):
         """ Delete a status by id """
+
         if not status_id:
-            raise DataNotFound(f"Status not found")
+            raise DataNotFound("Status not found")
 
         try:
             query = Status.query.filter(Status.id == status_id).first()
             if not query:
                 raise DataNotFound(f"Status Detail with {status_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Status with {status_id} not found")

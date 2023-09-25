@@ -1,13 +1,13 @@
 """ Defines the Seller repository """
-import jwt
-import os
-from datetime import datetime, timedelta
+
+
 import sys
+
 from sqlalchemy import or_
-from flask import jsonify
+from sqlalchemy.exc import IntegrityError
+
 from models import Seller
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError
 
 
 class SellerRepository:
@@ -19,7 +19,7 @@ class SellerRepository:
 
         # make sure one of the parameters was passed
         if not seller_id and not username and not email:
-            raise DataNotFound(f"Seller not found, no detail provided")
+            raise DataNotFound("Seller not found, no detail provided")
 
         try:
             query = Seller.query
@@ -40,7 +40,8 @@ class SellerRepository:
 
             seller = query.first()
             return seller
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Seller with {seller_id} not found")
 
@@ -92,13 +93,14 @@ class SellerRepository:
 
         # make sure seller_id was passed
         if not seller_id:
-            raise DataNotFound(f"Seller not found, no detail provided")
+            raise DataNotFound("Seller not found, no detail provided")
 
         try:
             query = Seller.query.filter(Seller.id == seller_id)
 
             seller = query.first()
             return seller.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Seller with {seller_id} not found")

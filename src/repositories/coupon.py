@@ -1,9 +1,13 @@
 """ Defines the Coupon repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
+
 from models import Coupon
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class CouponRepository:
@@ -15,7 +19,7 @@ class CouponRepository:
 
         # ensure that atleast one parameter is passed
         if not coupon_id and not code:
-            raise DataNotFound(f"Coupon not found, no detail provided")
+            raise DataNotFound("Coupon not found, no detail provided")
 
         try:
             query = Coupon.query
@@ -27,13 +31,15 @@ class CouponRepository:
 
             coupon = query.first()
             return coupon
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Coupon with {coupon_id} not found")
 
     @staticmethod
     def get_all():
         """ Query all Coupons"""
+
         coupons = Coupon.query.all()
         data = []
         for coup in coupons:
@@ -50,6 +56,7 @@ class CouponRepository:
 
     def update(self, coupon_id, **args):
         """ Update a Coupon's age """
+
         Coupon = self.get_one(coupon_id)
         if not Coupon:
             raise DataNotFound(f"Coupon Detail with {coupon_id} not found")
@@ -67,6 +74,7 @@ class CouponRepository:
     @staticmethod
     def create(amount, code, expires_at):
         """ Create a new Coupon """
+
         try:
             new_Coupon = Coupon(amount=amount, code=code,
                                 expires_at=expires_at)
@@ -80,14 +88,16 @@ class CouponRepository:
     @staticmethod
     def delete(coupon_id):
         """ Delete a coupoun by id """
+
         if not coupon_id:
-            raise DataNotFound(f"Coupon not found")
+            raise DataNotFound("Coupon not found")
 
         try:
             query = Coupon.query.filter(Coupon.id == coupon_id).first()
             if not query:
                 raise DataNotFound(f"Coupon Detail with {coupon_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Store with {coupon_id} not found")

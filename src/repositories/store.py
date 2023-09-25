@@ -1,9 +1,13 @@
 """ Defines the Store repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
+
 from models import Store, db
-from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
+from utils.errors import DataNotFound, InternalServerError
 
 
 class StoreRepository:
@@ -15,7 +19,7 @@ class StoreRepository:
 
         # make sure one of the parameters was passed
         if not store_id and not name and not email and not phone:
-            raise DataNotFound(f"Store not found, no detail provided")
+            raise DataNotFound("Store not found, no detail provided")
 
         try:
             query = Store.query
@@ -23,23 +27,28 @@ class StoreRepository:
                 query = query.filter(Store.id == store_id)
             if name:
                 query = query.filter(
-                    or_(Store.name == name, Store.email == name, Store.phone == name))
+                    or_(Store.name == name, Store.email == name,
+                        Store.phone == name))
             if email:
                 query = query.filter(
-                    or_(Store.email == email, Store.name == email, Store.phone == email))
+                    or_(Store.email == email, Store.name == email,
+                        Store.phone == email))
             if phone:
                 query = query.filter(
-                    or_(Store.phone == phone, Store.email == phone, Store.name == phone))
+                    or_(Store.phone == phone, Store.email == phone,
+                        Store.name == phone))
 
             store = query.first()
             return store
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Store with {store_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all Stores"""
+
         stores = db.session.query(Store).all()
 
         data = []
@@ -59,6 +68,7 @@ class StoreRepository:
 
     def update(self, store_id, **args):
         """ Update a Store's age """
+
         store = self.get(store_id)
         if not store:
             raise DataNotFound(f"Store Detail with {store_id} not found")
@@ -81,9 +91,11 @@ class StoreRepository:
         return store.save()
 
     @staticmethod
-    def create(name, address,  phone, sellers_id, email=None, email_verified=None,
+    def create(name, address,  phone, sellers_id, email=None,
+               email_verified=None,
                phone_verified=None, ):
         """ Create a new Store """
+
         if not sellers_id:
             raise DataNotFound("a store must be related to a seller")
         if not name or not address or not phone:
@@ -98,21 +110,25 @@ class StoreRepository:
 
             return new_Store.save()
         except IntegrityError as e:
+
             message = e.orig.diag.message_detail
             raise DataNotFound(message)
+
         except Exception:
             raise InternalServerError
 
     @staticmethod
     def delete(store_id):
         """ Delete a store by id """
+
         if not store_id:
-            raise DataNotFound(f"Store not found")
+            raise DataNotFound("Store not found")
         try:
             query = Store.query.filter(Store.id == store_id).first()
             if not query:
                 raise DataNotFound(f"Store Detail with {store_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Store with {store_id} not found")

@@ -1,6 +1,7 @@
 """
 Define the resources for the product
 """
+
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource
@@ -71,11 +72,17 @@ class ProductResource(Resource):
                  help="The sellers_id that created the product."),
         Argument("product_categories_id", location="json",
                  help="The product_categories of the product."),
+        Argument("rating", location="json",
+                 help="The product_categories of the product."),
+        Argument("long_desc", location="json",
+                 help="The product_categories of the product."),
+        Argument("brand_id", location="json",
+                 help="The product_categories of the product."),
     )
     @swag_from("../swagger/products/post.yml")
     @requires_auth('post:product')
     def post(title, price, quantity, short_desc,
-             thumbnail, image, sellers_id, product_categories_id):
+             thumbnail, image, sellers_id, product_categories_id, long_desc, rating, brand_id):  # noqa
         """ Create a product based on the provided information """
 
         if title is None:
@@ -116,6 +123,13 @@ class ProductResource(Resource):
         if product_categories_id == "":
             abort(400, "Sorry, product cannot belong to an empty category.")
 
+        if brand_id is None:
+            abort(400, "Sorry, brand_id cannot be null.")
+        if rating is None:
+            abort(400, "Sorry, rating cannot be null.")
+        if long_desc is None:
+            abort(400, "Sorry, long_desc cannot be null.")
+
         product = ProductRepository.create(
             title=title,
             price=price,
@@ -124,7 +138,10 @@ class ProductResource(Resource):
             thumbnail=thumbnail,
             image=image,
             sellers_id=sellers_id,
-            product_categories_id=product_categories_id)
+            product_categories_id=product_categories_id,
+            brand_id=brand_id,
+            rating=rating,
+            long_desc=long_desc)
 
         return jsonify({
             "title": product.title,

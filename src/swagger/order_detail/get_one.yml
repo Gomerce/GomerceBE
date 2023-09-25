@@ -75,5 +75,4 @@ responses:
             message: The order detail was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

@@ -1,28 +1,32 @@
 """
 Define resources for Coupon
 """
-from flask import jsonify, abort
+
+
 from flasgger import swag_from
+from flask import abort, jsonify
 from flask_restful import Resource
 from flask_restful.reqparse import Argument
-from validators.auth import requires_auth
+
 from repositories import CartRepository
 from utils import parse_params
 from utils.errors import DataNotFound
+from validators.auth import requires_auth
 
 
 class CartResource(Resource):
     """ cart functionalities """
 
     @staticmethod
-    # @swag_from("../swagger/coupon/get_one.yml")
+    @swag_from("../swagger/coupon/get_one.yml")
     @requires_auth('get:cart')
     def get_one(card_id):
         """ Return a cart based on id provided"""
+
         try:
             cart = CartRepository.get_one(card_id=card_id)
             if not cart:
-                return jsonify({"message": f" Cart with the id {card_id} not found"})
+                return jsonify({"message": f" Cart with the id {card_id} not found"})  # noqa
             data = {
                 "quantity": cart.quantity,
                 "id": cart.id,
@@ -39,14 +43,16 @@ class CartResource(Resource):
             abort(500)
 
     @staticmethod
-    # @swag_from("../swagger/coupon/get_all.yml")
+    @swag_from("../swagger/coupon/get_all.yml")
     @requires_auth('get:carts')
     def get_all(customer_id):
         """ Return all cart information based on the query parameter """
+
         carts = CartRepository.get_all(customer_id=customer_id)
         return jsonify({"data": carts})
 
     @staticmethod
+    @swag_from("../swagger/coupon/put.yml")
     @parse_params(
         Argument("unit_price", location="json",
                  help="The unit price of cart product."),
@@ -58,6 +64,7 @@ class CartResource(Resource):
     @requires_auth('patch:cart')
     def update(cart_id, unit_price, quantity, total_cost):
         """ Update a cart """
+
         repo = CartRepository()
         cart = repo.update(
             cart_id=cart_id,
@@ -77,6 +84,7 @@ class CartResource(Resource):
         return jsonify({"data": data})
 
     @staticmethod
+    @swag_from("../swagger/coupon/post.yml")
     @parse_params(
         Argument("unit_price", location="json",
                  help="The unit price of cart product."),
@@ -92,6 +100,7 @@ class CartResource(Resource):
     @requires_auth('post:cart')
     def post(unit_price, quantity, total_cost, customer_id, product_id):
         """ Create a cart based on the provided information """
+
         cart = CartRepository.create(
             unit_price=unit_price,
             quantity=quantity,
@@ -109,8 +118,10 @@ class CartResource(Resource):
         }
         return jsonify({"data": data})
 
+    @swag_from("../swagger/coupon/delete.yml")
     @requires_auth('delete:cart')
     def delete(cart_id):
         """ delete a cart via the provided id """
+
         CartRepository.delete(cart_id=cart_id)
         return jsonify({"message": "cart item successfully deleted"})

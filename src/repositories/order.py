@@ -1,9 +1,12 @@
 """ Defines the Order repository """
+
+
 import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy.exc import IntegrityError
+
 from models import Order, db
 from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
 
 
 class OrderRepository:
@@ -15,19 +18,21 @@ class OrderRepository:
 
         # make sure one of the parameters was passed
         if not order_id:
-            raise DataNotFound(f"Order not found, no detail provided")
+            raise DataNotFound("Order not found, no detail provided")
 
         try:
             order = db.session.query(Order).filter(
                 Order.id == order_id).first()
             return order
-        except:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Order with {order_id} not found")
 
     @staticmethod
     def getAll():
         """ Query all orders"""
+
         orders = db.session.query(Order).all()
         data = []
         for order in orders:
@@ -47,6 +52,7 @@ class OrderRepository:
 
     def update(self, order_id, **args):
         """ Update a order details"""
+
         order = self.get(order_id)
         if not order:
             raise DataNotFound(f"Order Detail with {order_id} not found")
@@ -61,7 +67,8 @@ class OrderRepository:
         return order.save()
 
     @staticmethod
-    def create(total_cost, tax, delivery_status, delivered_at, customer_id, shipping_address_id, coupon_id, seller_id):
+    def create(total_cost, tax, delivery_status, delivered_at, customer_id,
+               shipping_address_id, coupon_id, seller_id):
         """ Create a new order Details """
         try:
             order_detail = Order(total_cost=total_cost,
@@ -83,14 +90,16 @@ class OrderRepository:
     @staticmethod
     def delete(order_id):
         """ Delete a Order by id """
+
         if not order_id:
-            raise DataNotFound(f"Order not found")
+            raise DataNotFound("Order not found")
 
         try:
             query = Order.query.filter(Order.id == order_id).first()
             if not query:
                 raise DataNotFound(f"Order Detail with {order_id} not found")
             return query.delete()
-        except DataNotFound as e:
+
+        except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Order Detail with {order_id} not found")

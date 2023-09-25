@@ -60,5 +60,4 @@ responses:
             message: The Payment Method was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []

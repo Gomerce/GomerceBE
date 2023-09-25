@@ -1,6 +1,8 @@
 """
 Define the resources for the payment method
 """
+
+
 from flasgger import swag_from
 from flask import abort, jsonify
 from flask_restful import Resource
@@ -38,7 +40,7 @@ class PaymentMethodResource(Resource):
     @swag_from("../swagger/payment_method/get_all.yml")
     @requires_auth('get:payment_methods')
     def get_all():
-        """ Return all payment method key information based on the query parameter """
+        """ Return all payment method key information based on the query parameter """  # noqa
         payment_methods = PaymentMethodRepository.getAll()
         return jsonify({"data": payment_methods})
 
@@ -46,9 +48,9 @@ class PaymentMethodResource(Resource):
     @swag_from("../swagger/payment_method/put.yml")
     @parse_params(
         Argument("name", location="json",
-                help="The name of the payment."),
+                 help="The name of the payment."),
         Argument("currency", location="json",
-                help="The currency of the payment."),
+                 help="The currency of the payment."),
     )
     @requires_auth('patch:payment_method')
     def update(method_id, name, currency):
@@ -59,15 +61,15 @@ class PaymentMethodResource(Resource):
             currency=currency,
         )
         print(order)
-        return jsonify({"message": f"data updated"})
+        return jsonify({"message": "data updated"})
 
     @staticmethod
     @swag_from("../swagger/payment_method/post.yml")
     @parse_params(
         Argument("name", location="json",
-                help="The name of the payment."),
+                 help="The name of the payment."),
         Argument("currency", location="json",
-                help="The currency of the payment."),
+                 help="The currency of the payment."),
     )
     @requires_auth('post:payment_method')
     def post(name, currency):

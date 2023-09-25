@@ -94,5 +94,4 @@ responses:
             message: The Order was not found
 
 security:
-  - implicit:
-      - get
+   - bearerAuth: []
