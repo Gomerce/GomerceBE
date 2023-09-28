@@ -3,6 +3,7 @@
 
 import sys
 
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 from models import Product, ProductCategory, db
@@ -29,34 +30,41 @@ class ProductRepository:
 
             return product
 
-        except DataNotFound:
+        except DataNotFound as error:
             print(sys.exc_info())
-            raise DataNotFound(f"Product with {product_id} not found")
-        
+            raise DataNotFound(
+                f"Product with {product_id} not found") from error
+
     @staticmethod
     def search_filter(title, min=None, max=None, category=None):
         try:
             products = None
             if title and isinstance(title, str):
-                search = title.strip() 
-                products = Product.query.filter(or_(Product.title.ilike(f'%{search}%'), Product.short_desc.ilike(f'%{search}%'))).all()
-                
+                search = title.strip()
+                products = Product.query.filter(or_(Product.title.ilike(
+                    f'%{search}%'),
+                    Product.short_desc.ilike(f'%{search}%'))).all()
+
             if min and isinstance(min, float):
-                products = Product.query.filter(Product.price >= float(min)).all()
-                
+                products = Product.query.filter(
+                    Product.price >= float(min)).all()
+
             if max and isinstance(max, float):
-                products = Product.query.filter(Product.price <= float(max)).all()
+                products = Product.query.filter(
+                    Product.price <= float(max)).all()
             if max and title:
                 query = Product.query.filter(Product.title.ilike(f'%{title}%'))
-                products = query.filter(Product.price >= float(max)) # chaining the previous query and thus filtering it
-                
+                # chaining the previous query and thus filtering it
+                products = query.filter(Product.price >= float(max))
+
             if min and title:
                 query = Product.query.filter(Product.title.ilike(f'%{title}%'))
-                products = query.filter(Product.price <float(min))
-                
+                products = query.filter(Product.price < float(min))
+
             if category:
-                products = Product.query.join(ProductCategory).filter(ProductCategory.name.ilike(f'%{category}%')).all()
-                
+                products = Product.query.join(ProductCategory).filter(
+                    ProductCategory.name.ilike(f'%{category}%')).all()
+
             response = []
             for product in products:
                 response.append({
@@ -74,9 +82,9 @@ class ProductRepository:
                 })
 
             return response
-        except DataNotFound as e:
-            raise DataNotFound(f"Search field cannot be empty else check for the correct data type of float and string")
-
+        except DataNotFound:
+            raise DataNotFound(
+                "Search field cannot be empty else check for the correct data type of float and string")  # noqa
 
     @staticmethod
     def getAll():
@@ -128,30 +136,30 @@ class ProductRepository:
         return product.save()
 
     @staticmethod
-    def create(title, price, quantity, short_desc, thumbnail, image,
-               sellers_id, product_categories_id, brand_id,
-               long_desc, rating):
+    def create(title, price, short_desc, quantity=None, long_desc=None,
+               rating=None, thumbnail=None, image=None, sellers_id=None,
+               product_categories_id=None, brand_id=None):
         """ Create a new product """
 
         try:
-            new_product = Product(title=title, price=price, quantity=quantity,
+            new_product = Product(title=title, price=price,
                                   short_desc=short_desc,
-                                  thumbnail=thumbnail, image=image,
-                                  sellers_id=sellers_id,
+                                  quantity=quantity,
+                                  long_desc=long_desc,
+                                  rating=rating, thumbnail=thumbnail,
+                                  image=image, sellers_id=sellers_id,
                                   product_categories_id=product_categories_id,
-                                  brand_id=brand_id, long_desc=long_desc,
-                                  rating=rating)
+                                  brand_id=brand_id)
 
             return new_product.save()
 
-        except IntegrityError as e:
-            message = e.orig.diag.message_detail
+        except IntegrityError as error:
             db.session.rollback()
-            raise DuplicateData(message)
+            raise ValueError("Duplicated Data") from error
 
-        except Exception:
+        except InternalServerError as error:
             db.session.rollback()
-            raise InternalServerError
+            raise InternalServerError from error
 
     @staticmethod
     def delete(product_id):

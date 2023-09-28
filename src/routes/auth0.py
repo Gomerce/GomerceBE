@@ -9,4 +9,4 @@ AUTH0_BLUEPRINT = Blueprint("auth0", __name__)
 
 AUTH0_BLUEPRINT.route("/login", methods=['POST'])(Auth0Resource.login)
 AUTH0_BLUEPRINT.route("/logout", methods=['POST'])(Auth0Resource.logout)
-AUTH0_BLUEPRINT.route("/callback", methods=['POST'])(Auth0Resource.callback)
+AUTH0_BLUEPRINT.route("/callback", methods=['GET'])(Auth0Resource.callback)
