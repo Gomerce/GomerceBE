@@ -1,9 +1,10 @@
 """ Defines the Customer repository """
-import sys
-from sqlalchemy import or_, and_
+
+from sqlalchemy import or_
+from sqlalchemy.exc import IntegrityError
+
 from models import Customer
-from utils.errors import DataNotFound, DuplicateData, InternalServerError
-from sqlalchemy.exc import IntegrityError, DataError
+from utils.errors import DataNotFound, InternalServerError
 
 
 class CustomerRepository:
@@ -15,7 +16,7 @@ class CustomerRepository:
 
         # make sure one of the parameters was passed
         if not customer_id and not username and not email:
-            raise DataNotFound(f"Customer not found, no detail provided")
+            raise DataNotFound("Customer not found, no detail provided")
 
         try:
             query = Customer.query
@@ -23,21 +24,24 @@ class CustomerRepository:
                 query = query.filter(Customer.id == customer_id)
             if username:
                 query = query.filter(
-                    or_(Customer.username == username, Customer.email == username))
+                    or_(Customer.username == username,
+                        Customer.email == username))
             if email:
                 query = query.filter(
                     or_(Customer.email == email, Customer.username == email))
 
             customer = query.first()
             return customer
-        except:
-            print(sys.exc_info())
-            raise DataNotFound(f"Customer with {customer_id} not found")
+
+        except DataNotFound:
+            return (f"Customer with {customer_id} was not found")
 
     @staticmethod
-    def getAll():
+    def get_all():
         """ Query all customers"""
+
         customers = Customer.query.all()
+
         if not customers:
             return []
         data = []
@@ -58,19 +62,49 @@ class CustomerRepository:
 
         return data
 
-    def update(self, customer_id, **args):
+    @staticmethod
+    def update(customer_id, **args):
         """ Update a customer's age """
-        customer = self.get(customer_id)
-        if 'phone' in args and args['phone'] is not None:
-            customer.phone = args['phone']
 
-        if 'last_name' in args and args['last_name'] is not None:
-            customer.last_name = args['last_name']
+        # customer = self.get(customer_id)
 
-        if 'first_name' in args and args['first_name'] is not None:
-            customer.first_name = args['first_name']
+        customer = Customer.query.filter_by(id=customer_id).first()
 
-        return customer.save()
+        if customer:
+
+            if 'username' in args and args['username'] is not None:
+                customer.username = args['username']
+
+            if 'last_name' in args and args['last_name'] is not None:
+                customer.last_name = args['last_name']
+
+            if 'first_name' in args and args['first_name'] is not None:
+                customer.first_name = args['first_name']
+
+            if 'email' in args and args['email'] is not None:
+                customer.email = args['email']
+
+            if 'phone' in args and args['phone'] is not None:
+                customer.phone = args['phone']
+
+            if 'country' in args and args['country'] is not None:
+                customer.country = args['country']
+
+            if 'state' in args and args['state'] is not None:
+                customer.state = args['state']
+
+            if 'city' in args and args['city'] is not None:
+                customer.city = args['city']
+
+            if 'street_name' in args and args['street_name'] is not None:
+                customer.street_name = args['street_name']
+
+            if 'zipcode' in args and args['zipcode'] is not None:
+                customer.zipcode = args['zipcode']
+
+            return customer.save()
+
+        return customer
 
     @staticmethod
     def create(username, last_name, first_name, email, password, phone=None,
@@ -86,8 +120,9 @@ class CustomerRepository:
             new_customer.set_password(password)
 
             return new_customer.save()
-        except IntegrityError as e:
-            message = e.orig.diag.message_detail
-            raise DuplicateData(message)
-        except Exception:
-            raise InternalServerError
+
+        except IntegrityError as error:
+            raise ValueError("Duplicated Data") from error
+
+        except InternalServerError as exc:
+            raise InternalServerError from exc

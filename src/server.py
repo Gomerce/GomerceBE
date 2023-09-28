@@ -101,7 +101,6 @@ swagger_config["security"] = [{"bearerAuth": []}]
 Swagger(server, config=swagger_config)
 
 
-""" Error handling """
 # error handler for 422
 
 
