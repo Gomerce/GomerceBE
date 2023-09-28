@@ -25,7 +25,7 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
     email_verified = db.Column(db.Boolean)
     phone_verified = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

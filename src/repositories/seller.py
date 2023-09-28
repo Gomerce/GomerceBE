@@ -41,12 +41,12 @@ class SellerRepository:
             seller = query.first()
             return seller
 
-        except DataNotFound:
+        except DataNotFound as error:
             print(sys.exc_info())
-            raise DataNotFound(f"Seller with {seller_id} not found")
+            raise DataNotFound(f"Seller with {seller_id} not found") from error
 
     @staticmethod
-    def getAll():
+    def get_all():
         """ Query all sellers"""
         sellers = Seller.query.all()
         all_sellers = [seller.json for seller in sellers]
@@ -55,37 +55,43 @@ class SellerRepository:
     def update(self, seller_id, **args):
         """ Update a seller's details """
         seller = self.get(seller_id)
-        if 'phone' in args and args['phone'] is not None:
-            seller.phone = args['phone']
+        if seller:
+            if 'phone' in args and args['phone'] is not None:
+                seller.phone = args['phone']
 
-        if 'email' in args and args['email'] is not None:
-            seller.email = args['email']
+            if 'email' in args and args['email'] is not None:
+                seller.email = args['email']
 
-        if 'last_name' in args and args['last_name'] is not None:
-            seller.last_name = args['last_name']
+            if 'last_name' in args and args['last_name'] is not None:
+                seller.last_name = args['last_name']
 
-        if 'first_name' in args and args['first_name'] is not None:
-            seller.first_name = args['first_name']
+            if 'first_name' in args and args['first_name'] is not None:
+                seller.first_name = args['first_name']
 
-        if 'rating' in args and args['rating'] is not None:
-            seller.rating = args['rating']
+            if 'rating' in args and args['rating'] is not None:
+                seller.rating = args['rating']
 
-        return seller.save()
+            return seller.save()
+
+        return seller
 
     @staticmethod
-    def create(username, last_name, first_name, email, password, phone):
+    def create(username, last_name, first_name, email, password,
+               phone, rating):
         """ Create a new seller """
         try:
             new_seller = Seller(username=username, first_name=first_name,
-                                last_name=last_name, email=email, phone=phone)
+                                last_name=last_name, email=email, phone=phone,
+                                rating=rating)
             new_seller.set_password(password)
             return new_seller.save()
 
-        except IntegrityError as e:
-            message = e.orig.diag.message_detail
+        except IntegrityError as error:
+            message = error.orig.diag.message_detail
             raise DuplicateData(message)
-        except Exception:
-            raise InternalServerError
+
+        except InternalServerError as error:
+            raise InternalServerError from error
 
     @staticmethod
     def delete(seller_id):
@@ -101,6 +107,6 @@ class SellerRepository:
             seller = query.first()
             return seller.delete()
 
-        except DataNotFound:
+        except DataNotFound as error:
             print(sys.exc_info())
-            raise DataNotFound(f"Seller with {seller_id} not found")
+            raise DataNotFound(f"Seller with {seller_id} not found") from error

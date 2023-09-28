@@ -31,8 +31,9 @@ class SellerResource(Resource):
                 return jsonify(
                     {"message": f" Seller with the id {seller_id} not found"})
             return jsonify({"data": seller.json})
-        except DataNotFound as e:
-            abort(404, e.message)
+
+        except DataNotFound as error:
+            abort(404, error.message)
         except Exception:
             abort(500)
 
@@ -40,7 +41,8 @@ class SellerResource(Resource):
     @swag_from("../swagger/seller/get_all.yml")
     def get_all():
         """ Return all seller key information based on the query parameter """
-        sellers = SellerRepository.getAll()
+        sellers = SellerRepository.get_all()
+
         return jsonify({"data": sellers})
 
     @staticmethod
@@ -50,35 +52,20 @@ class SellerResource(Resource):
         Argument("last_name", location="json",
                  help="The last_name of the seller."),
         Argument("phone", location="json",
-                 help="The phone details of the seller.")
+                 help="The phone details of the seller."),
+        Argument("rating", location="json",
+                 help="The rating of the seller."),
     )
     @swag_from("../swagger/seller/put.yml")
     @requires_auth('patch:seller')
-    def update_seller(seller_id, last_name, first_name, phone):
+    def update_seller(seller_id, last_name, first_name, phone, rating):
         """ Update a seller based on the provided information """
 
-        repository = SellerRepository()
+        seller = SellerRepository()
 
-        if first_name is None:
-            abort(400, "Sorry, first name cannot be null.")
-        if first_name == "":
-            abort(400, "Sorry, first name cannot be empty.")
-
-        if last_name is None:
-            abort(400, "Sorry, last name cannot be null.")
-        if last_name == "":
-            abort(400, "Sorry, last name cannot be empty.")
-
-        if phone is None:
-            abort(400, "Sorry, phone cannot be null.")
-        if phone == "":
-            abort(400, "Sorry, phone cannot be empty.")
-
-        seller = repository.update(
-            seller_id=seller_id,
-            last_name=last_name,
-            first_name=first_name,
-            phone=phone)
+        seller = seller.update(seller_id=seller_id, last_name=last_name,
+                               first_name=first_name, phone=phone,
+                               rating=rating)
         return jsonify({"data": seller.json})
 
     @staticmethod
@@ -93,12 +80,14 @@ class SellerResource(Resource):
                  help="The username of the seller."),
         Argument("email", location="json",
                  help="The email of the seller."),
+        Argument("rating", location="json",
+                 help="The rating of the seller."),
         Argument("password", location="json",
-                 help="The password of the seller.")
+                 help="The password of the seller."),
     )
     @swag_from("../swagger/seller/post.yml")
     @requires_auth('post:seller')
-    def post(last_name, first_name, phone, username, email, password):
+    def post(last_name, first_name, phone, username, email, password, rating):
         """ Create a seller based on the provided information """
         error = False
 
@@ -154,7 +143,8 @@ class SellerResource(Resource):
                 phone=phone,
                 username=username,
                 email=email,
-                password=password
+                password=password,
+                rating=rating,
             )
 
             token = jwt.encode(
@@ -171,6 +161,7 @@ class SellerResource(Resource):
                 "email": seller.email,
                 "firstName": seller.first_name,
                 "lastName": seller.last_name,
+                "phoneNumber": seller.phone,
                 "token": token
             })
 

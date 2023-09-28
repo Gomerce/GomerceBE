@@ -30,9 +30,10 @@ class ProductRepository:
 
             return product
 
-        except DataNotFound:
+        except DataNotFound as error:
             print(sys.exc_info())
-            raise DataNotFound(f"Product with {product_id} not found")
+            raise DataNotFound(
+                f"Product with {product_id} not found") from error
 
     @staticmethod
     def search_filter(title, min=None, max=None, category=None):
@@ -135,30 +136,30 @@ class ProductRepository:
         return product.save()
 
     @staticmethod
-    def create(title, price, quantity, short_desc, thumbnail, image,
-               sellers_id, product_categories_id, brand_id,
-               long_desc, rating):
+    def create(title, price, short_desc, quantity=None, long_desc=None,
+               rating=None, thumbnail=None, image=None, sellers_id=None,
+               product_categories_id=None, brand_id=None):
         """ Create a new product """
 
         try:
-            new_product = Product(title=title, price=price, quantity=quantity,
+            new_product = Product(title=title, price=price,
                                   short_desc=short_desc,
-                                  thumbnail=thumbnail, image=image,
-                                  sellers_id=sellers_id,
+                                  quantity=quantity,
+                                  long_desc=long_desc,
+                                  rating=rating, thumbnail=thumbnail,
+                                  image=image, sellers_id=sellers_id,
                                   product_categories_id=product_categories_id,
-                                  brand_id=brand_id, long_desc=long_desc,
-                                  rating=rating)
+                                  brand_id=brand_id)
 
             return new_product.save()
 
-        except IntegrityError as e:
-            message = e.orig.diag.message_detail
+        except IntegrityError as error:
             db.session.rollback()
-            raise DuplicateData(message)
+            raise ValueError("Duplicated Data") from error
 
-        except Exception:
+        except InternalServerError as error:
             db.session.rollback()
-            raise InternalServerError
+            raise InternalServerError from error
 
     @staticmethod
     def delete(product_id):
