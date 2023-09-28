@@ -17,7 +17,6 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     __tablename__ = "customers"
 
     id = db.Column(db.Integer, primary_key=True)
-    # id = db.Column(db.String(), primary_key=True, default=lambda: str(uuid.uuid4()))
     username = db.Column(db.String(32), nullable=False, unique=True)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))
@@ -29,8 +28,9 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
     city = db.Column(db.String(50))
     street_name = db.Column(db.String(50))
     zipcode = db.Column(db.String(50))
+
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

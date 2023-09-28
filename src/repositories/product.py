@@ -3,6 +3,7 @@
 
 import sys
 
+from sqlalchemy import or_
 from sqlalchemy.exc import IntegrityError
 
 from models import Product, ProductCategory, db
@@ -32,31 +33,37 @@ class ProductRepository:
         except DataNotFound:
             print(sys.exc_info())
             raise DataNotFound(f"Product with {product_id} not found")
-        
+
     @staticmethod
     def search_filter(title, min=None, max=None, category=None):
         try:
             products = None
             if title and isinstance(title, str):
-                search = title.strip() 
-                products = Product.query.filter(or_(Product.title.ilike(f'%{search}%'), Product.short_desc.ilike(f'%{search}%'))).all()
-                
+                search = title.strip()
+                products = Product.query.filter(or_(Product.title.ilike(
+                    f'%{search}%'),
+                    Product.short_desc.ilike(f'%{search}%'))).all()
+
             if min and isinstance(min, float):
-                products = Product.query.filter(Product.price >= float(min)).all()
-                
+                products = Product.query.filter(
+                    Product.price >= float(min)).all()
+
             if max and isinstance(max, float):
-                products = Product.query.filter(Product.price <= float(max)).all()
+                products = Product.query.filter(
+                    Product.price <= float(max)).all()
             if max and title:
                 query = Product.query.filter(Product.title.ilike(f'%{title}%'))
-                products = query.filter(Product.price >= float(max)) # chaining the previous query and thus filtering it
-                
+                # chaining the previous query and thus filtering it
+                products = query.filter(Product.price >= float(max))
+
             if min and title:
                 query = Product.query.filter(Product.title.ilike(f'%{title}%'))
-                products = query.filter(Product.price <float(min))
-                
+                products = query.filter(Product.price < float(min))
+
             if category:
-                products = Product.query.join(ProductCategory).filter(ProductCategory.name.ilike(f'%{category}%')).all()
-                
+                products = Product.query.join(ProductCategory).filter(
+                    ProductCategory.name.ilike(f'%{category}%')).all()
+
             response = []
             for product in products:
                 response.append({
@@ -74,9 +81,9 @@ class ProductRepository:
                 })
 
             return response
-        except DataNotFound as e:
-            raise DataNotFound(f"Search field cannot be empty else check for the correct data type of float and string")
-
+        except DataNotFound:
+            raise DataNotFound(
+                "Search field cannot be empty else check for the correct data type of float and string")  # noqa
 
     @staticmethod
     def getAll():

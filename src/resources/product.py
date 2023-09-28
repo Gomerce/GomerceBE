@@ -9,7 +9,7 @@ from flask_restful.reqparse import Argument
 
 from repositories import ProductRepository
 from utils import parse_params
-from utils.errors import DataNotFound
+from utils.errors import DataNotFound, InternalServerError
 from validators.auth import requires_auth
 
 
@@ -40,9 +40,10 @@ class ProductResource(Resource):
                 "thumbnail": product.thumbnail,
                 "sellers_id": product.sellers_id
             })
-        except DataNotFound as e:
-            abort(404, e.message)
-        except Exception:
+        except DataNotFound as error:
+            abort(404, error.message)
+
+        except InternalServerError:
             abort(500)
 
     @staticmethod
@@ -154,17 +155,18 @@ class ProductResource(Resource):
             "sellers_id": product.sellers_id,
             "product_category_id": product.product_categories_id
         })
-        
-   
+
     def search_product(title, min, max, category):
-        products = ProductRepository.search_filter(title=title, min=min, max=max, category=category)
+        """ search a product based on the product title etc. """
+        products = ProductRepository.search_filter(title=title, min=min,
+                                                   max=max, category=category)
         return jsonify({"data": products})
-        
 
     @swag_from("../swagger/products/delete.yml")
     @requires_auth('delete:product')
     def delete(product_id):
         """ delete a product based on the product id provided """
+
         # fetch product
 
         product = ProductRepository
@@ -254,4 +256,3 @@ class ProductResource(Resource):
         return jsonify({
             "message": f"Product with id {product_id} updated successfully"
         })
-
