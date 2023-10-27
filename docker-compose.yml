@@ -1,0 +1,33 @@
+version: 3.8
+
+services:
+  app:
+    container_name: gomerce_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3303:3303"
+    env_file:
+      - .env.prod
+    volumes:
+      - .:/app
+    command: python3 ./src/server.py
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=gomerce
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=gomerce
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
