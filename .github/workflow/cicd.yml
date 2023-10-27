@@ -1,7 +1,7 @@
 name: Flask CICD
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
