@@ -1,0 +1,57 @@
+name: Flask CICD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  Test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Docker-Compose
+      run: docker-compose up -d
+
+  Deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login into Docker
+      env:
+        DOCKER_URL: ${{ secrets.DOCKER_URL }}
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - name: Create an env file
+      run: |
+        echo "${{ secrets.GOMERCE_ENV }}" > .env
+      shell: bash
+
+
+    - name: Build the Docker images using Docker Compose
+      run: |
+        # Build the Docker images using Docker Compose
+        docker-compose -f docker-compose-prod.yml build
+        # Tag the images with your Docker Hub repository name and version
+        docker tag gomerce_app ${{ secrets.DOCKER_USERNAME }}/gomerce_app:lastest
+        # Push the images to Docker Hub
+        docker push ${{ secrets.DOCKER_USERNAME }}/gomerce_app:lastest
+      shell: bash
+
+    - name: Executing remote ssh commands using ssh key
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{secrets.SSH_HOST}}
+        username: ${{secrets.SSH_USER}}
+        key: ${{secrets.SSH_KEY}
+        script: |
+          cd ${{secrets.PROJECT_PATH}}
+          docker pull
+          docker compose -f docker-compose-prod.yml stop
+          # git pull
+          docker compose -f docker-compose-prod.yml restart

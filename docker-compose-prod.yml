@@ -1,0 +1,51 @@
+version: 3.8
+
+services:
+
+  app:
+    container_name: gomerce_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    expose:
+      - 3303
+    env_file:
+      - .env
+    command: gunicorn --bind 0.0.0.0:3303 --workers 4 "run:app"
+    depends_on:
+      - db
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: always
+    ports:
+      - 80:80
+      - 443:433
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+
+  db:
+    image: postgres:14
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -166,3 +166,16 @@ You can visit the Products URL to test the application at `http://localhost:3303
 The API Swagger documentation should be accessible at `http://localhost:3303/apidocs`
 
 
+
+## docker run
+
+```
+# running cerbort
+docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --dry-run -d example.org
+
+# 
+docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ -d example.org
+
+# renew cert
+docker compose run --rm certbot renew
+```
