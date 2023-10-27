@@ -17,6 +17,8 @@ oauth = OAuth()
 class Auth0Resource(Resource):
     """ This class define Auth0 Resource """
 
+    # pylint: disable=E0211
+
     def login():
         """ This define the login function """
 
@@ -29,7 +31,7 @@ class Auth0Resource(Resource):
 
         token = oauth.auth0.authorize_access_token()
         session["user"] = token
-        return redirect(url_for("index"))
+        return redirect(url_for("index.index"))
 
     def logout():
         """ This define the logout function """
@@ -40,7 +42,7 @@ class Auth0Resource(Resource):
             + "/v2/logout?"
             + urlencode(
                 {
-                    "returnTo": url_for("index.get", _external=True),
+                    "returnTo": url_for("index.index", _external=True),
                     "client_id": config.AUTH0_CLIENT_ID,
                 },
                 quote_via=quote_plus,

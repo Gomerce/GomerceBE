@@ -9,7 +9,7 @@ from flask_restful.reqparse import Argument
 
 from repositories import ProductRepository
 from utils import parse_params
-from utils.errors import DataNotFound
+from utils.errors import DataNotFound, InternalServerError
 from validators.auth import requires_auth
 
 
@@ -40,9 +40,10 @@ class ProductResource(Resource):
                 "thumbnail": product.thumbnail,
                 "sellers_id": product.sellers_id
             })
-        except DataNotFound as e:
-            abort(404, e.message)
-        except Exception:
+        except DataNotFound as error:
+            abort(404, error.message)
+
+        except InternalServerError:
             abort(500)
 
     @staticmethod
@@ -60,10 +61,14 @@ class ProductResource(Resource):
                  help="The title of the product."),
         Argument("price", location="json",
                  help="The price of the product."),
-        Argument("quantity", location="json",
-                 help="The quantity of the product."),
         Argument("short_desc", location="json",
                  help="The short_desc of the product."),
+        Argument("quantity", location="json",
+                 help="The quantity of the product."),
+        Argument("long_desc", location="json",
+                 help="The long_desc of the product."),
+        Argument("rating", location="json",
+                 help="The rating of the product."),
         Argument("thumbnail", location="json",
                  help="The thumbnail of the product."),
         Argument("image", location="json",
@@ -72,17 +77,14 @@ class ProductResource(Resource):
                  help="The sellers_id that created the product."),
         Argument("product_categories_id", location="json",
                  help="The product_categories of the product."),
-        Argument("rating", location="json",
-                 help="The product_categories of the product."),
-        Argument("long_desc", location="json",
-                 help="The product_categories of the product."),
         Argument("brand_id", location="json",
                  help="The product_categories of the product."),
     )
     @swag_from("../swagger/products/post.yml")
     @requires_auth('post:product')
-    def post(title, price, quantity, short_desc,
-             thumbnail, image, sellers_id, product_categories_id, long_desc, rating, brand_id):  # noqa
+    def post(title, price, short_desc, quantity=None, long_desc=None,
+             rating=None, thumbnail=None, image=None, sellers_id=None,
+             product_categories_id=None, brand_id=None):
         """ Create a product based on the provided information """
 
         if title is None:
@@ -130,41 +132,28 @@ class ProductResource(Resource):
         if long_desc is None:
             abort(400, "Sorry, long_desc cannot be null.")
 
-        product = ProductRepository.create(
-            title=title,
-            price=price,
-            quantity=quantity,
-            short_desc=short_desc,
-            thumbnail=thumbnail,
-            image=image,
-            sellers_id=sellers_id,
-            product_categories_id=product_categories_id,
-            brand_id=brand_id,
-            rating=rating,
-            long_desc=long_desc)
+        product = ProductRepository.create(title=title, price=price,
+                                           quantity=quantity,
+                                           short_desc=short_desc,
+                                           long_desc=long_desc,
+                                           rating=rating, thumbnail=thumbnail,
+                                           image=image, sellers_id=sellers_id,
+                                           product_categories_id=product_categories_id,  # noqa
+                                           brand_id=brand_id)
 
-        return jsonify({
-            "title": product.title,
-            "id": product.id,
-            "price": product.price,
-            "quantity": product.quantity,
-            "short_desc": product.short_desc,
-            "thumbnail": product.thumbnail,
-            "image": product.image,
-            "sellers_id": product.sellers_id,
-            "product_category_id": product.product_categories_id
-        })
-        
-   
+        return jsonify({"data": product.json})
+
     def search_product(title, min, max, category):
-        products = ProductRepository.search_filter(title=title, min=min, max=max, category=category)
+        """ search a product based on the product title etc. """
+        products = ProductRepository.search_filter(title=title, min=min,
+                                                   max=max, category=category)
         return jsonify({"data": products})
-        
 
     @swag_from("../swagger/products/delete.yml")
     @requires_auth('delete:product')
     def delete(product_id):
         """ delete a product based on the product id provided """
+
         # fetch product
 
         product = ProductRepository
@@ -254,4 +243,3 @@ class ProductResource(Resource):
         return jsonify({
             "message": f"Product with id {product_id} updated successfully"
         })
-

@@ -25,7 +25,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     thumbnail = db.Column(db.String(100))
     image = db.Column(db.String(100))
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
 
     # Foreign Key
     sellers_id = db.Column(db.Integer, db.ForeignKey(
