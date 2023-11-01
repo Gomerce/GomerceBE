@@ -33,5 +33,10 @@ jobs:
             sudo apt-get install -y nginx
             sudo systemctl start nginx
             sudo systemctl enable nginx
-            cd home
+            cd home/project/
+            python3 -m venv venv
+            source venv/lib/activate
+            pip3 install -r requirements.txt 
+            export FLASK_APP="src/server.py"
+            python3 src/server.py
             # sudo mv * /var/www/html
