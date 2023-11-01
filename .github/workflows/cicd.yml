@@ -39,4 +39,4 @@ jobs:
             pip3 install -r requirements.txt 
             export FLASK_APP="src/server.py"
             python3 src/server.py
-            # sudo mv * /var/www/html
+      
