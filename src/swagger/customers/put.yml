@@ -5,12 +5,12 @@ tags:
 operationId: patchcustomer
 
 parameters:
-        - name: customerID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - name: customer_id
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
 
 requestBody:
   description: Update customer details
@@ -29,12 +29,6 @@ requestBody:
             type: string
             format: email
             example: macdonalddoe@example.com
-          
-        required:
-          - last_name
-          - first_name
-          - email
-  required: true
 
 responses:
   200:
@@ -87,5 +81,4 @@ responses:
             message: Access token does not have the required scope
 
 security:
-  - implicit:
-      - patch
+   - bearerAuth: []

@@ -5,12 +5,12 @@ tags:
 operationId: getcustomer
 
 parameters:
-        - name: customerID
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+  - name: customer_id
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int64
 
 responses:
   200:
@@ -29,11 +29,7 @@ responses:
             email:
               type: string
               format: email
-          required:
-            - id
-            - last_name
-            - first_name
-            - email
+
         example:
           id: 1
           last_name: Doe
