@@ -21,11 +21,6 @@ requestBody:
             type: string
             format: email
             example: johndoe@example.com
-        required:
-          - last_name
-          - first_name
-          - email
-  required: true
 
 responses:
   200:
