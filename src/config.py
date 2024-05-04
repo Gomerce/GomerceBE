@@ -17,6 +17,7 @@ DB_URI = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # Application configs
 SECRET_KEY = os.getenv("SECRET_KEY")
+AUTH_ALGORITHMS = os.getenv("AUTH_ALGORITHMS")
 DEBUG = os.getenv("ENVIRONEMENT") == "DEV"
 APPLICATION_ROOT = os.getenv("API_APPLICATION_ROOT", "/api")
 HOST = os.getenv("APPLICATION_HOST")

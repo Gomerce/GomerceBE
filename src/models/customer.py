@@ -12,6 +12,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import db
 from .abc import BaseModel, MetaBaseModel
+from validators.jwt import encode_auth_token
 
 
 class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
@@ -40,6 +41,9 @@ class Customer(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def encode_token(self, id, first_name, last_name):
+        return encode_auth_token(id, first_name, last_name)
 
     # Relationship
     orders = db.relationship('Order', backref='customers', lazy=True)
