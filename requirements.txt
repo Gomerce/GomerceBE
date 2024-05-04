@@ -20,7 +20,7 @@ dparse==0.6.4b0
 ecdsa==0.18.0
 flake8==7.0.0
 flasgger==0.9.7.1
-Flask==3.0.2
+Flask==2.3.3
 Flask-Migrate==4.0.7
 Flask-RESTful==0.3.10
 Flask-Script==2.0.6

@@ -3,8 +3,9 @@ Define the Product model
 """
 
 from datetime import datetime
+from uuid import uuid4
 
-from sqlalchemy import Numeric
+from sqlalchemy import Numeric, UUID
 
 from . import db
 from .abc import BaseModel, MetaBaseModel
@@ -15,7 +16,7 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "products"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     title = db.Column(db.String(300), nullable=False)
     price = db.Column(Numeric(precision=15, scale=2), nullable=False)
     quantity = db.Column(db.Integer)
@@ -28,13 +29,13 @@ class Product(db.Model, BaseModel, metaclass=MetaBaseModel):
     updated_at = db.Column(db.DateTime(), onupdate=datetime.utcnow)
 
     # Foreign Key
-    sellers_id = db.Column(db.Integer, db.ForeignKey(
+    sellers_id = db.Column(UUID(as_uuid=True), db.ForeignKey(
         'sellers.id'), nullable=False)
-    product_categories_id = db.Column(db.Integer, db.ForeignKey(
+    product_categories_id = db.Column(UUID(as_uuid=True), db.ForeignKey(
         'product_categories.id'), nullable=False)
-    product_subcategories_id = db.Column(db.Integer, db.ForeignKey(
+    product_subcategories_id = db.Column(UUID(as_uuid=True), db.ForeignKey(
         'product_subcategories.id'), nullable=False)
-    brand_id = db.Column(db.Integer, db.ForeignKey(
+    brand_id = db.Column(UUID(as_uuid=True), db.ForeignKey(
         'brands.id'), nullable=False)
 
     # Relationship
