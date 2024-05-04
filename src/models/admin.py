@@ -4,6 +4,9 @@ Define the Admin model
 
 
 from datetime import datetime
+from uuid import uuid4
+
+from sqlalchemy import UUID
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -16,8 +19,7 @@ class Admin(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "admins"
 
-    id = db.Column(db.Integer, primary_key=True)
-    # id = db.Column(db.String(), primary_key=True, default=lambda: str(uuid.uuid4()))
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     username = db.Column(db.String(32), nullable=False, unique=True)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))

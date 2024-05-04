@@ -3,6 +3,9 @@ Define the Store model
 """
 
 from datetime import datetime
+from uuid import uuid4
+
+from sqlalchemy import UUID
 
 from . import db
 from .abc import BaseModel, MetaBaseModel
@@ -15,7 +18,7 @@ class Store(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "stores"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = db.Column(db.String(50), nullable=False, unique=True)
     address = db.Column(db.String)
     phone = db.Column(db.String(15))
@@ -26,5 +29,5 @@ class Store(db.Model, BaseModel, metaclass=MetaBaseModel):
     phone_verified = db.Column(db.Boolean, default=False)
 
     # Foreign Key
-    sellers_id = db.Column(db.Integer, db.ForeignKey(
+    sellers_id = db.Column(UUID(as_uuid=True), db.ForeignKey(
         'sellers.id'), nullable=False)

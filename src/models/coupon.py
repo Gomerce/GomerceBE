@@ -4,8 +4,11 @@ Define the Coupon model
 
 
 from datetime import datetime
+from uuid import uuid4
 
-from sqlalchemy import Numeric
+
+from sqlalchemy import Numeric, UUID
+
 
 from . import db
 from .abc import BaseModel, MetaBaseModel
@@ -16,7 +19,7 @@ class Coupon(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "coupons"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     code = db.Column(db.String(20), nullable=False, unique=True)
     amount = db.Column(Numeric(precision=15, scale=2), nullable=False)
     expires_at = db.Column(
