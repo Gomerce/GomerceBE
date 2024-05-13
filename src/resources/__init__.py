@@ -17,3 +17,5 @@ from .status import StatusResource
 from .store import StoreResource
 from .coupon import CouponResource
 from .cart import CartResource
+
+from .authentication import AuthenticationResource

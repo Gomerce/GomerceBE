@@ -2,6 +2,9 @@
 Define the Seller model
 """
 from datetime import datetime
+from uuid import uuid4
+
+from sqlalchemy import UUID
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -14,7 +17,7 @@ class Seller(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "sellers"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     first_name = db.Column(db.String(300))
     last_name = db.Column(db.String(300))
     email = db.Column(db.String(100), nullable=False, unique=True)

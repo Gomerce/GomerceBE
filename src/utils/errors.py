@@ -50,6 +50,15 @@ class NotificationFailed(Exception):
         print(sys.exc_info())
 
 
+class Forbidden(Exception):
+    """ This class represents a 403 unauthorized request """
+
+    def __init__(self) -> None:
+        self.code = 403
+        self.type = 'Forbidden Request'
+        self.message = 'A forbidden request was made. The request was not authorized to perform the requested operation. This may indicate that the client lacks the necessary permissions or credentials'  # noqa
+
+
 errors = {
     "InternalServerError": {
         "message": "Something went wrong",

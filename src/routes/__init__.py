@@ -22,3 +22,5 @@ from .store import STORE_BLUEPRINT
 from .status import STATUS_BLUEPRINT
 from .coupon import COUPON_BLUEPRINT
 from .cart import CART_BLUEPRINT
+
+from .authentication import AuthenticationBlueprint

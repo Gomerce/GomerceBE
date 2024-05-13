@@ -5,6 +5,11 @@ Define the Shipping Address model
 
 from datetime import datetime
 
+from uuid import uuid4
+
+from sqlalchemy import UUID
+
+
 from . import db
 from .abc import BaseModel, MetaBaseModel
 
@@ -14,7 +19,7 @@ class ShippingAddress(db.Model, BaseModel, metaclass=MetaBaseModel):
 
     __tablename__ = "shipping_addresses"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     country = db.Column(db.String(50), nullable=False)
     state = db.Column(db.String(70), nullable=False)
     city = db.Column(db.String(50), nullable=False)

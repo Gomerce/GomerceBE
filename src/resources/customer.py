@@ -48,7 +48,7 @@ class CustomerResource(Resource):
 
     @staticmethod
     @swag_from("../swagger/customers/get_all.yml")
-    @requires_auth('get:users')
+    # @requires_auth('get:users')
     def get_all():
         """ Return all customer key information based on the
         query parameter """
