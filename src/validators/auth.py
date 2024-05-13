@@ -4,7 +4,8 @@ import json
 from functools import wraps
 from urllib.request import urlopen
 
-from flask import _request_ctx_stack, request
+# from flask import _request_ctx_stack, request
+from flask import request
 from jose import ExpiredSignatureError, JWTError, jwt
 
 import config
@@ -114,7 +115,7 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://'+AUTH0_DOMAIN+'/'
             )
-            _request_ctx_stack.top.current_user = payload
+            # _request_ctx_stack.top.current_user = payload
             return payload
 
     # Failure during verification of RSA Key
